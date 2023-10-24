@@ -23,15 +23,6 @@ public class PilotCommands {
                 .withName("Training.A Button");
     }
 
-    public static Command solidPurpleLED() {
-        return LEDsCommands.solid(Color.kPurple, 2).withName("LEDs.solidPurpleLED");
-    }
-
-    public static Command strobeOrangeLED() {
-        return LEDsCommands.strobe(Section.FULL, Color.kOrange, 0.5, 3)
-                .withName("LEDs.strobeOrangeLED");
-    }
-
     public static Command periodicCommand() {
         return TrainingCommands.printPeriodicCommand("Print Periodic: B Button Pressed")
                 .withName("Training.periodicCommand + LEDs.purple");
@@ -56,5 +47,14 @@ public class PilotCommands {
                         "Print Periodic 1: Y Button Pressed",
                         "Print Periodic 2: and Right Bumper Pressed")
                 .withName("Training.Y + Right Bumper");
+    }
+
+    public static Command solidPurpleLED() {
+        return LEDsCommands.solid(Color.kPurple, 2).withName("LEDs.solidPurpleLED");
+    }
+
+    public static Command strobeOrangeLED() {
+        return LEDsCommands.strobe(Section.FULL, Color.kOrange, 0.5, 3)
+                .withName("LEDs.strobeOrangeLED");
     }
 }

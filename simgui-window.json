@@ -5,88 +5,55 @@
   "MainWindow": {
     "GLOBAL": {
       "fps": "120",
-      "height": "1253",
+      "height": "900",
       "maximized": "0",
       "style": "0",
-      "userScale": "6",
-      "width": "2119",
-      "xpos": "1073",
-      "ypos": "421"
-    }
-  },
-  "Table": {
-    "0x965B9C9E,2": {
-      "Column 0  Width": "160",
-      "Column 1  Weight": "1.0000",
-      "RefScale": "16"
-    },
-    "0xE56EC1C2,4": {
-      "Column 0  Weight": "1.0000",
-      "Column 1  Weight": "1.0000",
-      "Column 2  Weight": "1.0000",
-      "Column 3  Weight": "1.0000"
+      "userScale": "2",
+      "width": "1600",
+      "xpos": "1298",
+      "ypos": "863"
     }
   },
   "Window": {
-    "###/FMSInfo": {
-      "Collapsed": "0",
-      "Pos": "521,184",
-      "Size": "202,194"
-    },
-    "###/SmartDashboard/Scheduler": {
-      "Collapsed": "0",
-      "Pos": "259,58",
-      "Size": "809,263"
-    },
     "###Addressable LEDs": {
       "Collapsed": "0",
-      "Pos": "1500,-7",
-      "Size": "353,1207"
+      "Pos": "794,51",
+      "Size": "170,767"
     },
     "###FMS": {
       "Collapsed": "0",
-      "Pos": "128,881",
-      "Size": "653,272"
+      "Pos": "6,675",
+      "Size": "336,164"
     },
     "###Joysticks": {
       "Collapsed": "0",
-      "Pos": "486,881",
-      "Size": "2056,320"
+      "Pos": "312,581",
+      "Size": "976,179"
     },
     "###Keyboard 0 Settings": {
       "Collapsed": "0",
-      "Pos": "10,50",
-      "Size": "773,1059"
+      "Pos": "12,62",
+      "Size": "375,700"
     },
     "###NetworkTables": {
       "Collapsed": "0",
       "Pos": "312,346",
       "Size": "937,231"
     },
-    "###NetworkTables Info": {
-      "Collapsed": "0",
-      "Pos": "248,137",
-      "Size": "750,527"
-    },
     "###Other Devices": {
       "Collapsed": "0",
-      "Pos": "1164,49",
+      "Pos": "1281,25",
       "Size": "312,868"
-    },
-    "###RoboRIO": {
-      "Collapsed": "0",
-      "Pos": "793,122",
-      "Size": "233,320"
     },
     "###System Joysticks": {
       "Collapsed": "0",
       "Pos": "6,437",
-      "Size": "475,470"
+      "Size": "232,254"
     },
     "###Timing": {
       "Collapsed": "0",
       "Pos": "6,187",
-      "Size": "320,232"
+      "Size": "169,142"
     },
     "Debug##Default": {
       "Collapsed": "0",
@@ -96,7 +63,7 @@
     "Robot State": {
       "Collapsed": "0",
       "Pos": "5,20",
-      "Size": "213,204"
+      "Size": "109,114"
     }
   }
 }

@@ -37,8 +37,9 @@ public class TrainingCommands {
     }
 
     /**
-     * This command will print the text to the console once and continue running but not printing
-     * () -> {} is an empty lambda function to do nothing
+     * This command will print the text to the console once and continue running but not printing ()
+     * -> {} is an empty lambda function to do nothing
+     *
      * @param txt
      * @return
      */

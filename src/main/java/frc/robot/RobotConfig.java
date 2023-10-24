@@ -42,6 +42,7 @@ public final class RobotConfig {
 
     public enum RobotType {
         DEFAULT,
-        SIM
+        SIM,
+        REPLAY
     }
 }

@@ -12,7 +12,7 @@ public class LEDs extends SubsystemBase {
     // LED IO
     private final AddressableLED leds;
     private final AddressableLEDBuffer buffer;
-    private Runnable currentPattern = () -> {}; //Start with blank pattern
+    private Runnable currentPattern = () -> {}; // Start with blank pattern
 
     public LEDs() {
         config = new LEDsConfig();
@@ -39,7 +39,7 @@ public class LEDs extends SubsystemBase {
         if (LEDsCommands.defaultCommand() != null) {
             currentPattern = () -> LEDsCommands.defaultCommand().execute();
         } else {
-            currentPattern = () -> {}; //If there is no default command, do nothing
+            currentPattern = () -> {}; // If there is no default command, do nothing
         }
     }
 

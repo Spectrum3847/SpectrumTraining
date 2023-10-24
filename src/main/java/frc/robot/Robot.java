@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.leds.LEDs;
 import frc.robot.leds.commands.LEDsCommands;
@@ -8,8 +7,14 @@ import frc.robot.pilot.Pilot;
 import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.training.Training;
 import frc.robot.training.commands.TrainingCommands;
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
     public static RobotConfig config;
     public static RobotTelemetry telemetry;
 
@@ -53,6 +58,7 @@ public class Robot extends TimedRobot {
         /** Intialize Telemetry and Auton */
         telemetry = new RobotTelemetry();
         // auton = new Auton();
+        advantageKitInit();
 
         /**
          * Set Default Commands this method should exist for each subsystem that has default command
@@ -185,4 +191,33 @@ public class Robot extends TimedRobot {
 
     /** This method is called periodically during simulation. */
     public void simulationPeriodic() {}
+
+    /** This method is called once at the end of RobotInit to begin logging */
+    public void advantageKitInit() {
+        // Set up data receivers & replay source
+        switch (Robot.config.getRobotType()) {
+            case SIM:
+                // Running a physics simulator, log to NT
+                Logger.addDataReceiver(new NT4Publisher());
+                break;
+
+            case REPLAY:
+                // Replaying a log, set up replay source
+                setUseTiming(false); // Run as fast as possible
+                String logPath = LogFileUtil.findReplayLog();
+                Logger.setReplaySource(new WPILOGReader(logPath));
+                Logger.addDataReceiver(
+                        new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+                break;
+
+            default:
+                // Running on a real robot, log to a USB stick
+                Logger.addDataReceiver(new WPILOGWriter("/U"));
+                Logger.addDataReceiver(new NT4Publisher());
+                break;
+        }
+
+        // Start AdvantageKit logger
+        Logger.start();
+    }
 }

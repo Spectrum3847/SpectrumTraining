@@ -1,12 +1,12 @@
 package frc.robot.training.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 
 /** This an example Command that includes all the common methods a command should override */
-public class FullCommand extends CommandBase {
+public class FullCommand extends Command {
     private double startTime = 0;
 
     /** Creates a new FullCommand. */

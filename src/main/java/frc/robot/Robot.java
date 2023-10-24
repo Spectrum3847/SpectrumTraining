@@ -2,6 +2,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.leds.LEDs;
+import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.training.Training;
@@ -13,6 +15,8 @@ public class Robot extends TimedRobot {
 
     /** Create a single static instance of all of your subsystems */
     public static Training training;
+
+    public static LEDs leds;
 
     public static Pilot pilot;
 
@@ -44,6 +48,7 @@ public class Robot extends TimedRobot {
          */
         training = new Training();
         pilot = new Pilot();
+        leds = new LEDs();
 
         /** Intialize Telemetry and Auton */
         telemetry = new RobotTelemetry();
@@ -54,6 +59,7 @@ public class Robot extends TimedRobot {
          * these must be done after all the subsystems are intialized
          */
         TrainingCommands.setupDefaultCommand();
+        LEDsCommands.setupDefaultCommand();
         PilotCommands.setupDefaultCommand();
 
         RobotTelemetry.print("--- Robot Init Complete ---");

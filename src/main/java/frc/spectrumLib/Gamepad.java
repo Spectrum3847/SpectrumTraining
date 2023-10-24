@@ -143,16 +143,16 @@ public abstract class Gamepad extends SubsystemBase {
     }
 
     /** Command that can be used to rumble the pilot controller */
-    public Command rumble(
-            String name, double leftIntensity, double rightIntensity, double durationSeconds) {
+    public Command rumbleCommand(
+            double leftIntensity, double rightIntensity, double durationSeconds) {
         return new RunCommand(() -> rumble(leftIntensity, rightIntensity), this)
                 .withTimeout(durationSeconds)
                 .ignoringDisable(true)
-                .withName(name);
+                .withName("Gamepad.Rumble");
     }
 
-    public Command rumble(String name, double intensity, double durationSeconds) {
-        return rumble(name, intensity, intensity, durationSeconds);
+    public Command rumbleCommand(double intensity, double durationSeconds) {
+        return rumbleCommand(intensity, intensity, durationSeconds);
     }
 
     public abstract void setupTeleopButtons();

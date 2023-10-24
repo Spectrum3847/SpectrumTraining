@@ -14,7 +14,7 @@ public class FullCommand extends CommandBase {
 
         /* Use addRequirements() here to declare subsystem dependencies. */
         addRequirements(Robot.training);
-
+        setName("Training.FullCommand");
         /** Shows when the constructor runs and prints the time */
         RobotTelemetry.print("FullCommand: constructor: " + Timer.getFPGATimestamp());
     }

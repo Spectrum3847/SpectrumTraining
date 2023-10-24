@@ -1,10 +1,8 @@
 package frc.robot.training.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 
@@ -21,7 +19,8 @@ public class TrainingCommands {
     public static void setupDefaultCommand() {
         // subsystem.setDefaultCommand(new Command());
         Robot.training.setDefaultCommand(
-                printOnceCommand("Training Default", "Training Default Command is running"));
+                printOnceCommand("Training Default Command is running")
+                        .withName("Training.default"));
     }
 
     /**
@@ -31,10 +30,10 @@ public class TrainingCommands {
      * @param txt
      * @return
      */
-    public static Command printInstantCommand(String commandName, String txt) {
-        return new InstantCommand(() -> RobotTelemetry.print(txt), Robot.training)
+    public static Command printInstantCommand(String txt) {
+        return Commands.runOnce(() -> RobotTelemetry.print(txt), Robot.training)
                 .ignoringDisable(true)
-                .withName(commandName);
+                .withName("Training.PrintInstantCommand");
     }
 
     /**
@@ -43,10 +42,10 @@ public class TrainingCommands {
      * @param txt
      * @return
      */
-    public static Command printOnceCommand(String commandName, String txt) {
-        return new StartEndCommand(() -> RobotTelemetry.print(txt), () -> {}, Robot.training)
+    public static Command printOnceCommand(String txt) {
+        return Commands.startEnd(() -> RobotTelemetry.print(txt), () -> {}, Robot.training)
                 .ignoringDisable(true)
-                .withName(commandName);
+                .withName("Training.PrintOunceCommand");
     }
 
     /**
@@ -55,10 +54,10 @@ public class TrainingCommands {
      * @param txt
      * @return
      */
-    public static Command printPeriodicCommand(String commandName, String txt) {
-        return new RunCommand(() -> RobotTelemetry.print(txt), Robot.training)
+    public static Command printPeriodicCommand(String txt) {
+        return Commands.run(() -> RobotTelemetry.print(txt), Robot.training)
                 .ignoringDisable(true)
-                .withName(commandName);
+                .withName("Training.PrintPerioicCommand");
     }
 
     /**
@@ -72,12 +71,11 @@ public class TrainingCommands {
      * @param periodicText
      * @return
      */
-    public static Command sequentialPrintCommand(
-            String commandName, String oneTimeText, String periodicText) {
-        return printInstantCommand("Instand", oneTimeText)
-                .andThen(printPeriodicCommand("Periodic", periodicText))
+    public static Command sequentialPrintCommand(String oneTimeText, String periodicText) {
+        return printInstantCommand(oneTimeText)
+                .andThen(printPeriodicCommand(periodicText))
                 .ignoringDisable(true)
-                .withName(commandName + " Sequential Group");
+                .withName("Training.Sequential Group");
     }
 
     /**
@@ -85,13 +83,12 @@ public class TrainingCommands {
      * at the same time because they are in a Parrell Command Group. This is created using hte
      * alongWith method.
      */
-    public static Command parallelPrintCommand(
-            String commandName, String periodicText1, String periodicText2) {
-        return printPeriodicCommand("Periodic 1", periodicText1)
+    public static Command parallelPrintCommand(String periodicText1, String periodicText2) {
+        return printPeriodicCommand(periodicText1)
                 .alongWith(new PrintCommand(periodicText2).repeatedly())
                 // Have to use PrintCommand and repeatedly becuase it doesn't require the Training
                 // Subystem
                 .ignoringDisable(true)
-                .withName(commandName + " Parallel Group");
+                .withName("Training.Parallel Group");
     }
 }

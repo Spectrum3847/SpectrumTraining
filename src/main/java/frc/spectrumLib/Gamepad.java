@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotTelemetry;
+import java.util.function.DoubleSupplier;
 
 public abstract class Gamepad extends SubsystemBase {
 
@@ -99,25 +100,25 @@ public abstract class Gamepad extends SubsystemBase {
     }
 
     public Trigger leftYTrigger(ThresholdType t, double threshold) {
-        return axisTrigger(t, threshold, gamepad.getLeftY());
+        return axisTrigger(t, threshold, () -> gamepad.getLeftY());
     }
 
     public Trigger leftXTrigger(ThresholdType t, double threshold) {
-        return axisTrigger(t, threshold, gamepad.getLeftX());
+        return axisTrigger(t, threshold, () -> gamepad.getLeftX());
     }
 
     public Trigger rightYTrigger(ThresholdType t, double threshold) {
-        return axisTrigger(t, threshold, gamepad.getRightY());
+        return axisTrigger(t, threshold, () -> gamepad.getRightY());
     }
 
     public Trigger rightXTrigger(ThresholdType t, double threshold) {
-        return axisTrigger(t, threshold, gamepad.getRightX());
+        return axisTrigger(t, threshold, () -> gamepad.getRightX());
     }
 
-    public Trigger axisTrigger(ThresholdType t, double threshold, double axis) {
+    private Trigger axisTrigger(ThresholdType t, double threshold, DoubleSupplier v) {
         return new Trigger(
                 () -> {
-                    double value = axis;
+                    double value = v.getAsDouble();
                     switch (t) {
                         case GREATER_THAN:
                             return value > threshold;

@@ -8,7 +8,7 @@
       "height": "1253",
       "maximized": "0",
       "style": "0",
-      "userScale": "6",
+      "userScale": "3",
       "width": "2119",
       "xpos": "1073",
       "ypos": "421"
@@ -40,18 +40,18 @@
     },
     "###Addressable LEDs": {
       "Collapsed": "0",
-      "Pos": "1500,-7",
-      "Size": "353,1207"
+      "Pos": "1508,54",
+      "Size": "255,673"
     },
     "###FMS": {
       "Collapsed": "0",
       "Pos": "128,881",
-      "Size": "653,272"
+      "Size": "495,218"
     },
     "###Joysticks": {
       "Collapsed": "0",
-      "Pos": "486,881",
-      "Size": "2056,320"
+      "Pos": "-13,962",
+      "Size": "1516,249"
     },
     "###Keyboard 0 Settings": {
       "Collapsed": "0",
@@ -70,7 +70,7 @@
     },
     "###Other Devices": {
       "Collapsed": "0",
-      "Pos": "1164,49",
+      "Pos": "1191,44",
       "Size": "312,868"
     },
     "###RoboRIO": {
@@ -81,12 +81,12 @@
     "###System Joysticks": {
       "Collapsed": "0",
       "Pos": "6,437",
-      "Size": "475,470"
+      "Size": "354,362"
     },
     "###Timing": {
       "Collapsed": "0",
       "Pos": "6,187",
-      "Size": "320,232"
+      "Size": "241,187"
     },
     "Debug##Default": {
       "Collapsed": "0",
@@ -96,7 +96,7 @@
     "Robot State": {
       "Collapsed": "0",
       "Pos": "5,20",
-      "Size": "213,204"
+      "Size": "161,159"
     }
   }
 }

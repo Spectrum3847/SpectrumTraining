@@ -23,6 +23,33 @@ public class TrainingCommands {
                         .withName("Training.default"));
     }
 
+    /** Specific Commands */
+    public static Command printOnceCommand() {
+        return TrainingCommands.printOnceCommand("Print Once").withName("Training.Print Once");
+    }
+
+    public static Command periodicCommand() {
+        return TrainingCommands.printPeriodicCommand("Print Periodic")
+                .withName("Training.periodicCommand");
+    }
+
+    public static Command periodicTimeoutCommand() {
+        return TrainingCommands.printPeriodicCommand("Print Periodic with Timeout")
+                .withTimeout(1)
+                .withName("Training.periodicTimeoutCommand");
+    }
+
+    public static Command sequentialGroupCommand() {
+        return TrainingCommands.sequentialPrintCommand("Print Instant", "Print Periodic")
+                .withName("Training.Y + Left Bumpers");
+    }
+
+    public static Command parellelGroupCommand() {
+        return TrainingCommands.parallelPrintCommand("Print Periodic 1", "Print Periodic 2")
+                .withName("Training.Parellel Group");
+    }
+
+    /** Common Commands */
     /**
      * This command will print the text to the console once and then end immediately. If this is
      * called by a whileTrue trigger it will start over again.
@@ -37,8 +64,9 @@ public class TrainingCommands {
     }
 
     /**
-     * This command will print the text to the console once and continue running but not printing
-     * () -> {} is an empty lambda function to do nothing
+     * This command will print the text to the console once and continue running but not printing ()
+     * -> {} is an empty lambda function to do nothing
+     *
      * @param txt
      * @return
      */

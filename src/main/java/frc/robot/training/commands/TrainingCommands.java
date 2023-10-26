@@ -41,7 +41,7 @@ public class TrainingCommands {
 
     public static Command sequentialGroupCommand() {
         return TrainingCommands.sequentialPrintCommand("Print Instant", "Print Periodic")
-                .withName("Training.Y + Left Bumpers");
+                .withName("Training.Sequential Group");
     }
 
     public static Command parellelGroupCommand() {

@@ -18,8 +18,7 @@ public class LEDsCommands {
     public static Command defaultCommand() {
         return Commands.run(
                         () -> {
-                            rainbow(Section.HALF_HIGH, LEDsConfig.length / 2, 2, 0).execute();
-                            rainbow(Section.HALF_LOW, LEDsConfig.length / 2, 2, 0).execute();
+                            rainbow(Section.FULL, LEDsConfig.length / 2, 2, 0).execute();
                         },
                         Robot.leds)
                 .ignoringDisable(true)

@@ -10,6 +10,9 @@ public class SpectrumLEDs extends SubsystemBase {
     private AddressableLED leds;
     private SpectrumLEDBuffer buffer;
     protected Runnable defaultPattern = () -> {}; // Start with blank pattern
+    private boolean update = true;
+    private int counter = 0;
+    private double time = 0;
 
     public SpectrumLEDs(int port, int length) {
         leds = new AddressableLED(port);
@@ -33,11 +36,31 @@ public class SpectrumLEDs extends SubsystemBase {
     }
 
     public void periodic() {
-        leds.setData(buffer.getLEDBuffer());
+        // Have our LEDs calculate only every other cycle
+        if (counter % 5 == 0) {
+            time = counter * 0.02;
+            update = true;
+        } else if ((counter - 1) % 5 == 0) {
+            leds.setData(buffer.getLEDBuffer());
+        } else {
+            update = false;
+        }
+        counter++;
+        if (counter > 500) {
+            counter = 0;
+        }
     }
 
     public void resetPriority() {
         buffer.resetPriorityBuffer();
+    }
+
+    public boolean getUpdate() {
+        return update;
+    }
+
+    public double getLEDTime() {
+        return time;
     }
 
     public void setLED(int i, Color c, int priority) {

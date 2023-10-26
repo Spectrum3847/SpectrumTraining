@@ -10,8 +10,8 @@
       "style": "0",
       "userScale": "3",
       "width": "2119",
-      "xpos": "1073",
-      "ypos": "421"
+      "xpos": "1485",
+      "ypos": "489"
     }
   },
   "Table": {
@@ -50,7 +50,7 @@
     },
     "###Joysticks": {
       "Collapsed": "0",
-      "Pos": "-13,962",
+      "Pos": "191,954",
       "Size": "1516,249"
     },
     "###Keyboard 0 Settings": {

@@ -34,7 +34,7 @@ public class LEDs extends SpectrumLEDs {
      * @param color The color to set the LEDs to
      */
     public void solid(double percent, Color color, int priority) {
-        if (Robot.leds.getUpdate()) {
+        if (getUpdate()) {
             for (int i = 0;
                     i < MathUtil.clamp(LEDsConfig.length * percent, 0, LEDsConfig.length);
                     i++) {
@@ -51,19 +51,19 @@ public class LEDs extends SpectrumLEDs {
      * @param duration The duration of the strobe
      */
     public void strobe(Section section, Color color, double duration, int priority) {
-        if (Robot.leds.getUpdate()) {
-            boolean on = ((Robot.leds.getLEDTime() % duration) / duration) > 0.5;
+        if (getUpdate()) {
+            boolean on = ((getLEDTime() % duration) / duration) > 0.5;
             solid(section, on ? color : Color.kBlack, priority);
         }
     }
 
     public void breath(Section section, Color c1, Color c2, double duration, int priority) {
-        breath(section, c1, c2, duration, Robot.leds.getLEDTime(), priority);
+        breath(section, c1, c2, duration, getLEDTime(), priority);
     }
 
     public void breath(
             Section section, Color c1, Color c2, double duration, double timestamp, int priority) {
-        if (Robot.leds.getUpdate()) {
+        if (getUpdate()) {
             double x =
                     ((timestamp % LEDsConfig.breathDuration) / LEDsConfig.breathDuration)
                             * 2.0
@@ -84,8 +84,8 @@ public class LEDs extends SpectrumLEDs {
      * @param duration The duration of the rainbow
      */
     public void rainbow(Section section, double cycleLength, double duration, int priority) {
-        if (Robot.leds.getUpdate()) {
-            double x = (1 - ((Robot.leds.getLEDTime() / duration) % 1.0)) * 180.0;
+        if (getUpdate()) {
+            double x = (1 - ((getLEDTime() / duration) % 1.0)) * 180.0;
             double xDiffPerLed = 180.0 / cycleLength;
             for (int i = section.start(); i < section.end(); i++) {
                 x += xDiffPerLed;
@@ -111,8 +111,8 @@ public class LEDs extends SpectrumLEDs {
             double cycleLength,
             double duration,
             int priority) {
-        if (Robot.leds.getUpdate()) {
-            double x = (1 - ((Robot.leds.getLEDTime() % duration) / duration)) * 2.0 * Math.PI;
+        if (getUpdate()) {
+            double x = (1 - ((getLEDTime() % duration) / duration)) * 2.0 * Math.PI;
             double xDiffPerLed = (2.0 * Math.PI) / cycleLength;
             for (int i = section.start(); i < section.end(); i++) {
                 x += xDiffPerLed;
@@ -134,9 +134,8 @@ public class LEDs extends SpectrumLEDs {
 
     public void stripes(
             Section section, List<Color> colors, int length, double duration, int priority) {
-        if (Robot.leds.getUpdate()) {
-            int offset =
-                    (int) (Robot.leds.getLEDTime() % duration / duration * length * colors.size());
+        if (getUpdate()) {
+            int offset = (int) (getLEDTime() % duration / duration * length * colors.size());
             for (int i = section.start(); i < section.end(); i++) {
                 int colorIndex =
                         (int) (Math.floor((double) (i - offset) / length) + colors.size())

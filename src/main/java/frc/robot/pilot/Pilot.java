@@ -1,7 +1,9 @@
 package frc.robot.pilot;
 
-import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.RobotCommands;
+import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.training.commands.FullCommand;
+import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
 
 public class Pilot extends Gamepad {
@@ -17,25 +19,27 @@ public class Pilot extends Gamepad {
     /*  A, B, X, Y, Left Bumper, Right Bumper = Buttons 1 to 6 in simualation */
     public void setupTeleopButtons() {
         // Prints Once
-        gamepad.a().whileTrue(PilotCommands.printOnceCommand());
-        gamepad.a().whileTrue(PilotCommands.solidPurpleLED());
+        gamepad.a().whileTrue(TrainingCommands.printOnceCommand());
+        gamepad.a().whileTrue(LEDsCommands.solidPurpleLED());
 
         // Prints every periodic loop that the button is pressed
         // Change this to .onTrue() to continue printing even when the button is released
-        gamepad.b().whileTrue(PilotCommands.periodicCommand());
-        gamepad.b().whileTrue(PilotCommands.strobeOrangeLED());
+        gamepad.b().whileTrue(TrainingCommands.periodicCommand());
+        gamepad.b().whileTrue(LEDsCommands.strobeOrangeLED());
 
         // Runs the FullComman Training Command, doesn't run while disabled
         gamepad.x().whileTrue(new FullCommand());
 
         // Prints every periodic loop for 1 second
-        gamepad.y().and(noBumpers()).whileTrue(PilotCommands.periodicTimeoutCommand());
+        gamepad.y().and(noBumpers()).whileTrue(TrainingCommands.periodicTimeoutCommand());
 
         // Prints one line once and then prints one line every periodic loop
-        gamepad.y().and(leftBumperOnly()).whileTrue(PilotCommands.sequentialGroupCommand());
+        gamepad.y().and(leftBumperOnly()).whileTrue(TrainingCommands.sequentialGroupCommand());
 
         // Prints two lines every periodic loop
-        gamepad.y().and(rightBumperOnly()).whileTrue(PilotCommands.parrellelGroupCommand());
+        gamepad.y().and(rightBumperOnly()).whileTrue(TrainingCommands.parellelGroupCommand());
+
+        leftXTrigger(ThresholdType.GREATER_THAN, 0).whileTrue(RobotCommands.PrintAndBreathLED());
     };
 
     /** Setup the Buttons for Disabled mode. */

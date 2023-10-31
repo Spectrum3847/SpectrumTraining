@@ -2,7 +2,6 @@ package frc.robot.leds;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.Robot;
 import frc.robot.leds.LEDsConfig.Section;
 import frc.spectrumLib.leds.SpectrumLEDs;
 import java.util.List;
@@ -18,7 +17,7 @@ public class LEDs extends SpectrumLEDs {
     // LED Patterns
     // Many of these were borrowed from 6328-2023 code
     public void solid(Section section, Color color, int priority) {
-        if (Robot.leds.getUpdate()) {
+        if (getUpdate()) {
             if (color != null) {
                 for (int i = section.start(); i < section.end(); i++) {
                     setLED(i, color, priority);

@@ -20,6 +20,11 @@ public class DefaultConfig {
     private static final SlotGains steerGains = new SlotGains(100, 0, 0.05, 0, 0);
     private static final SlotGains driveGains = new SlotGains(3, 0, 0, 0, 0);
 
+    /*Rotation Controller*/
+    private static final double kPRotationController = 0.0;
+    private static final double kIRotationController = 0.0;
+    private static final double kDRotationController = 0.0;
+
     // Device Setup
     private static final String kCANbusName = "rio";
     private static final boolean supportsPro = false;
@@ -136,5 +141,7 @@ public class DefaultConfig {
                     .withPigeon2Id(kPigeonId)
                     .withCANbusName(kCANbusName)
                     .withSupportsPro(supportsPro)
-                    .withModules(ModuleConfigs);
+                    .withModules(ModuleConfigs)
+                    .withRotationGains(
+                            kPRotationController, kIRotationController, kDRotationController);
 }

@@ -15,6 +15,12 @@ public class NOTEBLOCK2023 {
     private static final double kBackLeftCANcoderOffset = -0.4794921875;
     private static final double kBackRightCANcoderOffset = -0.84130859375;
 
+    // Physical Config
+    private static final double wheelBaseInches = 21.5;
+    private static final double trackWidthInches = 18.5;
+    private static final double kDriveGearRatio = (6.746 / 1.0);
+    private static final double kSteerGearRatio = (50.0 / 14.0) * (60.0 / 10.0);
+
     // Tuning Config
     // Estimated at first, then fudge-factored to make odom match record
     private static final double kWheelRadiusInches = 2.167;
@@ -23,17 +29,25 @@ public class NOTEBLOCK2023 {
     private static final SlotGains driveGains = new SlotGains(3, 0, 0, 0, 0);
     private static final SlotGains steerGains = new SlotGains(100, 0, 0.05, 0, 0);
 
+    /*Rotation Controller*/
+    private static final double kPRotationController = 0.0;
+    private static final double kIRotationController = 0.0;
+    private static final double kDRotationController = 0.0;
+
+    /*Profiling Configs*/
+    private static final double maxVelocity = speedAt12VoltsMps;
+    private static final double maxAccel = maxVelocity * 1.5; // take 1/2 sec to get to max speed.
+    private static final double maxAngularVelocity =
+            maxVelocity
+                    / Units.inchesToMeters(
+                            Math.hypot(wheelBaseInches / 2.0, trackWidthInches / 2.0));
+    private static final double maxAngularAcceleration = Math.pow(maxAngularVelocity, 2);
+
     // Device Setup
     private static final String kCANbusName = "3847";
     private static final boolean supportsPro = true;
     private static final SwerveModuleSteerFeedbackType steerFeedbackType =
             SwerveModuleSteerFeedbackType.FusedCANcoder;
-
-    // Physical Config
-    private static final double wheelBaseInches = 21.5;
-    private static final double trackWidthInches = 18.5;
-    private static final double kDriveGearRatio = (6.746 / 1.0);
-    private static final double kSteerGearRatio = (50.0 / 14.0) * (60.0 / 10.0);
 
     // Wheel Positions
     private static final double kFrontLeftXPos = Units.inchesToMeters(wheelBaseInches / 2.0);
@@ -102,5 +116,9 @@ public class NOTEBLOCK2023 {
     public static final SwerveConfig config =
             DefaultConfig.DrivetrainConstants.withCANbusName(kCANbusName)
                     .withSupportsPro(supportsPro)
-                    .withModules(ModuleConfigs);
+                    .withModules(ModuleConfigs)
+                    .withRotationGains(
+                            kPRotationController, kIRotationController, kDRotationController)
+                    .withProfilingConfigs(
+                            maxVelocity, maxAccel, maxAngularVelocity, maxAngularAcceleration);
 }

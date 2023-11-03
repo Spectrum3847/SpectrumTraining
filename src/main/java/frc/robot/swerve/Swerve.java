@@ -2,6 +2,7 @@ package frc.robot.swerve;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Timer;
@@ -16,12 +17,14 @@ import frc.spectrumLib.swerve.SwerveDrivetrain.SwerveState;
 import frc.spectrumLib.swerve.SwerveRequest;
 import frc.spectrumLib.swerve.config.SwerveConfig;
 import java.util.function.Consumer;
+import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 public class Swerve implements Subsystem {
-    SwerveConfig config;
-    SwerveDrivetrain drivetrain;
-    double OdometryUpdateFrequency = 250;
+    public final SwerveConfig config;
+    private final SwerveDrivetrain drivetrain;
+    private final RotationController rotationController;
+    private double OdometryUpdateFrequency = 250;
 
     public Swerve() {
         RobotTelemetry.print("Swerve Subsystem Starting: " + Timer.getFPGATimestamp());
@@ -36,11 +39,16 @@ public class Swerve implements Subsystem {
                 break;
             case SIM: // runs in simulation and replay
             case REPLAY:
-                config = NOTEBLOCK2023.config;
                 OdometryUpdateFrequency = 50;
+                config = NOTEBLOCK2023.config;
+                break;
+            default:
+                config = NOTEBLOCK2023.config;
                 break;
         }
         drivetrain = new SwerveDrivetrain(config, OdometryUpdateFrequency);
+
+        rotationController = new RotationController(this);
         RobotTelemetry.print("Swerve Subsystem Initialized: " + Timer.getFPGATimestamp());
     }
 
@@ -71,6 +79,18 @@ public class Swerve implements Subsystem {
 
     public Pose2d getPose() {
         return getState().Pose;
+    }
+
+    public Rotation2d getRotation() {
+        return getPose().getRotation();
+    }
+
+    public void resetRotationController() {
+        rotationController.reset();
+    }
+
+    public double calculateRotationController(DoubleSupplier targetRadians) {
+        return rotationController.calculate(targetRadians.getAsDouble());
     }
 
     /**

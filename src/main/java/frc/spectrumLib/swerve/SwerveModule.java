@@ -5,6 +5,7 @@ import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TorqueCurrentConfigs;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -328,5 +329,15 @@ public class SwerveModule {
      */
     public CANcoder getCANcoder() {
         return m_cancoder;
+    }
+
+    // NEEDS TO BE TESTED
+    public void setDriveNeutralMode(NeutralModeValue mode) {
+        MotorOutputConfigs configs = new MotorOutputConfigs();
+        m_driveMotor.getConfigurator().refresh(configs);
+        if (configs.NeutralMode != mode) {
+            configs.NeutralMode = mode;
+            m_driveMotor.getConfigurator().apply(configs);
+        }
     }
 }

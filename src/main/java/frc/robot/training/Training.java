@@ -1,6 +1,8 @@
 package frc.robot.training;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotTelemetry;
 
 public class Training extends SubsystemBase {
 
@@ -14,5 +16,7 @@ public class Training extends SubsystemBase {
     // https://docs.wpilib.org/en/stable/docs/software/commandbased/subsystems.html
     public Training() {
         config = new TrainingConfig();
+
+        RobotTelemetry.print("Training Subsystem Initialized: " + Timer.getFPGATimestamp());
     }
 }

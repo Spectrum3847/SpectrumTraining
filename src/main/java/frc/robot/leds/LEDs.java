@@ -1,7 +1,9 @@
 package frc.robot.leds;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.RobotTelemetry;
 import frc.robot.leds.LEDsConfig.Section;
 import frc.spectrumLib.leds.SpectrumLEDs;
 import java.util.List;
@@ -12,6 +14,8 @@ public class LEDs extends SpectrumLEDs {
     public LEDs() {
         super(LEDsConfig.port, LEDsConfig.length);
         config = new LEDsConfig();
+
+        RobotTelemetry.print("LEDs Subsystem Initialized: " + Timer.getFPGATimestamp());
     }
 
     // LED Patterns

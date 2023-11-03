@@ -1,6 +1,8 @@
 package frc.robot.pilot;
 
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotCommands;
+import frc.robot.RobotTelemetry;
 import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.training.commands.FullCommand;
 import frc.robot.training.commands.TrainingCommands;
@@ -13,6 +15,8 @@ public class Pilot extends Gamepad {
     public Pilot() {
         super(PilotConfig.name, PilotConfig.port);
         config = new PilotConfig();
+
+        RobotTelemetry.print("Pilot Subsystem Initialized: " + Timer.getFPGATimestamp());
     }
 
     /** Setup the Buttons for telop mode. */

@@ -15,7 +15,7 @@ public class DefaultConfig {
     // Tuning Config
     // Estimated at first, then fudge-factored to make odom match record
     private static final double kWheelRadiusInches = 2;
-    private static final double speedAt12VoltsMps = 16;
+    private static final double speedAt12VoltsMps = Units.feetToMeters(16);
     private static final double slipCurrent = 30;
     private static final SlotGains steerGains = new SlotGains(100, 0, 0.05, 0, 0);
     private static final SlotGains driveGains = new SlotGains(3, 0, 0, 0, 0);

@@ -8,6 +8,18 @@
       "window": {
         "visible": true
       }
+    },
+    "Other Devices": {
+      "Talon FX (Pro)[1]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (Pro)[1]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      }
     }
   },
   "NTProvider": {

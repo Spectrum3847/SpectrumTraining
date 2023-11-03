@@ -38,7 +38,7 @@ public interface SwerveRequest {
     public class SwerveDriveBrake implements SwerveRequest {
 
         /** True to use open-loop control while stopped. */
-        public boolean IsOpenLoop = true;
+        public boolean IsOpenLoop = false;
 
         public StatusCode apply(
                 SwerveControlRequestParameters parameters, SwerveModule... modulesToApply) {
@@ -93,7 +93,7 @@ public interface SwerveRequest {
         public double RotationalDeadband = 0;
 
         /** True to use open-loop control when driving. */
-        public boolean IsOpenLoop = true;
+        public boolean IsOpenLoop = false;
 
         /** The last applied state in case we don't have anything to drive */
         protected SwerveModuleState[] m_lastAppliedState = null;
@@ -195,7 +195,7 @@ public interface SwerveRequest {
         public double RotationalDeadband = 0;
 
         /** True to use open-loop control when driving. */
-        public boolean IsOpenLoop = true;
+        public boolean IsOpenLoop = false;
 
         /**
          * The PID controller used to maintain the desired heading. Users can specify the PID gains
@@ -280,7 +280,7 @@ public interface SwerveRequest {
     public class Idle implements SwerveRequest {
 
         /** True to use open-loop control while stopped. */
-        public boolean IsOpenLoop = true;
+        public boolean IsOpenLoop = false;
 
         public StatusCode apply(
                 SwerveControlRequestParameters parameters, SwerveModule... modulesToApply) {
@@ -303,7 +303,7 @@ public interface SwerveRequest {
          */
         public Rotation2d ModuleDirection = new Rotation2d();
         /** True to use open-loop control while stopped. */
-        public boolean IsOpenLoop = true;
+        public boolean IsOpenLoop = false;
 
         public StatusCode apply(
                 SwerveControlRequestParameters parameters, SwerveModule... modulesToApply) {
@@ -363,7 +363,7 @@ public interface SwerveRequest {
         public double RotationalDeadband = 0;
 
         /** True to use open-loop control when driving. */
-        public boolean IsOpenLoop = true;
+        public boolean IsOpenLoop = false;
 
         public StatusCode apply(
                 SwerveControlRequestParameters parameters, SwerveModule... modulesToApply) {
@@ -425,7 +425,7 @@ public interface SwerveRequest {
         /** The center of rotation to rotate around. */
         public Translation2d CenterOfRotation = new Translation2d(0, 0);
         /** True to use open-loop control while stopped. */
-        public boolean IsOpenLoop = true;
+        public boolean IsOpenLoop = false;
 
         public StatusCode apply(
                 SwerveControlRequestParameters parameters, SwerveModule... modulesToApply) {

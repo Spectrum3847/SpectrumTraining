@@ -70,8 +70,8 @@
     },
     "###Other Devices": {
       "Collapsed": "0",
-      "Pos": "1191,44",
-      "Size": "312,868"
+      "Pos": "2213,28",
+      "Size": "691,868"
     },
     "###RoboRIO": {
       "Collapsed": "0",
@@ -86,7 +86,7 @@
     "###Timing": {
       "Collapsed": "0",
       "Pos": "11,252",
-      "Size": "337,232"
+      "Size": "337,276"
     },
     "Debug##Default": {
       "Collapsed": "0",

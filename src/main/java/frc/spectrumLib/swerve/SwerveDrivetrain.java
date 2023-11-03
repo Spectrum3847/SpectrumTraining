@@ -19,6 +19,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Threads;
+import edu.wpi.first.wpilibj.Timer;
+import frc.robot.RobotTelemetry;
 import frc.spectrumLib.swerve.SwerveRequest.SwerveControlRequestParameters;
 import frc.spectrumLib.swerve.config.ModuleConfig;
 import frc.spectrumLib.swerve.config.SwerveConfig;
@@ -68,7 +70,7 @@ public class SwerveDrivetrain {
      * Plain-Old-Data class holding the state of the swerve drivetrain. This encapsulates most data
      * that is relevant for telemetry or decision-making from the Swerve Drive.
      */
-    public class SwerveDriveState {
+    public class SwerveState {
         public int SuccessfulDaqs;
         public int FailedDaqs;
         public Pose2d Pose;
@@ -76,8 +78,8 @@ public class SwerveDrivetrain {
         public double OdometryPeriod;
     }
 
-    protected Consumer<SwerveDriveState> m_telemetryFunction = null;
-    protected SwerveDriveState m_cachedState = new SwerveDriveState();
+    protected Consumer<SwerveState> m_telemetryFunction = null;
+    protected SwerveState m_cachedState = new SwerveState();
 
     /* Perform swerve module updates in a separate thread to minimize latency */
     public class OdometryThread extends Thread {
@@ -227,11 +229,11 @@ public class SwerveDrivetrain {
      * <p>This constructs the underlying hardware devices, so user should not construct the devices
      * themselves. If they need the devices, they can access them through getters in the classes.
      *
-     * @param driveTrainConstants Drivetrain-wide constants for the swerve drive
+     * @param swerveConfig Drivetrain-wide constants for the swerve drive
      * @param modules Constants for each specific module
      */
-    public SwerveDrivetrain(SwerveConfig driveTrainConstants, ModuleConfig... modules) {
-        this(driveTrainConstants, 250, modules);
+    public SwerveDrivetrain(SwerveConfig swerveConfig) {
+        this(swerveConfig, 250);
     }
 
     /**
@@ -240,21 +242,19 @@ public class SwerveDrivetrain {
      * <p>This constructs the underlying hardware devices, so user should not construct the devices
      * themselves. If they need the devices, they can access them through getters in the classes.
      *
-     * @param driveTrainConstants Drivetrain-wide constants for the swerve drive
+     * @param swerveConfig Drivetrain-wide constants for the swerve drive
      * @param OdometryUpdateFrequency The frequency to run the odometry loop. If unspecified, this
      *     is 250 hz.
      * @param modules Constants for each specific module
      */
-    public SwerveDrivetrain(
-            SwerveConfig driveTrainConstants,
-            double OdometryUpdateFrequency,
-            ModuleConfig... modules) {
+    public SwerveDrivetrain(SwerveConfig swerveConfig, double OdometryUpdateFrequency) {
+        ModuleConfig[] modules = swerveConfig.modules;
         UpdateFrequency = OdometryUpdateFrequency;
         ModuleCount = modules.length;
 
-        IsOnCANFD = checkIsOnCanFD(driveTrainConstants.CANbusName);
+        IsOnCANFD = checkIsOnCanFD(swerveConfig.CANbusName);
 
-        m_pigeon2 = new Pigeon2(driveTrainConstants.Pigeon2Id, driveTrainConstants.CANbusName);
+        m_pigeon2 = new Pigeon2(swerveConfig.Pigeon2Id, swerveConfig.CANbusName);
         m_yawGetter = m_pigeon2.getYaw().clone();
         m_angularZGetter = m_pigeon2.getAngularVelocityZ().clone();
 
@@ -265,10 +265,7 @@ public class SwerveDrivetrain {
         int iteration = 0;
         for (ModuleConfig module : modules) {
             Modules[iteration] =
-                    new SwerveModule(
-                            module,
-                            driveTrainConstants.CANbusName,
-                            driveTrainConstants.SupportsPro);
+                    new SwerveModule(module, swerveConfig.CANbusName, swerveConfig.SupportsPro);
             m_moduleLocations[iteration] = new Translation2d(module.LocationX, module.LocationY);
             m_modulePositions[iteration] = Modules[iteration].getPosition(true);
 
@@ -281,10 +278,10 @@ public class SwerveDrivetrain {
 
         m_fieldRelativeOffset = new Rotation2d();
 
-        m_simDrive =
-                new SimSwerveDrivetrain(m_moduleLocations, m_pigeon2, driveTrainConstants, modules);
+        m_simDrive = new SimSwerveDrivetrain(m_moduleLocations, m_pigeon2, swerveConfig, modules);
 
         m_odometryThread = new OdometryThread();
+        RobotTelemetry.print("Starting Odometry Thread: " + Timer.getFPGATimestamp());
         m_odometryThread.start();
     }
 
@@ -408,7 +405,7 @@ public class SwerveDrivetrain {
      *
      * @return Current state of the drivetrain
      */
-    public SwerveDriveState getState() {
+    public SwerveState getState() {
         try {
             m_stateLock.readLock().lock();
 
@@ -529,7 +526,7 @@ public class SwerveDrivetrain {
      *
      * @param telemetryFunction Function to call for telemetry or logging
      */
-    public void registerTelemetry(Consumer<SwerveDriveState> telemetryFunction) {
+    public void registerTelemetry(Consumer<SwerveState> telemetryFunction) {
         m_telemetryFunction = telemetryFunction;
     }
 }

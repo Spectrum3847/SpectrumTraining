@@ -31,7 +31,7 @@ public class MUSICDISC2023 {
             NOTEBLOCK2023.BackRight.withCANcoderOffset(kBackRightCANcoderOffset)
                     .withFeedbackSource(steerFeedbackType);
 
-                        public static final ModuleConfig[] ModuleConfigs = {FrontLeft, FrontRight, BackLeft, BackRight};
+    public static final ModuleConfig[] ModuleConfigs = {FrontLeft, FrontRight, BackLeft, BackRight};
 
     public static final SwerveConfig config =
             DefaultConfig.DrivetrainConstants.withCANbusName(kCANbusName)

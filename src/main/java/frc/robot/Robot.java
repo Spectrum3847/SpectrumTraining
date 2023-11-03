@@ -5,6 +5,8 @@ import frc.robot.leds.LEDs;
 import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.swerve.configs.AMconfig;
+import frc.robot.swerve.configs.FMconfig;
 import frc.robot.training.Training;
 import frc.robot.training.commands.TrainingCommands;
 import org.littletonrobotics.junction.LogFileUtil;
@@ -69,6 +71,8 @@ public class Robot extends LoggedRobot {
         PilotCommands.setupDefaultCommand();
 
         RobotTelemetry.print("--- Robot Init Complete ---");
+        RobotTelemetry.print("FM Offset: " + FMconfig.FrontLeft.CANcoderOffset);
+        RobotTelemetry.print("AM Offset: " + AMconfig.FrontLeft.CANcoderOffset);
     }
 
     /* ROBOT PERIODIC  */

@@ -1,6 +1,6 @@
-package frc.spectrumLib.swerve;
+package frc.spectrumLib.swerve.config;
 
-public class SwerveDrivetrainConstants {
+public class SwerveConfig {
     /** CAN ID of the Pigeon2 on the drivetrain */
     public int Pigeon2Id = 0;
     /** Name of CANivore the swerve drive is on */
@@ -9,18 +9,25 @@ public class SwerveDrivetrainConstants {
     /** If using Pro, specify this as true to make use of all the Pro features */
     public boolean SupportsPro = false;
 
-    public SwerveDrivetrainConstants withPigeon2Id(int id) {
+    public ModuleConfig[] modules = new ModuleConfig[0];
+
+    public SwerveConfig withPigeon2Id(int id) {
         this.Pigeon2Id = id;
         return this;
     }
 
-    public SwerveDrivetrainConstants withCANbusName(String name) {
+    public SwerveConfig withCANbusName(String name) {
         this.CANbusName = name;
         return this;
     }
 
-    public SwerveDrivetrainConstants withSupportsPro(boolean supportsPro) {
+    public SwerveConfig withSupportsPro(boolean supportsPro) {
         this.SupportsPro = supportsPro;
+        return this;
+    }
+
+    public SwerveConfig withModules(ModuleConfig[] modules) {
+        this.modules = modules;
         return this;
     }
 }

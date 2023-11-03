@@ -30,8 +30,8 @@ public final class RobotConfig {
             robotType = RobotType.SIM;
             RobotTelemetry.print("Robot Type: Simulation");
         } else {
-            robotType = RobotType.DEFAULT;
-            RobotTelemetry.print("Robot Type: Default");
+            robotType = RobotType.NOTEBLOCK;
+            RobotTelemetry.print("Robot Type: NOTEBLOCK");
         }
         return robotType;
     }
@@ -41,7 +41,8 @@ public final class RobotConfig {
     }
 
     public enum RobotType {
-        DEFAULT,
+        MUSICDISC,
+        NOTEBLOCK,
         SIM,
         REPLAY
     }

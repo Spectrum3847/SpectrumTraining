@@ -20,6 +20,8 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Threads;
 import frc.spectrumLib.swerve.SwerveRequest.SwerveControlRequestParameters;
+import frc.spectrumLib.swerve.config.ModuleConfig;
+import frc.spectrumLib.swerve.config.SwerveConfig;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
@@ -228,8 +230,7 @@ public class SwerveDrivetrain {
      * @param driveTrainConstants Drivetrain-wide constants for the swerve drive
      * @param modules Constants for each specific module
      */
-    public SwerveDrivetrain(
-            SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
+    public SwerveDrivetrain(SwerveConfig driveTrainConstants, ModuleConfig... modules) {
         this(driveTrainConstants, 250, modules);
     }
 
@@ -245,9 +246,9 @@ public class SwerveDrivetrain {
      * @param modules Constants for each specific module
      */
     public SwerveDrivetrain(
-            SwerveDrivetrainConstants driveTrainConstants,
+            SwerveConfig driveTrainConstants,
             double OdometryUpdateFrequency,
-            SwerveModuleConstants... modules) {
+            ModuleConfig... modules) {
         UpdateFrequency = OdometryUpdateFrequency;
         ModuleCount = modules.length;
 
@@ -262,7 +263,7 @@ public class SwerveDrivetrain {
         m_moduleLocations = new Translation2d[ModuleCount];
 
         int iteration = 0;
-        for (SwerveModuleConstants module : modules) {
+        for (ModuleConfig module : modules) {
             Modules[iteration] =
                     new SwerveModule(
                             module,
@@ -339,6 +340,21 @@ public class SwerveDrivetrain {
             m_stateLock.writeLock().lock();
 
             m_fieldRelativeOffset = getState().Pose.getRotation();
+        } finally {
+            m_stateLock.writeLock().unlock();
+        }
+    }
+
+    /**
+     * Takes the current orientation of the robot plus an angle offset and makes it X forward for
+     * field-relative maneuvers.
+     */
+    public void seedFieldRelative(double offsetDegrees) {
+        try {
+            m_stateLock.writeLock().lock();
+
+            m_fieldRelativeOffset =
+                    getState().Pose.getRotation().plus(Rotation2d.fromDegrees(offsetDegrees));
         } finally {
             m_stateLock.writeLock().unlock();
         }

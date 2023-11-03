@@ -3,6 +3,7 @@ package frc.spectrumLib.swerve;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TorqueCurrentConfigs;
@@ -10,6 +11,7 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -18,7 +20,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
-import frc.spectrumLib.swerve.angleSensors.AngleSensorIO;
+import frc.spectrumLib.swerve.config.ModuleConfig;
 
 /**
  * Swerve Module class that encapsulates a swerve module powered by CTR Electronics devices.
@@ -32,7 +34,7 @@ import frc.spectrumLib.swerve.angleSensors.AngleSensorIO;
 public class SwerveModule {
     private TalonFX m_driveMotor;
     private TalonFX m_steerMotor;
-    private AngleSensorIO m_angleEncoder;
+    private CANcoder m_cancoder;
 
     private StatusSignal<Double> m_drivePosition;
     private StatusSignal<Double> m_driveVelocity;
@@ -54,43 +56,34 @@ public class SwerveModule {
     /**
      * Construct a SwerveModule with the specified constants.
      *
-     * @param constants Constants used to construct the module
+     * @param config Constants used to construct the module
      * @param canbusName The name of the CAN bus this module is on
      * @param supportsPro True if the devices are licensed to use Pro features
      */
-    public SwerveModule(SwerveModuleConstants constants, String canbusName, boolean supportsPro) {
-        m_driveMotor = new TalonFX(constants.DriveMotorId, canbusName);
-        m_steerMotor = new TalonFX(constants.SteerMotorId, canbusName);
-        /* Angle Encoder Config */
-        // switch (config.physical.angleSensorType) {
-        //     case CANCoder:
-        //         m_angleEncoder = new CanCoder(moduleConfig.absAngleSensorID,
-        // moduleConfig.canBus);
-        //         break;
-        //     case ThriftyEncoder:
-        //         m_angleEncoder = new ThriftyEncoder(moduleConfig.absAngleSensorID);
-        //         break;
-        // }
+    public SwerveModule(ModuleConfig config, String canbusName, boolean supportsPro) {
+        m_driveMotor = new TalonFX(config.DriveMotorId, canbusName);
+        m_steerMotor = new TalonFX(config.SteerMotorId, canbusName);
+        m_cancoder = new CANcoder(config.AngleEncoderId, canbusName);
 
         TalonFXConfiguration talonConfigs = new TalonFXConfiguration();
 
         talonConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
-        talonConfigs.Slot0 = constants.DriveMotorGains;
-        talonConfigs.TorqueCurrent.PeakForwardTorqueCurrent = constants.SlipCurrent;
-        talonConfigs.TorqueCurrent.PeakReverseTorqueCurrent = -constants.SlipCurrent;
-        talonConfigs.CurrentLimits.StatorCurrentLimit = constants.SlipCurrent;
+        talonConfigs.Slot0 = config.DriveMotorGains;
+        talonConfigs.TorqueCurrent.PeakForwardTorqueCurrent = config.SlipCurrent;
+        talonConfigs.TorqueCurrent.PeakReverseTorqueCurrent = -config.SlipCurrent;
+        talonConfigs.CurrentLimits.StatorCurrentLimit = config.SlipCurrent;
         talonConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
 
         talonConfigs.MotorOutput.Inverted =
-                constants.DriveMotorInverted
+                config.DriveMotorInverted
                         ? InvertedValue.Clockwise_Positive
                         : InvertedValue.CounterClockwise_Positive;
         StatusCode response = m_driveMotor.getConfigurator().apply(talonConfigs);
         if (!response.isOK()) {
             System.out.println(
                     "Talon ID "
-                            + constants.DriveMotorId
+                            + config.DriveMotorId
                             + " failed config with error "
                             + response.toString());
         }
@@ -100,14 +93,10 @@ public class SwerveModule {
         /* And to current limits */
         talonConfigs.CurrentLimits = new CurrentLimitsConfigs();
 
-        talonConfigs.Slot0 = constants.SteerMotorGains;
+        talonConfigs.Slot0 = config.SteerMotorGains;
         // Modify configuration to use remote CANcoder fused
-        talonConfigs.Feedback.FeedbackRemoteSensorID = constants.AngleEncoderId;
-        switch (constants.FeedbackSource) {
-            case RotorSensor:
-                talonConfigs.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
-                // DO SOMETHING TO SET THE OFFSET ANGLE
-                break;
+        talonConfigs.Feedback.FeedbackRemoteSensorID = config.AngleEncoderId;
+        switch (config.FeedbackSource) {
             case RemoteCANcoder:
                 talonConfigs.Feedback.FeedbackSensorSource =
                         FeedbackSensorSourceValue.RemoteCANcoder;
@@ -120,23 +109,34 @@ public class SwerveModule {
                 talonConfigs.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.SyncCANcoder;
                 break;
         }
-        talonConfigs.Feedback.RotorToSensorRatio = constants.SteerMotorGearRatio;
+        talonConfigs.Feedback.RotorToSensorRatio = config.SteerMotorGearRatio;
 
-        talonConfigs.MotionMagic.MotionMagicAcceleration = 100;
-        talonConfigs.MotionMagic.MotionMagicCruiseVelocity = 10;
+        talonConfigs.MotionMagic.MotionMagicAcceleration = config.MotionMagicAcceleration;
+        talonConfigs.MotionMagic.MotionMagicCruiseVelocity = config.MotionMagicCruiseVelocity;
 
         talonConfigs.ClosedLoopGeneral.ContinuousWrap =
                 true; // Enable continuous wrap for swerve modules
 
         talonConfigs.MotorOutput.Inverted =
-                constants.SteerMotorInverted
+                config.SteerMotorInverted
                         ? InvertedValue.Clockwise_Positive
                         : InvertedValue.CounterClockwise_Positive;
         response = m_steerMotor.getConfigurator().apply(talonConfigs);
         if (!response.isOK()) {
             System.out.println(
                     "Talon ID "
-                            + constants.DriveMotorId
+                            + config.DriveMotorId
+                            + " failed config with error "
+                            + response.toString());
+        }
+
+        CANcoderConfiguration cancoderConfigs = new CANcoderConfiguration();
+        cancoderConfigs.MagnetSensor.MagnetOffset = config.CANcoderOffset;
+        response = m_cancoder.getConfigurator().apply(cancoderConfigs);
+        if (!response.isOK()) {
+            System.out.println(
+                    "CANcoder ID "
+                            + config.DriveMotorId
                             + " failed config with error "
                             + response.toString());
         }
@@ -153,10 +153,10 @@ public class SwerveModule {
         m_signals[3] = m_steerVelocity;
 
         /* Calculate the ratio of drive motor rotation to meter on ground */
-        double rotationsPerWheelRotation = constants.DriveMotorGearRatio;
-        double metersPerWheelRotation = 2 * Math.PI * Units.inchesToMeters(constants.WheelRadius);
+        double rotationsPerWheelRotation = config.DriveMotorGearRatio;
+        double metersPerWheelRotation = 2 * Math.PI * Units.inchesToMeters(config.WheelRadius);
         m_driveRotationsPerMeter = rotationsPerWheelRotation / metersPerWheelRotation;
-        m_couplingRatioDriveRotorToCANcoder = constants.CouplingGearRatio;
+        m_couplingRatioDriveRotorToCANcoder = config.CouplingGearRatio;
 
         /* Make control requests synchronous */
         m_velocityTorqueSetter.UpdateFreqHz = 0;
@@ -165,7 +165,7 @@ public class SwerveModule {
         m_angleSetter.UpdateFreqHz = 0;
 
         /* Get the expected speed when applying 12 volts */
-        m_speedAt12VoltsMps = constants.SpeedAt12VoltsMps;
+        m_speedAt12VoltsMps = config.SpeedAt12VoltsMps;
 
         /* If this supports pro, save it */
         m_supportsPro = supportsPro;
@@ -318,7 +318,15 @@ public class SwerveModule {
         return m_steerMotor;
     }
 
-    // private Rotation2d checkAbsoluteAngle() {
-    //     return m_angleEncoder.get();
-    // }
+    /**
+     * Gets this module's CANcoder reference.
+     *
+     * <p>This should be used only to access signals and change configurations that the swerve
+     * drivetrain does not configure itself.
+     *
+     * @return This module's CANcoder reference
+     */
+    public CANcoder getCANcoder() {
+        return m_cancoder;
+    }
 }

@@ -1,8 +1,8 @@
-package frc.spectrumLib.swerve.configTemplates;
+package frc.spectrumLib.swerve.config;
 
 import com.ctre.phoenix6.configs.Slot0Configs;
 
-public class SwerveModuleConfig {
+public class ModuleConfig {
     public enum SwerveModuleSteerFeedbackType {
         RemoteCANcoder,
         FusedCANcoder,
@@ -72,98 +72,111 @@ public class SwerveModuleConfig {
     public SwerveModuleSteerFeedbackType FeedbackSource =
             SwerveModuleSteerFeedbackType.RemoteCANcoder;
 
-    public SwerveModuleConfig withDriveMotorId(int id) {
+    public double MotionMagicAcceleration = 100.0;
+    public double MotionMagicCruiseVelocity = 10;
+
+    public ModuleConfig withDriveMotorId(int id) {
         this.DriveMotorId = id;
         return this;
     }
 
-    public SwerveModuleConfig withSteerMotorId(int id) {
+    public ModuleConfig withSteerMotorId(int id) {
         this.SteerMotorId = id;
         return this;
     }
 
-    public SwerveModuleConfig withCANcoderId(int id) {
+    public ModuleConfig withCANcoderId(int id) {
         this.AngleEncoderId = id;
         return this;
     }
 
-    public SwerveModuleConfig withCANcoderOffset(double offset) {
+    public ModuleConfig withCANcoderOffset(double offset) {
         this.CANcoderOffset = offset;
         return this;
     }
 
-    public SwerveModuleConfig withDriveMotorGearRatio(double ratio) {
+    public ModuleConfig withDriveMotorGearRatio(double ratio) {
         this.DriveMotorGearRatio = ratio;
         return this;
     }
 
-    public SwerveModuleConfig withSteerMotorGearRatio(double ratio) {
+    public ModuleConfig withSteerMotorGearRatio(double ratio) {
         this.SteerMotorGearRatio = ratio;
         return this;
     }
 
-    public SwerveModuleConfig withCouplingGearRatio(double ratio) {
+    public ModuleConfig withCouplingGearRatio(double ratio) {
         this.CouplingGearRatio = ratio;
         return this;
     }
 
-    public SwerveModuleConfig withWheelRadius(double radius) {
+    public ModuleConfig withWheelRadius(double radius) {
         this.WheelRadius = radius;
         return this;
     }
 
-    public SwerveModuleConfig withLocationX(double locationXMeters) {
+    public ModuleConfig withLocationX(double locationXMeters) {
         this.LocationX = locationXMeters;
         return this;
     }
 
-    public SwerveModuleConfig withLocationY(double locationYMeters) {
+    public ModuleConfig withLocationY(double locationYMeters) {
         this.LocationY = locationYMeters;
         return this;
     }
 
-    public SwerveModuleConfig withSteerMotorGains(Slot0Configs gains) {
+    public ModuleConfig withSteerMotorGains(Slot0Configs gains) {
         this.SteerMotorGains = gains;
         return this;
     }
 
-    public SwerveModuleConfig withDriveMotorGains(Slot0Configs gains) {
+    public ModuleConfig withDriveMotorGains(Slot0Configs gains) {
         this.DriveMotorGains = gains;
         return this;
     }
 
-    public SwerveModuleConfig withSlipCurrent(double slipCurrent) {
+    public ModuleConfig withSlipCurrent(double slipCurrent) {
         this.SlipCurrent = slipCurrent;
         return this;
     }
 
-    public SwerveModuleConfig withSteerMotorInverted(boolean SteerMotorInverted) {
+    public ModuleConfig withSteerMotorInverted(boolean SteerMotorInverted) {
         this.SteerMotorInverted = SteerMotorInverted;
         return this;
     }
 
-    public SwerveModuleConfig withDriveMotorInverted(boolean DriveMotorInverted) {
+    public ModuleConfig withDriveMotorInverted(boolean DriveMotorInverted) {
         this.DriveMotorInverted = DriveMotorInverted;
         return this;
     }
 
-    public SwerveModuleConfig withSpeedAt12VoltsMps(double speedAt12VoltsMps) {
+    public ModuleConfig withSpeedAt12VoltsMps(double speedAt12VoltsMps) {
         this.SpeedAt12VoltsMps = speedAt12VoltsMps;
         return this;
     }
 
-    public SwerveModuleConfig withSimulationSteerInertia(double steerInertia) {
+    public ModuleConfig withSimulationSteerInertia(double steerInertia) {
         this.SteerInertia = steerInertia;
         return this;
     }
 
-    public SwerveModuleConfig withSimulationDriveInertia(double driveInertia) {
+    public ModuleConfig withSimulationDriveInertia(double driveInertia) {
         this.DriveInertia = driveInertia;
         return this;
     }
 
-    public SwerveModuleConfig withFeedbackSource(SwerveModuleSteerFeedbackType source) {
+    public ModuleConfig withFeedbackSource(SwerveModuleSteerFeedbackType source) {
         this.FeedbackSource = source;
+        return this;
+    }
+
+    public ModuleConfig withMotionMagicAcceleration(double acceleration) {
+        this.MotionMagicAcceleration = acceleration;
+        return this;
+    }
+
+    public ModuleConfig withMotionMagicCruiseVelocity(double cruiseVelocity) {
+        this.MotionMagicCruiseVelocity = cruiseVelocity;
         return this;
     }
 }

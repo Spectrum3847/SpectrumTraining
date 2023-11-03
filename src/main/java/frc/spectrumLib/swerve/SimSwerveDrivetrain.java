@@ -11,6 +11,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+import frc.spectrumLib.swerve.config.ModuleConfig;
+import frc.spectrumLib.swerve.config.SwerveConfig;
 
 /**
  * Extremely simplified swerve drive simulation class.
@@ -58,8 +60,8 @@ public class SimSwerveDrivetrain {
     public SimSwerveDrivetrain(
             Translation2d[] wheelLocations,
             Pigeon2 pigeon,
-            SwerveDrivetrainConstants driveConstants,
-            SwerveModuleConstants... moduleConstants) {
+            SwerveConfig driveConstants,
+            ModuleConfig... moduleConstants) {
         PigeonSim = pigeon.getSimState();
         ModuleCount = moduleConstants.length;
         m_modules = new SimSwerveModule[ModuleCount];

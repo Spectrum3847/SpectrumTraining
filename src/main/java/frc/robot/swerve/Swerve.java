@@ -5,7 +5,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Robot;
@@ -27,7 +26,7 @@ public class Swerve implements Subsystem {
     private double OdometryUpdateFrequency = 250;
 
     public Swerve() {
-        RobotTelemetry.print("Swerve Subsystem Starting: " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("Swerve Subsystem Starting: ");
 
         // Choose the correct swerve configuration
         switch (Robot.config.getRobotType()) {
@@ -49,7 +48,7 @@ public class Swerve implements Subsystem {
         drivetrain = new SwerveDrivetrain(config, OdometryUpdateFrequency);
 
         rotationController = new RotationController(this);
-        RobotTelemetry.print("Swerve Subsystem Initialized: " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("Swerve Subsystem Initialized: ");
     }
 
     @Override

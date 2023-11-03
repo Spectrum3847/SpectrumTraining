@@ -15,7 +15,37 @@
           "open": true
         }
       },
+      "Talon FX (Pro)[1]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (Pro)[1]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
       "Talon FX (Pro)[1]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (Pro)[2]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (Pro)[2]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (Pro)[2]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (Pro)[2]/Rotor Sensor": {
         "header": {
           "open": true
         }
@@ -26,6 +56,13 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Scheduler": "Scheduler"
+    },
+    "windows": {
+      "/SmartDashboard/Scheduler": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   }
 }

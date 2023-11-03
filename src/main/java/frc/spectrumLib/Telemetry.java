@@ -1,5 +1,6 @@
 package frc.spectrumLib;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -46,7 +47,7 @@ public class Telemetry extends SubsystemBase {
     /** Print a statment if they are enabled */
     public static void print(String output) {
         if (!disablePrints) {
-            System.out.println(output);
+            System.out.println(output + " : TIME:" + Timer.getFPGATimestamp());
         }
     }
 }

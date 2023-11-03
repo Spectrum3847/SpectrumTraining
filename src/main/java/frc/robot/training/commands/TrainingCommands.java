@@ -23,6 +23,10 @@ public class TrainingCommands {
                         .withName("Training.default"));
     }
 
+    public static Command fullCommand() {
+        return new FullCommand();
+    }
+
     /** Specific Commands */
     public static Command printOnceCommand() {
         return printOnceCommand("Print Once").withName("Training.Print Once");

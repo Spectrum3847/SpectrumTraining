@@ -45,7 +45,7 @@ public class NOTEBLOCK2023 {
 
     // Device Setup
     private static final String kCANbusName = "3847";
-    private static final boolean supportsPro = true;
+    private static final boolean supportsPro = false;
     private static final SwerveModuleSteerFeedbackType steerFeedbackType =
             SwerveModuleSteerFeedbackType.FusedCANcoder;
 

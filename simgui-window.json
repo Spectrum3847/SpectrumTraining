@@ -5,7 +5,7 @@
   "MainWindow": {
     "GLOBAL": {
       "fps": "120",
-      "height": "1248",
+      "height": "1467",
       "maximized": "0",
       "style": "0",
       "userScale": "6",
@@ -35,7 +35,7 @@
     },
     "###/SmartDashboard/Scheduler": {
       "Collapsed": "0",
-      "Pos": "368,90",
+      "Pos": "607,470",
       "Size": "809,263"
     },
     "###Addressable LEDs": {
@@ -45,12 +45,12 @@
     },
     "###FMS": {
       "Collapsed": "0",
-      "Pos": "160,964",
+      "Pos": "17,1003",
       "Size": "653,272"
     },
     "###Joysticks": {
       "Collapsed": "0",
-      "Pos": "873,918",
+      "Pos": "879,979",
       "Size": "2056,320"
     },
     "###Keyboard 0 Settings": {
@@ -60,7 +60,7 @@
     },
     "###NetworkTables": {
       "Collapsed": "0",
-      "Pos": "312,346",
+      "Pos": "547,187",
       "Size": "937,231"
     },
     "###NetworkTables Info": {
@@ -80,7 +80,7 @@
     },
     "###System Joysticks": {
       "Collapsed": "0",
-      "Pos": "14,492",
+      "Pos": "10,524",
       "Size": "475,470"
     },
     "###Timing": {

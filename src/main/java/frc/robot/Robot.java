@@ -1,12 +1,12 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.leds.LEDs;
 import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.swerve.Swerve;
+import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.Training;
 import frc.robot.training.commands.TrainingCommands;
 import org.littletonrobotics.junction.LogFileUtil;
@@ -24,9 +24,7 @@ public class Robot extends LoggedRobot {
     public static Training training;
 
     public static Swerve swerve;
-
     public static LEDs leds;
-
     public static Pilot pilot;
 
     /**
@@ -45,7 +43,7 @@ public class Robot extends LoggedRobot {
     /* ROBOT INIT (Initialization) */
     /** This method is called once when the robot is first powered on. */
     public void robotInit() {
-        RobotTelemetry.print("--- Robot Init Starting ---" + Timer.getFPGATimestamp());
+        RobotTelemetry.print("--- Robot Init Starting ---");
 
         /** Set up the config */
         config = new RobotConfig();
@@ -70,10 +68,11 @@ public class Robot extends LoggedRobot {
          * these must be done after all the subsystems are intialized
          */
         TrainingCommands.setupDefaultCommand();
+        SwerveCommands.setupDefaultCommand();
         LEDsCommands.setupDefaultCommand();
         PilotCommands.setupDefaultCommand();
 
-        RobotTelemetry.print("--- Robot Init Complete ---" + Timer.getFPGATimestamp());
+        RobotTelemetry.print("--- Robot Init Complete ---");
     }
 
     /* ROBOT PERIODIC  */
@@ -98,11 +97,11 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when disabled starts */
     public void disabledInit() {
-        RobotTelemetry.print("### Disabled Init Starting ### " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("### Disabled Init Starting ### ");
 
         resetCommandsAndButtons();
 
-        RobotTelemetry.print("### Disabled Init Complete ### " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("### Disabled Init Complete ### ");
     }
 
     /** This method is called periodically while disabled. */
@@ -110,7 +109,7 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when disabled exits */
     public void disabledExit() {
-        RobotTelemetry.print("### Disabled Exit### " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("### Disabled Exit### ");
     }
 
     /* AUTONOMOUS MODE (AUTO) */
@@ -121,10 +120,10 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when autonomous starts */
     public void autonomousInit() {
-        RobotTelemetry.print("@@@ Auton Init Starting @@@ " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("@@@ Auton Init Starting @@@ ");
         resetCommandsAndButtons();
 
-        RobotTelemetry.print("@@@ Auton Init Complete @@@ " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("@@@ Auton Init Complete @@@ ");
     }
 
     /** This method is called periodically during autonomous. */
@@ -132,7 +131,7 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when autonomous exits */
     public void autonomousExit() {
-        RobotTelemetry.print("@@@ Auton Exit @@@ " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("@@@ Auton Exit @@@ ");
     }
 
     /* TELEOP MODE */
@@ -143,10 +142,10 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when teleop starts */
     public void teleopInit() {
-        RobotTelemetry.print("!!! Teleop Init Starting !!! " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("!!! Teleop Init Starting !!! ");
         resetCommandsAndButtons();
 
-        RobotTelemetry.print("!!! Teleop Init Complete !!! " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("!!! Teleop Init Complete !!! ");
     }
 
     /** This method is called periodically during operator control. */
@@ -154,7 +153,7 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when teleop exits */
     public void teleopExit() {
-        RobotTelemetry.print("!!! Teleop Exit !!! " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("!!! Teleop Exit !!! ");
     }
 
     /* TEST MODE */
@@ -167,10 +166,10 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when test mode starts */
     public void testInit() {
-        RobotTelemetry.print("~~~ Test Init Starting ~~~ " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("~~~ Test Init Starting ~~~ ");
         resetCommandsAndButtons();
 
-        RobotTelemetry.print("~~~ Test Init Complete ~~~ " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("~~~ Test Init Complete ~~~ ");
     }
 
     /** This method is called periodically during test. */
@@ -178,7 +177,7 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when the robot exits test mode */
     public void testExit() {
-        RobotTelemetry.print("~~~ Test Exit ~~~ " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("~~~ Test Exit ~~~ ");
     }
 
     /* SIMULATION MODE */
@@ -189,9 +188,9 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when a simulation starts */
     public void simulationInit() {
-        RobotTelemetry.print("$$$ Simulation Init Starting $$$ " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("$$$ Simulation Init Starting $$$ ");
 
-        RobotTelemetry.print("$$$ Simulation Init Complete $$$ " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("$$$ Simulation Init Complete $$$ ");
     }
 
     /** This method is called periodically during simulation. */

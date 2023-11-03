@@ -19,7 +19,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Threads;
-import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotTelemetry;
 import frc.spectrumLib.swerve.SwerveRequest.SwerveControlRequestParameters;
 import frc.spectrumLib.swerve.config.ModuleConfig;
@@ -281,7 +280,7 @@ public class SwerveDrivetrain {
         m_simDrive = new SimSwerveDrivetrain(m_moduleLocations, m_pigeon2, swerveConfig, modules);
 
         m_odometryThread = new OdometryThread();
-        RobotTelemetry.print("Starting Odometry Thread: " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("Starting Odometry Thread: ");
         m_odometryThread.start();
     }
 

@@ -16,7 +16,7 @@ public class FullCommand extends Command {
         addRequirements(Robot.training);
         setName("Training.FullCommand");
         /** Shows when the constructor runs and prints the time */
-        RobotTelemetry.print("FullCommand: constructor: " + Timer.getFPGATimestamp());
+        RobotTelemetry.print("FullCommand: constructor: ");
     }
 
     /** Called when the command is initially scheduled. */

@@ -7,13 +7,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.spectrumLib.swerve.SwerveModule;
 import frc.spectrumLib.swerve.SwerveRequest;
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
 
 /** Accepts a generic ChassisSpeeds to apply to the drivetrain. */
 public class ApplyChassisSpeeds implements SwerveRequest {
 
-    public static Command run(ChassisSpeeds speeds, boolean isOpenLoop) {
+    public static Command run(Supplier<ChassisSpeeds> speeds, BooleanSupplier isOpenLoop) {
         return Robot.swerve.applyRequest(
-                () -> new ApplyChassisSpeeds().withSpeeds(speeds).withIsOpenLoop(isOpenLoop));
+                () ->
+                        new ApplyChassisSpeeds()
+                                .withSpeeds(speeds.get())
+                                .withIsOpenLoop(isOpenLoop.getAsBoolean()));
     }
 
     /** The chassis speeds to apply to the drivetrain. */

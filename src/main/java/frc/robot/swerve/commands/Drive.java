@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.spectrumLib.swerve.SwerveModule;
 import frc.spectrumLib.swerve.SwerveRequest;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 /**
@@ -34,8 +35,8 @@ public class Drive implements SwerveRequest {
             DoubleSupplier velocityX,
             DoubleSupplier velocityY,
             DoubleSupplier rotationalRate,
-            boolean isFieldOriented,
-            boolean isOpenLoop) {
+            BooleanSupplier isFieldOriented,
+            BooleanSupplier isOpenLoop) {
         return Robot.swerve
                 .applyRequest(
                         () ->
@@ -43,8 +44,8 @@ public class Drive implements SwerveRequest {
                                         .withVelocityX(velocityX.getAsDouble())
                                         .withVelocityY(velocityY.getAsDouble())
                                         .withRotationalRate(rotationalRate.getAsDouble())
-                                        .isFieldOriented(isFieldOriented)
-                                        .isOpenLoop(isOpenLoop))
+                                        .isFieldOriented(isFieldOriented.getAsBoolean())
+                                        .isOpenLoop(isOpenLoop.getAsBoolean()))
                 .withName("Drive");
     }
 

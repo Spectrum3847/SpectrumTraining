@@ -5,14 +5,26 @@ import frc.robot.RobotTelemetry;
 import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
+import frc.spectrumLib.util.ExpCurve;
 
 public class Pilot extends Gamepad {
     public PilotConfig config;
+    private boolean isSlowMode = false;
+    private boolean isFieldOriented = false;
+    private ExpCurve LeftStickCurve;
+    private ExpCurve TriggersCurve;
 
     /** Create a new Pilot with the default name and port. */
     public Pilot() {
         super(PilotConfig.name, PilotConfig.port);
         config = new PilotConfig();
+
+        // Curve objects that we use to configure the controller axis ojbects
+        LeftStickCurve =
+                new ExpCurve(
+                        config.leftStickExp, 0, config.leftStickScalar, config.leftStickDeadzone);
+        TriggersCurve =
+                new ExpCurve(config.triggersExp, 0, config.triggersScalar, config.triggersDeadzone);
 
         RobotTelemetry.print("Pilot Subsystem Initialized: ");
     }
@@ -56,19 +68,45 @@ public class Pilot extends Gamepad {
         setupTeleopButtons();
     };
 
+    public void setSlowMode(boolean isSlowMode) {
+        this.isSlowMode = isSlowMode;
+    }
+
+    public void setFieldOriented(boolean isFieldOriented) {
+        this.isFieldOriented = isFieldOriented;
+    }
+
+    public boolean getFieldOriented() {
+        return isFieldOriented;
+    }
+
+    // Positive is forward, up on the left stick is positive
+    // Applies Expontial Curve, Deadzone, and Slow Mode toggle
     public double getDriveFwdPositive() {
-        double fwdPositive = -1 * controller.getLeftY();
+        double fwdPositive = LeftStickCurve.calculate(-1 * controller.getLeftY());
+        if (isSlowMode) {
+            fwdPositive *= Math.abs(PilotConfig.slowModeScalor);
+        }
         return fwdPositive;
     }
 
+    // Positive is left, left on the left stick is positive
+    // Applies Expontial Curve, Deadzone, and Slow Mode toggle
     public double getDriveLeftPositive() {
-        double leftPositive = controller.getLeftX();
+        double leftPositive = LeftStickCurve.calculate(controller.getLeftX());
+        if (isSlowMode) {
+            leftPositive *= Math.abs(PilotConfig.slowModeScalor);
+        }
         return leftPositive;
     }
 
     // Positive is counter-clockwise, left Trigger is positive
+    // Applies Expontial Curve, Deadzone, and Slow Mode toggle
     public double getDriveCCWPositive() {
-        double ccwPositive = getTwist();
+        double ccwPositive = TriggersCurve.calculate(getTwist());
+        if (isSlowMode) {
+            ccwPositive *= Math.abs(PilotConfig.slowModeScalor);
+        }
         return ccwPositive;
     }
 }

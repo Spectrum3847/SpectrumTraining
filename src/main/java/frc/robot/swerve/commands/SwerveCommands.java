@@ -2,41 +2,33 @@ package frc.robot.swerve.commands;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Robot;
 import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.swerve.Swerve;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
 
 public class SwerveCommands {
+    private static Swerve swerve = Robot.swerve;
 
     public static void setupDefaultCommand() {
-        Robot.swerve.setDefaultCommand(PilotCommands.pilotDrive());
+        swerve.setDefaultCommand(PilotCommands.pilotDrive());
     }
 
-    /**
-     * Turn the swerve wheels to an X to prevent the robot from moving
-     *
-     * @return
-     */
+    /** Turn the swerve wheels to an X to prevent the robot from moving */
     public static Command Xbrake() {
         return Xbrake.run().withName("Swerve: Xbrake");
     }
 
-    /**
-     * Drive the swerve
-     *
-     * @param velocityX
-     * @param velocityY
-     * @param rotationalRate
-     * @param isFieldOriented
-     * @param isOpenLoop
-     * @return Command
-     */
+    /** Drive the swerve */
     public static Command Drive(
             DoubleSupplier velocityX,
             DoubleSupplier velocityY,
             DoubleSupplier rotationalRate,
-            boolean isFieldOriented,
-            boolean isOpenLoop) {
+            BooleanSupplier isFieldOriented,
+            BooleanSupplier isOpenLoop) {
         return Drive.run(velocityX, velocityY, rotationalRate, isFieldOriented, isOpenLoop)
                 .withName("Swerve.Drive")
                 .ignoringDisable(true);
@@ -45,50 +37,69 @@ public class SwerveCommands {
     /**
      * Reset the turn controller and then run the drive command with a angle supplier. This can be
      * used for aiming at a goal or heading locking, etc
-     *
-     * @param velocityX
-     * @param velocityY
-     * @param goalAngle
-     * @param isFieldOriented
-     * @return
      */
     public static Command aimDrive(
             DoubleSupplier velocityX,
             DoubleSupplier velocityY,
             DoubleSupplier goalAngle,
-            boolean isFieldOriented,
-            boolean isOpenLoop) {
+            BooleanSupplier isFieldOriented,
+            BooleanSupplier isOpenLoop) {
         return resetTurnController()
                 .andThen(
                         Drive(
                                 velocityX,
                                 velocityY,
-                                () -> Robot.swerve.calculateRotationController(goalAngle),
+                                () -> swerve.calculateRotationController(goalAngle),
                                 isFieldOriented,
                                 isOpenLoop))
                 .withName("Swerve.AimDrive");
     }
 
     /**
-     * Apply a chassis speed to the swerve
-     *
-     * @param speeds
-     * @param isOpenLoop
-     * @return
+     * Reset the turn controller, set the target heading to the current heading(end that command
+     * immediately), and then run the drive command with a angle supplier. The rotation controller
+     * will only engague if you are driving x or y.
      */
-    public static Command ApplyChassisSpeeds(ChassisSpeeds speeds, boolean isOpenLoop) {
+    public static Command headingLock(
+            DoubleSupplier velocityX,
+            DoubleSupplier velocityY,
+            BooleanSupplier isFieldOriented,
+            BooleanSupplier isOpenLoop) {
+        return resetTurnController()
+                .andThen(
+                        setTargetHeading(() -> swerve.getRotation().getRadians()).until(() -> true),
+                        Drive(
+                                velocityX,
+                                velocityY,
+                                () -> {
+                                    if (velocityX.getAsDouble() == 0
+                                            && velocityY.getAsDouble() == 0) {
+                                        return 0.0;
+                                    } else {
+                                        return swerve.calculateRotationController(
+                                                () -> swerve.getTargetHeading());
+                                    }
+                                },
+                                isFieldOriented,
+                                isOpenLoop))
+                .withName("Swerve.HeadingLock");
+    }
+
+    /** Apply a chassis speed to the swerve */
+    public static Command ApplyChassisSpeeds(
+            Supplier<ChassisSpeeds> speeds, BooleanSupplier isOpenLoop) {
         return ApplyChassisSpeeds.run(speeds, isOpenLoop).withName("Swerve.ApplyChassisSpeeds");
     }
 
-    /**
-     * Reset the turn controller
-     *
-     * @return
-     */
+    /** Reset the turn controller */
     public static Command resetTurnController() {
-        return Robot.swerve
-                .runOnce(() -> Robot.swerve.resetRotationController())
+        return swerve.runOnce(() -> swerve.resetRotationController())
                 .withName("ResetTurnController");
+    }
+
+    public static Command setTargetHeading(DoubleSupplier targetHeading) {
+        return Commands.run(() -> swerve.setTargetHeading(targetHeading.getAsDouble()))
+                .withName("SetTargetHeading");
     }
 
     // Swerve Command Options

@@ -24,6 +24,7 @@ public class Swerve implements Subsystem {
     private final SwerveDrivetrain drivetrain;
     private final RotationController rotationController;
     private double OdometryUpdateFrequency = 250;
+    private double targetHeading = 0;
 
     public Swerve() {
         RobotTelemetry.print("Swerve Subsystem Starting: ");
@@ -90,6 +91,14 @@ public class Swerve implements Subsystem {
 
     public double calculateRotationController(DoubleSupplier targetRadians) {
         return rotationController.calculate(targetRadians.getAsDouble());
+    }
+
+    public void setTargetHeading(double targetHeading) {
+        this.targetHeading = targetHeading;
+    }
+
+    public double getTargetHeading() {
+        return targetHeading;
     }
 
     /**

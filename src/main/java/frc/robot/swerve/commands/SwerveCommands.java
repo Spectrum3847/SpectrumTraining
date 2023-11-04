@@ -57,8 +57,8 @@ public class SwerveCommands {
 
     /**
      * Reset the turn controller, set the target heading to the current heading(end that command
-     * immediately), and then run the drive command with a angle supplier. The rotation controller
-     * will only engague if you are driving x or y.
+     * immediately), and then run the drive command with the Rotation controller. The rotation
+     * controller will only engague if you are driving x or y.
      */
     public static Command headingLock(
             DoubleSupplier velocityX,

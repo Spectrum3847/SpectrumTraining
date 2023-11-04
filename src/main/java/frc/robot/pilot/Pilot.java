@@ -3,6 +3,7 @@ package frc.robot.pilot;
 import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
 import frc.robot.leds.commands.LEDsCommands;
+import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
 import frc.spectrumLib.util.ExpCurve;
@@ -27,6 +28,10 @@ public class Pilot extends Gamepad {
                 new ExpCurve(config.triggersExp, 0, config.triggersScalar, config.triggersDeadzone);
 
         RobotTelemetry.print("Pilot Subsystem Initialized: ");
+    }
+
+    public void periodic() {
+        super.periodic();
     }
 
     /** Setup the Buttons for telop mode. */
@@ -54,6 +59,17 @@ public class Pilot extends Gamepad {
         controller.y().and(rightBumperOnly()).whileTrue(TrainingCommands.parellelGroupCommand());
 
         leftXTrigger(ThresholdType.GREATER_THAN, 0).whileTrue(RobotCommands.PrintAndBreathLED());
+
+        // Use the pilot drive if we are manually steering the robot
+        controller
+                .rightTrigger(config.triggersDeadzone)
+                .or(controller.leftTrigger(config.triggersDeadzone))
+                .whileTrue(PilotCommands.pilotDrive());
+
+        // Use the right stick to set a cardinal direction to aim at
+        rightXTrigger(ThresholdType.ABS_GREATER_THAN, 0.5)
+                .and(rightYTrigger(ThresholdType.ABS_GREATER_THAN, 0.5))
+                .whileTrue(PilotCommands.stickSteerDrive());
     };
 
     /** Setup the Buttons for Disabled mode. */

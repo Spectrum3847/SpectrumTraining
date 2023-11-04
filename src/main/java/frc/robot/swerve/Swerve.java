@@ -3,25 +3,28 @@ package frc.robot.swerve;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 import frc.robot.swerve.configs.MUSICDISC2023;
 import frc.robot.swerve.configs.NOTEBLOCK2023;
-import frc.spectrumLib.swerve.SwerveDrivetrain;
-import frc.spectrumLib.swerve.SwerveDrivetrain.SwerveState;
-import frc.spectrumLib.swerve.SwerveRequest;
+import frc.spectrumLib.swerve.Drivetrain;
+import frc.spectrumLib.swerve.Drivetrain.DriveState;
+import frc.spectrumLib.swerve.Request;
 import frc.spectrumLib.swerve.config.SwerveConfig;
 import java.util.function.Consumer;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
+import org.littletonrobotics.junction.Logger;
 
 public class Swerve implements Subsystem {
     public final SwerveConfig config;
-    private final SwerveDrivetrain drivetrain;
+    private final Drivetrain drivetrain;
     private final RotationController rotationController;
     private double OdometryUpdateFrequency = 250;
     private double targetHeading = 0;
@@ -46,21 +49,33 @@ public class Swerve implements Subsystem {
                 config = NOTEBLOCK2023.config;
                 break;
         }
-        drivetrain = new SwerveDrivetrain(config, OdometryUpdateFrequency);
+        drivetrain = new Drivetrain(config, OdometryUpdateFrequency);
 
         rotationController = new RotationController(this);
         RobotTelemetry.print("Swerve Subsystem Initialized: ");
     }
 
     @Override
-    public void periodic() {}
+    public void periodic() {
+        // Log measured states
+        Logger.recordOutput("SwerveStates/Measured", drivetrain.getState().ModuleStates);
+
+        // Log empty setpoint states when disabled
+        if (DriverStation.isDisabled()) {
+            Logger.recordOutput("SwerveStates/Setpoints", new SwerveModuleState[] {});
+            Logger.recordOutput("SwerveStates/SetpointsOptimized", new SwerveModuleState[] {});
+        }
+
+        // Log Odometry Pose
+        Logger.recordOutput("Odometry/Robot", getPose());
+    }
 
     @Override
     public void simulationPeriodic() {
         drivetrain.updateSimState(0.02, 12);
     }
 
-    public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
+    public Command applyRequest(Supplier<Request> requestSupplier) {
         return run(() -> setControlMode(requestSupplier.get()));
     }
 
@@ -69,11 +84,11 @@ public class Swerve implements Subsystem {
      *
      * @param mode
      */
-    private void setControlMode(SwerveRequest mode) {
+    private void setControlMode(Request mode) {
         drivetrain.setControl(mode);
     }
 
-    public SwerveState getState() {
+    public DriveState getState() {
         return drivetrain.getState();
     }
 
@@ -143,7 +158,7 @@ public class Swerve implements Subsystem {
      *
      * @param telemetryFunction Function to call for telemetry or logging
      */
-    public void registerTelemetry(Consumer<SwerveState> telemetryFunction) {
+    public void registerTelemetry(Consumer<DriveState> telemetryFunction) {
         drivetrain.registerTelemetry(telemetryFunction);
     }
 }

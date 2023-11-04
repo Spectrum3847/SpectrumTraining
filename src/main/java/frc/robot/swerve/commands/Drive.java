@@ -6,8 +6,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
-import frc.spectrumLib.swerve.SwerveModule;
-import frc.spectrumLib.swerve.SwerveRequest;
+import frc.spectrumLib.swerve.Module;
+import frc.spectrumLib.swerve.Request;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
@@ -21,7 +21,7 @@ import java.util.function.DoubleSupplier;
  * VelocityY is 0 m/s, and RotationRate is 0.5 rad/s. In this scenario, the robot would drive
  * northward at 5 m/s and turn counterclockwise at 0.5 rad/s.
  */
-public class Drive implements SwerveRequest {
+public class Drive implements Request {
 
     /**
      * Creates a new Drive command open loop and field oriented
@@ -76,8 +76,7 @@ public class Drive implements SwerveRequest {
     /** The last applied state in case we don't have anything to drive */
     protected SwerveModuleState[] m_lastAppliedState = null;
 
-    public StatusCode apply(
-            SwerveControlRequestParameters parameters, SwerveModule... modulesToApply) {
+    public StatusCode apply(ControlRequestParameters parameters, Module... modulesToApply) {
         double toApplyX = VelocityX;
         double toApplyY = VelocityY;
         double toApplyOmega = RotationalRate;
@@ -96,7 +95,8 @@ public class Drive implements SwerveRequest {
             speeds = new ChassisSpeeds(toApplyX, toApplyY, toApplyOmega);
         }
 
-        var states = parameters.kinematics.toSwerveModuleStates(speeds, new Translation2d());
+        SwerveModuleState[] states =
+                parameters.kinematics.toSwerveModuleStates(speeds, new Translation2d());
 
         for (int i = 0; i < modulesToApply.length; ++i) {
             modulesToApply[i].apply(states[i], IsOpenLoop);

@@ -32,7 +32,7 @@ import frc.spectrumLib.swerve.config.ModuleConfig;
  * <p>This class constructs hardware devices internally, so the user only specifies the constants
  * (IDs, PID gains, gear ratios, etc). Getters for these hardware devices are available.
  */
-public class SwerveModule {
+public class Module {
     private TalonFX m_driveMotor;
     private TalonFX m_steerMotor;
     private CANcoder m_cancoder;
@@ -61,7 +61,7 @@ public class SwerveModule {
      * @param canbusName The name of the CAN bus this module is on
      * @param supportsPro True if the devices are licensed to use Pro features
      */
-    public SwerveModule(ModuleConfig config, String canbusName, boolean supportsPro) {
+    public Module(ModuleConfig config, String canbusName, boolean supportsPro) {
         m_driveMotor = new TalonFX(config.DriveMotorId, canbusName);
         m_steerMotor = new TalonFX(config.SteerMotorId, canbusName);
         m_cancoder = new CANcoder(config.AngleEncoderId, canbusName);
@@ -215,7 +215,7 @@ public class SwerveModule {
      * @param isOpenLoop True if this should use open-loop control.
      */
     public void apply(SwerveModuleState state, boolean isOpenLoop) {
-        var optimized = SwerveModuleState.optimize(state, m_internalState.angle);
+        SwerveModuleState optimized = SwerveModuleState.optimize(state, m_internalState.angle);
 
         /* Back out the expected shimmy the drive motor will see */
         /* Find the angular rate to determine what to back out */

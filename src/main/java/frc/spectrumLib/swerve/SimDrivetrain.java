@@ -27,7 +27,7 @@ import frc.spectrumLib.swerve.config.SwerveConfig;
  * <p>These assumptions provide a simplified example that can demonstrate the behavior of a swerve
  * drive in simulation. Users are encouraged to expand this model for their own use.
  */
-public class SimSwerveDrivetrain {
+public class SimDrivetrain {
     public class SimSwerveModule {
         /* Reference to motor simulation for the steer motor */
         public final DCMotorSim SteerMotor;
@@ -57,7 +57,7 @@ public class SimSwerveDrivetrain {
     public final SwerveDriveKinematics Kinem;
     public Rotation2d LastAngle = new Rotation2d();
 
-    public SimSwerveDrivetrain(
+    public SimDrivetrain(
             Translation2d[] wheelLocations,
             Pigeon2 pigeon,
             SwerveConfig driveConstants,
@@ -88,7 +88,7 @@ public class SimSwerveDrivetrain {
      * @param supplyVoltage The voltage as seen at the motor controllers
      * @param modulesToApply What modules to apply the update to
      */
-    public void update(double dtSeconds, double supplyVoltage, SwerveModule... modulesToApply) {
+    public void update(double dtSeconds, double supplyVoltage, Module... modulesToApply) {
         if (m_modules.length != ModuleCount) return;
 
         SwerveModulePosition[] positions = new SwerveModulePosition[ModuleCount];

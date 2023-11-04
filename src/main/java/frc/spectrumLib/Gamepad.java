@@ -1,5 +1,6 @@
 package frc.spectrumLib;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +16,8 @@ public abstract class Gamepad extends SubsystemBase {
     public boolean configured = false;
     private boolean printed = false;
     public CommandXboxController controller;
+    private Rotation2d storedLeftStickDirection = new Rotation2d();
+    private Rotation2d storedRightStickDirection = new Rotation2d();
 
     /**
      * Creates a new Gamepad.
@@ -74,6 +77,65 @@ public abstract class Gamepad extends SubsystemBase {
             return value;
         }
         return 0;
+    }
+
+    /* Zero is stick up, 90 is stick to the left*/
+    public Rotation2d getLeftStickDirection() {
+        double x = -1 * controller.getLeftX();
+        double y = -1 * controller.getLeftY();
+        if (x != 0 || y != 0) {
+            Rotation2d angle = new Rotation2d(y, x);
+            storedLeftStickDirection = angle;
+        }
+        return storedLeftStickDirection;
+    }
+
+    public double getLeftStickCardinals() {
+        double stickAngle = getLeftStickDirection().getRadians();
+        if (stickAngle > -Math.PI / 4 && stickAngle <= Math.PI / 4) {
+            return 0;
+        } else if (stickAngle > Math.PI / 4 && stickAngle <= 3 * Math.PI / 4) {
+            return Math.PI / 2;
+        } else if (stickAngle > 3 * Math.PI / 4 || stickAngle <= -3 * Math.PI / 4) {
+            return Math.PI;
+        } else {
+            return -Math.PI / 2;
+        }
+    }
+
+    public double getLeftStickMagnitude() {
+        double x = -1 * controller.getLeftX();
+        double y = -1 * controller.getLeftY();
+        return Math.sqrt(x * x + y * y);
+    }
+
+    public Rotation2d getRightStickDirection() {
+        double x = controller.getRightX();
+        double y = controller.getRightY();
+        if (x != 0 || y != 0) {
+            Rotation2d angle = new Rotation2d(y, x);
+            storedRightStickDirection = angle;
+        }
+        return storedRightStickDirection;
+    }
+
+    public double getRightStickCardinals() {
+        double stickAngle = getRightStickDirection().getRadians();
+        if (stickAngle > -Math.PI / 4 && stickAngle <= Math.PI / 4) {
+            return 0;
+        } else if (stickAngle > Math.PI / 4 && stickAngle <= 3 * Math.PI / 4) {
+            return Math.PI / 2;
+        } else if (stickAngle > 3 * Math.PI / 4 || stickAngle <= -3 * Math.PI / 4) {
+            return Math.PI;
+        } else {
+            return -Math.PI / 2;
+        }
+    }
+
+    public double getRightStickMagnitude() {
+        double x = controller.getRightX();
+        double y = controller.getRightY();
+        return Math.sqrt(x * x + y * y);
     }
 
     /** Setup modifier bumper and trigger buttons */

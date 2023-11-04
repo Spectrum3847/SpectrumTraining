@@ -31,6 +31,42 @@ public class PilotCommands {
                 .withName("Swerve.PilotDrive");
     }
 
+    public static Command fullTurnDrive() {
+        return SwerveCommands.Drive(
+                        () -> pilot.getDriveFwdPositive(),
+                        () -> pilot.getDriveLeftPositive(),
+                        () -> 1.0,
+                        () -> pilot.getFieldOriented(), // true is field oriented
+                        () -> true)
+                .withName("Swerve.PilotFullTurnDrive")
+                .withTimeout(2);
+    }
+
+    public static Command headingLockDrive() {
+        return SwerveCommands.headingLock(
+                        () -> pilot.getDriveFwdPositive(),
+                        () -> pilot.getDriveLeftPositive(),
+                        () -> pilot.getFieldOriented(), // true is field oriented
+                        () -> true)
+                .withName("Swerve.PilotHeadingLockDrive");
+    }
+
+    /**
+     * Drive the robot using left stick and control orientation using the right stick Only Cardinal
+     * directions are allowed
+     *
+     * @return
+     */
+    public static Command stickSteerDrive() {
+        return SwerveCommands.aimDrive(
+                        () -> pilot.getDriveFwdPositive(),
+                        () -> pilot.getDriveLeftPositive(),
+                        () -> pilot.getRightStickCardinals(),
+                        () -> pilot.getFieldOriented(), // true is field oriented
+                        () -> true)
+                .withName("Swerve.PilotStickSteer");
+    }
+
     /**
      * Command that can be used to turn on the slow mode. Slow mode modifies the fwd, left, and CCW
      * methods, we don't want these to require the pilot subsystem

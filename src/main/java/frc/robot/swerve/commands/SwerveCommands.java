@@ -19,7 +19,7 @@ public class SwerveCommands {
 
     /** Turn the swerve wheels to an X to prevent the robot from moving */
     public static Command Xbrake() {
-        return Xbrake.run().withName("Swerve: Xbrake");
+        return Xbrake.run().withName("Swerve.Xbrake");
     }
 
     /** Drive the swerve */
@@ -41,7 +41,7 @@ public class SwerveCommands {
     public static Command aimDrive(
             DoubleSupplier velocityX,
             DoubleSupplier velocityY,
-            DoubleSupplier goalAngle,
+            DoubleSupplier targetRadians,
             BooleanSupplier isFieldOriented,
             BooleanSupplier isOpenLoop) {
         return resetTurnController()
@@ -49,7 +49,7 @@ public class SwerveCommands {
                         Drive(
                                 velocityX,
                                 velocityY,
-                                () -> swerve.calculateRotationController(goalAngle),
+                                () -> swerve.calculateRotationController(targetRadians),
                                 isFieldOriented,
                                 isOpenLoop))
                 .withName("Swerve.AimDrive");

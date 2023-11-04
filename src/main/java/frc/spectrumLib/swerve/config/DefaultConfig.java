@@ -15,10 +15,11 @@ public class DefaultConfig {
     // Tuning Config
     // Estimated at first, then fudge-factored to make odom match record
     private static final double kWheelRadiusInches = 2;
-    private static final double speedAt12VoltsMps = Units.feetToMeters(16);
-    private static final double slipCurrent = 30;
-    private static final SlotGains steerGains = new SlotGains(100, 0, 0.05, 0, 0);
-    private static final SlotGains driveGains = new SlotGains(3, 0, 0, 0, 0);
+    private static final double speedAt12VoltsMps = 6; // Units.feetToMeters(16);
+    private static final double slipCurrent = 800;
+    private static final SlotGains steerGains = new SlotGains(6.000, 0, 0.05, 0.1224, 0.8);
+    private static final SlotGains driveGains =
+            new SlotGains(0.02 * 12, 0, 0.000002 * 12, 1 / 101.98 * 12, 0.8);
 
     /*Rotation Controller*/
     private static final double kPRotationController = 0.0;
@@ -26,12 +27,12 @@ public class DefaultConfig {
     private static final double kDRotationController = 0.0;
 
     // Device Setup
-    private static final String kCANbusName = "rio";
+    private static final String kCANbusName = "3847";
     private static final boolean supportsPro = false;
     private static final SwerveModuleSteerFeedbackType steerFeedbackType =
             SwerveModuleSteerFeedbackType.RemoteCANcoder;
 
-    private static final int kPigeonId = 1;
+    private static final int kPigeonId = 0;
     private static final int kFrontLeftDriveMotorId = 1;
     private static final int kFrontLeftSteerMotorId = 2;
     private static final int kFrontLeftEncoderId = 3;
@@ -42,18 +43,19 @@ public class DefaultConfig {
     private static final int kBackLeftSteerMotorId = 22;
     private static final int kBackLeftEncoderId = 23;
     private static final int kBackRightDriveMotorId = 31;
-    private static final int kBackRightSteerMotorId = 31;
+    private static final int kBackRightSteerMotorId = 32;
     private static final int kBackRightEncoderId = 33;
 
     // Physical Config
     private static final double wheelBaseInches = 21.5;
     private static final double trackWidthInches = 18.5;
-    private static final double kDriveGearRatio = (50 / 14) * (17 / 27) * (45 / 15); // SDS L2
-    private static final double kSteerGearRatio = (50.0 / 14.0) * (60.0 / 10.0); // SDS
+    private static final double kDriveGearRatio =
+            6.746; // (50 / 14) * (17 / 27) * (45 / 15); // SDS L2
+    private static final double kSteerGearRatio = 21.428; // (50.0 / 14.0) * (60.0 / 10.0); // SDS
     private static final boolean kSteerMotorReversed = true;
     private static final boolean kInvertLeftSide = false;
     private static final boolean kInvertRightSide = true;
-    private static final double kCouplingGearRatio = kDriveGearRatio / (45 / 15); // SDS MK4
+    private static final double kCouplingGearRatio = 0; // SDS MK4
 
     // Simulation Config
     private static double kSteerInertia = 0.00001;

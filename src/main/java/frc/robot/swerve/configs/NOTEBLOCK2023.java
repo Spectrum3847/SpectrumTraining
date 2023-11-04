@@ -10,24 +10,25 @@ import frc.spectrumLib.swerve.config.SwerveConfig;
 public class NOTEBLOCK2023 {
 
     // Angle Offsets
-    private static final double kFrontLeftCANcoderOffset = -0.83544921875;
-    private static final double kFrontRightCANncoderOffset = -0.15234375;
-    private static final double kBackLeftCANcoderOffset = -0.4794921875;
+    private static final double kFrontLeftCANcoderOffset = -0.407958984375;
+    private static final double kFrontRightCANncoderOffset = -0.181396484375;
+    private static final double kBackLeftCANcoderOffset = -0.8779296875;
     private static final double kBackRightCANcoderOffset = -0.84130859375;
 
     // Physical Config
     private static final double wheelBaseInches = 21.5;
     private static final double trackWidthInches = 18.5;
-    private static final double kDriveGearRatio = (6.746 / 1.0);
-    private static final double kSteerGearRatio = (50.0 / 14.0) * (60.0 / 10.0);
+    private static final double kDriveGearRatio = 6.746;
+    private static final double kSteerGearRatio = 21.428;
 
     // Tuning Config
     // Estimated at first, then fudge-factored to make odom match record
-    private static final double kWheelRadiusInches = 2.167;
-    private static final double speedAt12VoltsMps = Units.feetToMeters(16);
-    private static final double slipCurrent = 30;
-    private static final SlotGains driveGains = new SlotGains(3, 0, 0, 0, 0);
-    private static final SlotGains steerGains = new SlotGains(100, 0, 0.05, 0, 0);
+    private static final double kWheelRadiusInches = 2;
+    private static final double speedAt12VoltsMps = 6;
+    private static final double slipCurrent = 800;
+    private static final SlotGains steerGains = new SlotGains(6.000, 0, 0.05, 0.1224, 0.8);
+    private static final SlotGains driveGains =
+            new SlotGains(0.02 * 12, 0, 0.000002 * 12, 1 / 101.98 * 12, 0.8);
 
     /*Rotation Controller*/
     private static final double kPRotationController = 0.0;
@@ -47,7 +48,7 @@ public class NOTEBLOCK2023 {
     private static final String kCANbusName = "3847";
     private static final boolean supportsPro = false;
     private static final SwerveModuleSteerFeedbackType steerFeedbackType =
-            SwerveModuleSteerFeedbackType.FusedCANcoder;
+            SwerveModuleSteerFeedbackType.RemoteCANcoder;
 
     // Wheel Positions
     private static final double kFrontLeftXPos = Units.inchesToMeters(wheelBaseInches / 2.0);

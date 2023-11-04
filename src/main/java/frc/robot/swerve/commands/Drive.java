@@ -22,19 +22,29 @@ import java.util.function.DoubleSupplier;
  */
 public class Drive implements SwerveRequest {
 
-    public static Command run() {
-        return Robot.swerve.applyRequest(() -> new Drive()).withName("Drive");
-    }
-
+    /**
+     * Creates a new Drive command open loop and field oriented
+     *
+     * @param velocityX
+     * @param velocityY
+     * @param rotationalRate
+     * @return
+     */
     public static Command run(
-            DoubleSupplier velocityX, DoubleSupplier velocityY, DoubleSupplier rotationalRate) {
+            DoubleSupplier velocityX,
+            DoubleSupplier velocityY,
+            DoubleSupplier rotationalRate,
+            boolean isFieldOriented,
+            boolean isOpenLoop) {
         return Robot.swerve
                 .applyRequest(
                         () ->
                                 new Drive()
                                         .withVelocityX(velocityX.getAsDouble())
                                         .withVelocityY(velocityY.getAsDouble())
-                                        .withRotationalRate(rotationalRate.getAsDouble()))
+                                        .withRotationalRate(rotationalRate.getAsDouble())
+                                        .isFieldOriented(isFieldOriented)
+                                        .isOpenLoop(isOpenLoop))
                 .withName("Drive");
     }
 
@@ -55,13 +65,12 @@ public class Drive implements SwerveRequest {
      * <p>This is in radians per second
      */
     public double RotationalRate = 0;
-    /** The allowable deadband of the request. */
-    public double Deadband = 0;
-    /** Rotational deadband of the request */
-    public double RotationalDeadband = 0;
 
     /** True to use open-loop control when driving. */
     public boolean IsOpenLoop = false;
+
+    /** True to use field-oriented control when driving */
+    public boolean IsFieldOriented = true;
 
     /** The last applied state in case we don't have anything to drive */
     protected SwerveModuleState[] m_lastAppliedState = null;
@@ -71,20 +80,20 @@ public class Drive implements SwerveRequest {
         double toApplyX = VelocityX;
         double toApplyY = VelocityY;
         double toApplyOmega = RotationalRate;
-        if (Math.sqrt(toApplyX * toApplyX + toApplyY * toApplyY) < Deadband) {
-            toApplyX = 0;
-            toApplyY = 0;
-        }
-        if (Math.abs(toApplyOmega) < RotationalDeadband) toApplyOmega = 0;
 
-        ChassisSpeeds speeds =
-                ChassisSpeeds.discretize(
-                        ChassisSpeeds.fromFieldRelativeSpeeds(
-                                toApplyX,
-                                toApplyY,
-                                toApplyOmega,
-                                parameters.currentPose.getRotation()),
-                        parameters.updatePeriod);
+        ChassisSpeeds speeds;
+        if (IsFieldOriented) {
+            speeds =
+                    ChassisSpeeds.discretize(
+                            ChassisSpeeds.fromFieldRelativeSpeeds(
+                                    toApplyX,
+                                    toApplyY,
+                                    toApplyOmega,
+                                    parameters.currentPose.getRotation()),
+                            parameters.updatePeriod);
+        } else {
+            speeds = new ChassisSpeeds(toApplyX, toApplyY, toApplyOmega);
+        }
 
         var states = parameters.kinematics.toSwerveModuleStates(speeds, new Translation2d());
 
@@ -110,18 +119,13 @@ public class Drive implements SwerveRequest {
         return this;
     }
 
-    public Drive withDeadband(double deadband) {
-        this.Deadband = deadband;
-        return this;
-    }
-
-    public Drive withRotationalDeadband(double RotationalDeadband) {
-        this.RotationalDeadband = RotationalDeadband;
-        return this;
-    }
-
-    public Drive withIsOpenLoop(boolean isOpenLoop) {
+    public Drive isOpenLoop(boolean isOpenLoop) {
         this.IsOpenLoop = isOpenLoop;
+        return this;
+    }
+
+    public Drive isFieldOriented(boolean isFieldOriented) {
+        this.IsFieldOriented = isFieldOriented;
         return this;
     }
 }

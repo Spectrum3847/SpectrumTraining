@@ -18,9 +18,11 @@ public class PilotCommands {
 
     public static Command pilotDrive() {
         return SwerveCommands.Drive(
-                        () -> 0, // Robot.pilot.getDriveFwdPositive(),
-                        () -> 0, // Robot.pilot.getDriveLeftPositive(),
-                        () -> 0) // Robot.pilot.getDriveCCWPositive())
+                        () -> Robot.pilot.getDriveFwdPositive(),
+                        () -> Robot.pilot.getDriveLeftPositive(),
+                        () -> Robot.pilot.getDriveCCWPositive(),
+                        true,
+                        true)
                 .withName("Swerve.PilotDrive");
     }
 }

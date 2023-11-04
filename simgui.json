@@ -10,6 +10,21 @@
       }
     },
     "Other Devices": {
+      "Talon FX (Pro)[11]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (Pro)[12]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX (Pro)[12]/Rotor Sensor": {
+        "header": {
+          "open": true
+        }
+      },
       "Talon FX (Pro)[1]": {
         "header": {
           "open": true

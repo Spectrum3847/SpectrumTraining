@@ -98,6 +98,7 @@ public class Drive implements Request {
         SwerveModuleState[] states =
                 parameters.kinematics.toSwerveModuleStates(speeds, new Translation2d());
 
+        Robot.swerve.writeSetpoints(states);
         for (int i = 0; i < modulesToApply.length; ++i) {
             modulesToApply[i].apply(states[i], IsOpenLoop);
         }

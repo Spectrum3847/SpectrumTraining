@@ -18,12 +18,13 @@ public class Xbrake implements Request {
 
     public StatusCode apply(ControlRequestParameters parameters, Module... modulesToApply) {
 
+        SwerveModuleState[] states = new SwerveModuleState[modulesToApply.length];
         for (int i = 0; i < modulesToApply.length; ++i) {
-            SwerveModuleState state =
+            states[i] =
                     new SwerveModuleState(0, parameters.swervePositions[i].getAngle());
-            modulesToApply[i].apply(state, IsOpenLoop);
+            modulesToApply[i].apply(states[i], IsOpenLoop);
         }
-
+        Robot.swerve.writeSetpoints(states);
         return StatusCode.OK;
     }
 

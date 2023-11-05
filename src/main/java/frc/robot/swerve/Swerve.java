@@ -17,6 +17,8 @@ import frc.spectrumLib.swerve.Drivetrain;
 import frc.spectrumLib.swerve.Drivetrain.DriveState;
 import frc.spectrumLib.swerve.Request;
 import frc.spectrumLib.swerve.config.SwerveConfig;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
@@ -28,6 +30,9 @@ public class Swerve implements Subsystem {
     private final RotationController rotationController;
     private double OdometryUpdateFrequency = 250;
     private double targetHeading = 0;
+    private ReadWriteLock m_stateLock = new ReentrantReadWriteLock();
+    private SwerveModuleState[] Setpoints = new SwerveModuleState[] {};
+    private SwerveModuleState[] OptimizedSetpoints = new SwerveModuleState[] {};
 
     public Swerve() {
         RobotTelemetry.print("Swerve Subsystem Starting: ");
@@ -63,7 +68,10 @@ public class Swerve implements Subsystem {
         // Log empty setpoint states when disabled
         if (DriverStation.isDisabled()) {
             Logger.recordOutput("SwerveStates/Setpoints", new SwerveModuleState[] {});
-            Logger.recordOutput("SwerveStates/SetpointsOptimized", new SwerveModuleState[] {});
+        } else {
+            // Log setpoint states
+            Logger.recordOutput("SwerveStates/Setpoints", readSetpoints());
+            ;
         }
 
         // Log Odometry Pose
@@ -160,5 +168,29 @@ public class Swerve implements Subsystem {
      */
     public void registerTelemetry(Consumer<DriveState> telemetryFunction) {
         drivetrain.registerTelemetry(telemetryFunction);
+    }
+
+    /**
+     * Applies the specified control request to this swerve drivetrain.
+     *
+     * @param request Request to apply
+     */
+    public void writeSetpoints(SwerveModuleState[] setpoints) {
+        try {
+            m_stateLock.writeLock().lock();
+
+            this.Setpoints = setpoints;
+        } finally {
+            m_stateLock.writeLock().unlock();
+        }
+    }
+
+    public SwerveModuleState[] readSetpoints() {
+        try {
+            m_stateLock.readLock().lock();
+            return Setpoints;
+        } finally {
+            m_stateLock.readLock().unlock();
+        }
     }
 }

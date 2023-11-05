@@ -32,6 +32,7 @@ public class ApplyChassisSpeeds implements Request {
     public StatusCode apply(ControlRequestParameters parameters, Module... modulesToApply) {
         SwerveModuleState[] states =
                 parameters.kinematics.toSwerveModuleStates(Speeds, CenterOfRotation);
+        Robot.swerve.writeSetpoints(states);
         for (int i = 0; i < modulesToApply.length; ++i) {
             modulesToApply[i].apply(states[i], IsOpenLoop);
         }

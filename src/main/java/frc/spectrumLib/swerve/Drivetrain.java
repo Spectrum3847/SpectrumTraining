@@ -71,8 +71,8 @@ public class Drivetrain {
     public class DriveState {
         public int SuccessfulDaqs;
         public int FailedDaqs;
-        public Pose2d Pose;
-        public SwerveModuleState[] ModuleStates;
+        public Pose2d Pose = new Pose2d();
+        public SwerveModuleState[] ModuleStates = new SwerveModuleState[] {};
         public double OdometryPeriod;
     }
 

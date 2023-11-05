@@ -26,11 +26,13 @@ public class PointWheelsAt implements Request {
     public boolean IsOpenLoop = false;
 
     public StatusCode apply(ControlRequestParameters parameters, Module... modulesToApply) {
-
+        SwerveModuleState[] states = new SwerveModuleState[modulesToApply.length];
         for (int i = 0; i < modulesToApply.length; ++i) {
-            SwerveModuleState state = new SwerveModuleState(0, ModuleDirection);
-            modulesToApply[i].apply(state, IsOpenLoop);
+            states[i] = new SwerveModuleState(0, ModuleDirection);
+            modulesToApply[i].apply(states[i], IsOpenLoop);
         }
+
+        Robot.swerve.writeSetpoints(states);
 
         return StatusCode.OK;
     }

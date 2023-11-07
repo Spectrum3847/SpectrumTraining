@@ -1,8 +1,19 @@
 package frc.robot.swerve;
 
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.Consumer;
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+
+import org.littletonrobotics.junction.Logger;
+
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -17,12 +28,6 @@ import frc.spectrumLib.swerve.Drivetrain;
 import frc.spectrumLib.swerve.Drivetrain.DriveState;
 import frc.spectrumLib.swerve.Request;
 import frc.spectrumLib.swerve.config.SwerveConfig;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.function.Consumer;
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
-import org.littletonrobotics.junction.Logger;
 
 public class Swerve implements Subsystem {
     public final SwerveConfig config;
@@ -102,6 +107,14 @@ public class Swerve implements Subsystem {
 
     public Pose2d getPose() {
         return getState().Pose;
+    }
+
+    public void resetPose(Pose2d pose) {
+        drivetrain.seedFieldRelative(pose);
+    }
+
+    public ChassisSpeeds getRobotRelativeSpeeds(){
+        return drivetrain.getChassisSpeeds();
     }
 
     public Rotation2d getRotation() {

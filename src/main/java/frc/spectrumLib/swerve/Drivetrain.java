@@ -5,6 +5,7 @@ import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule;
 import com.ctre.phoenix6.unmanaged.Unmanaged;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -13,6 +14,7 @@ import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -413,6 +415,18 @@ public class Drivetrain {
         }
     }
 
+    public SwerveModuleState[] getModuleStates(){
+        return m_cachedState.ModuleStates;
+    }
+
+    public void setModuleStates(SwerveModuleState[] desiredStates, double maxModuleSpeed){
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, maxModuleSpeed);
+        
+        for(Module mod : Modules)
+            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
+        }
+    }
+
     /**
      * Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
      * while still accounting for measurement noise.
@@ -451,6 +465,10 @@ public class Drivetrain {
         } finally {
             m_stateLock.writeLock().unlock();
         }
+    }
+
+    public ChassisSpeeds getChassisSpeeds(){
+        return m_kinematics.toChassisSpeeds(getModuleStates());
     }
 
     /**

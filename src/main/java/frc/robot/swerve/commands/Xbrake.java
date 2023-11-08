@@ -20,8 +20,7 @@ public class Xbrake implements Request {
 
         SwerveModuleState[] states = new SwerveModuleState[modulesToApply.length];
         for (int i = 0; i < modulesToApply.length; ++i) {
-            states[i] =
-                    new SwerveModuleState(0, parameters.swervePositions[i].getAngle());
+            states[i] = new SwerveModuleState(0, parameters.swervePositions[i].getAngle());
             modulesToApply[i].apply(states[i], IsOpenLoop);
         }
         Robot.swerve.writeSetpoints(states);

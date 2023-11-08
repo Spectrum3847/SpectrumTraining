@@ -117,6 +117,15 @@ public class Swerve implements Subsystem {
         return drivetrain.getChassisSpeeds();
     }
 
+    public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds){
+        drivetrain.driveRobotRelative(robotRelativeSpeeds, getCurrentMaxModuleSpeed());
+    }
+
+    public double getCurrentMaxModuleSpeed(){
+        // add function to get max module speed from current robot config
+        return ;
+    }
+
     public Rotation2d getRotation() {
         return getPose().getRotation();
     }

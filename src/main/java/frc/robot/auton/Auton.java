@@ -3,10 +3,6 @@ package frc.robot.auton;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -17,6 +13,7 @@ import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 import frc.robot.auton.commands.AutoBalance;
 import frc.robot.auton.config.AutonConfig;
+import frc.robot.swerve.commands.ApplyChassisSpeeds;
 
 public class Auton extends SubsystemBase {
     public static final SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -53,12 +50,13 @@ public class Auton extends SubsystemBase {
                 // starting pose)
                 Robot.swerve
                         ::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                Robot.swerve::driveRobotRelative, // Method that will drive the robot given ROBOT
+                ApplyChassisSpeeds.robotRelativeOutput(true), // Method that will drive the robot given ROBOT
                 // RELATIVE ChassisSpeeds
                 AutonConfig.AutonPathFollowerConfig,
                 Robot.swerve // Reference to this subsystem to set requirements
                 );
     }
+
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -105,5 +103,4 @@ public class Auton extends SubsystemBase {
             }
         }
     }
-
 }

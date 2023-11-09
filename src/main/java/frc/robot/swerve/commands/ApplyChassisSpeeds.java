@@ -9,6 +9,7 @@ import frc.robot.Robot;
 import frc.spectrumLib.swerve.Module;
 import frc.spectrumLib.swerve.Request;
 import java.util.function.BooleanSupplier;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /** Accepts a generic ChassisSpeeds to apply to the drivetrain. */
@@ -20,6 +21,10 @@ public class ApplyChassisSpeeds implements Request {
                         new ApplyChassisSpeeds()
                                 .withSpeeds(speeds.get())
                                 .withIsOpenLoop(isOpenLoop.getAsBoolean()));
+    }
+
+    public static Consumer<ChassisSpeeds> robotRelativeOutput(boolean isOpenLoop) {
+        return (speeds) -> Robot.swerve.setControlMode(new ApplyChassisSpeeds().withIsOpenLoop(isOpenLoop).withSpeeds(speeds));
     }
 
     /** The chassis speeds to apply to the drivetrain. */

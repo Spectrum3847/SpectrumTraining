@@ -1,18 +1,11 @@
 package frc.spectrumLib.swerve;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.function.Consumer;
-
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule;
 import com.ctre.phoenix6.unmanaged.Unmanaged;
-import com.google.flatbuffers.Constants;
-
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.LinearFilter;
@@ -31,6 +24,9 @@ import frc.robot.RobotTelemetry;
 import frc.spectrumLib.swerve.Request.ControlRequestParameters;
 import frc.spectrumLib.swerve.config.ModuleConfig;
 import frc.spectrumLib.swerve.config.SwerveConfig;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.Consumer;
 
 /**
  * Swerve Drive class utilizing CTR Electronics' Phoenix 6 API.
@@ -418,18 +414,23 @@ public class Drivetrain {
         }
     }
 
-    public SwerveModuleState[] getModuleStates(){
-        return m_cachedState.ModuleStates;
+    /**
+     * Get the current module states from the cached state
+     *
+     * @return
+     */
+    public SwerveModuleState[] getModuleStates() {
+        return getState().ModuleStates;
     }
-    
-    public void setModuleStates(SwerveModuleState[] desiredStates, double maxModuleSpeed) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, maxModuleSpeed);
-        
-        for(Module mod : Modules){
-            // rewrite for Module.java file
-            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
-        }
-    } 
+
+    /**
+     * Get the current chassis speeds from the cached state
+     *
+     * @return
+     */
+    public ChassisSpeeds getChassisSpeeds() {
+        return m_kinematics.toChassisSpeeds(getModuleStates());
+    }
 
     /**
      * Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
@@ -469,18 +470,6 @@ public class Drivetrain {
         } finally {
             m_stateLock.writeLock().unlock();
         }
-    }
-
-    public ChassisSpeeds getChassisSpeeds(){
-        return m_kinematics.toChassisSpeeds(getModuleStates());
-    }
-
-    public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds, double MaxModuleSpeed){
-        var states = m_kinematics.toSwerveModuleStates(robotRelativeSpeeds);
-    
-        SwerveDriveKinematics.desaturateWheelSpeeds(states, MaxModuleSpeed);
-    
-        setModuleStates(states);
     }
 
     /**

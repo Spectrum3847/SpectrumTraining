@@ -1,15 +1,5 @@
 package frc.robot.swerve;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.function.Consumer;
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
-
-import org.littletonrobotics.junction.Logger;
-
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule;
-
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -28,6 +18,12 @@ import frc.spectrumLib.swerve.Drivetrain;
 import frc.spectrumLib.swerve.Drivetrain.DriveState;
 import frc.spectrumLib.swerve.Request;
 import frc.spectrumLib.swerve.config.SwerveConfig;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.function.Consumer;
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+import org.littletonrobotics.junction.Logger;
 
 public class Swerve implements Subsystem {
     public final SwerveConfig config;
@@ -37,7 +33,6 @@ public class Swerve implements Subsystem {
     private double targetHeading = 0;
     private ReadWriteLock m_stateLock = new ReentrantReadWriteLock();
     private SwerveModuleState[] Setpoints = new SwerveModuleState[] {};
-    private SwerveModuleState[] OptimizedSetpoints = new SwerveModuleState[] {};
 
     public Swerve() {
         RobotTelemetry.print("Swerve Subsystem Starting: ");
@@ -88,16 +83,13 @@ public class Swerve implements Subsystem {
         drivetrain.updateSimState(0.02, 12);
     }
 
+    // Returns a commmand that applies the given request to the drivetrain
     public Command applyRequest(Supplier<Request> requestSupplier) {
         return run(() -> setControlMode(requestSupplier.get()));
     }
 
-    /**
-     * Use this to control the swerve drive, set motors, etc.
-     *
-     * @param mode
-     */
-    private void setControlMode(Request mode) {
+    // Use this to control the swerve drive, set motors, etc.
+    public void setControlMode(Request mode) {
         drivetrain.setControl(mode);
     }
 
@@ -113,17 +105,8 @@ public class Swerve implements Subsystem {
         drivetrain.seedFieldRelative(pose);
     }
 
-    public ChassisSpeeds getRobotRelativeSpeeds(){
+    public ChassisSpeeds getRobotRelativeSpeeds() {
         return drivetrain.getChassisSpeeds();
-    }
-
-    public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds){
-        drivetrain.driveRobotRelative(robotRelativeSpeeds, getCurrentMaxModuleSpeed());
-    }
-
-    public double getCurrentMaxModuleSpeed(){
-        // add function to get max module speed from current robot config
-        return ;
     }
 
     public Rotation2d getRotation() {

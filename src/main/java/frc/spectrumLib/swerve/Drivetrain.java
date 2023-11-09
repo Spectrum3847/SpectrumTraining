@@ -13,6 +13,7 @@ import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -411,6 +412,24 @@ public class Drivetrain {
         } finally {
             m_stateLock.readLock().unlock();
         }
+    }
+
+    /**
+     * Get the current module states from the cached state
+     *
+     * @return
+     */
+    public SwerveModuleState[] getModuleStates() {
+        return getState().ModuleStates;
+    }
+
+    /**
+     * Get the current chassis speeds from the cached state
+     *
+     * @return
+     */
+    public ChassisSpeeds getChassisSpeeds() {
+        return m_kinematics.toChassisSpeeds(getModuleStates());
     }
 
     /**

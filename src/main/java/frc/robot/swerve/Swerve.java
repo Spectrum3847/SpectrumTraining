@@ -3,6 +3,7 @@ package frc.robot.swerve;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -82,16 +83,13 @@ public class Swerve implements Subsystem {
         drivetrain.updateSimState(0.02, 12);
     }
 
+    // Returns a commmand that applies the given request to the drivetrain
     public Command applyRequest(Supplier<Request> requestSupplier) {
         return run(() -> setControlMode(requestSupplier.get()));
     }
 
-    /**
-     * Use this to control the swerve drive, set motors, etc.
-     *
-     * @param mode
-     */
-    private void setControlMode(Request mode) {
+    // Use this to control the swerve drive, set motors, etc.
+    public void setControlMode(Request mode) {
         drivetrain.setControl(mode);
     }
 
@@ -101,6 +99,14 @@ public class Swerve implements Subsystem {
 
     public Pose2d getPose() {
         return getState().Pose;
+    }
+
+    public void resetPose(Pose2d pose) {
+        drivetrain.seedFieldRelative(pose);
+    }
+
+    public ChassisSpeeds getRobotRelativeSpeeds() {
+        return drivetrain.getChassisSpeeds();
     }
 
     public Rotation2d getRotation() {

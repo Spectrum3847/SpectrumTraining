@@ -42,7 +42,7 @@ public class Auton extends SubsystemBase {
         RobotTelemetry.print("Auton Subsystem Initialized: ");
     }
 
-    //Configures the auto builder to use to run autons
+    // Configures the auto builder to use to run autons
     public static void configureAutoBuilder() {
         // Configure the AutoBuilder last
         AutoBuilder.configureHolonomic(

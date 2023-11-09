@@ -145,13 +145,33 @@ public class TalonFXFactory {
         return this;
     }
 
-    public TalonFXFactory withNeutralBrakeMode(TalonFXConfiguration config, boolean brakeMode) {
+    public TalonFXFactory withNeutralBrakeMode(boolean brakeMode) {
         if (brakeMode) {
             config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         } else {
             config.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         }
         return this;
+    }
+
+    public TalonFXFactory withMechConfig(MechConfig config) {
+        TalonFXFactory factory = this;
+        factory = factory.withGearRatio(config.gearRatio);
+        factory = factory.withNeutralBrakeMode(config.neutralBrakeMode);
+        factory = factory.withFeedbackPID(0, config.slot0.kP, config.slot0.kI, config.slot0.kD);
+        factory =
+                factory.withFeedForward(
+                        0, config.slot0.kV, config.slot0.kA, config.slot0.kS, config.slot0.kG);
+        factory = factory.withFeedbackPID(1, config.slot1.kP, config.slot1.kI, config.slot1.kD);
+        factory =
+                factory.withFeedForward(
+                        1, config.slot1.kV, config.slot1.kA, config.slot1.kS, config.slot1.kG);
+        factory = factory.withFeedbackPID(2, config.slot2.kP, config.slot2.kI, config.slot2.kD);
+        factory =
+                factory.withFeedForward(
+                        2, config.slot2.kV, config.slot2.kA, config.slot2.kS, config.slot2.kG);
+
+        return factory;
     }
 
     // Create a new follower talon with same configuration as the leader talon

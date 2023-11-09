@@ -5,13 +5,13 @@ import frc.robot.Robot;
 import frc.robot.intake.Intake;
 
 public class IntakeCommands {
-    private Intake intake = Robot.intake;
+    private static Intake intake = Robot.intake;
     
-    public Command runIntake() {
+    public static Command runFull() {
         return intake.runVelocity(intake.config.fullSpeed);
     }
 
-    public Command ejectIntake() {
+    public static Command eject() {
         return intake.runVelocity(intake.config.ejectSpeed);
     }
 }

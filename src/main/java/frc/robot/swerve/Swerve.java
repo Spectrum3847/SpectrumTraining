@@ -32,7 +32,6 @@ public class Swerve implements Subsystem {
     private double targetHeading = 0;
     private ReadWriteLock m_stateLock = new ReentrantReadWriteLock();
     private SwerveModuleState[] Setpoints = new SwerveModuleState[] {};
-    private SwerveModuleState[] OptimizedSetpoints = new SwerveModuleState[] {};
 
     public Swerve() {
         RobotTelemetry.print("Swerve Subsystem Starting: ");

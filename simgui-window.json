@@ -1,8 +1,6 @@
 {
   "Docking": {
-    "Data": [
-      "DockNode  ID=0x00000001 Pos=607,470 Size=809,263 Selected=0x2D9B9756"
-    ]
+    "Data": []
   },
   "MainWindow": {
     "GLOBAL": {
@@ -12,8 +10,8 @@
       "style": "0",
       "userScale": "6",
       "width": "3171",
-      "xpos": "-3325",
-      "ypos": "381"
+      "xpos": "386",
+      "ypos": "463"
     }
   },
   "Table": {
@@ -35,10 +33,19 @@
       "Pos": "521,184",
       "Size": "202,194"
     },
+    "###/Pose": {
+      "Collapsed": "0",
+      "Pos": "785,288",
+      "Size": "1159,703"
+    },
+    "###/SmartDashboard/Module 0": {
+      "Collapsed": "0",
+      "Pos": "1577,480",
+      "Size": "900,685"
+    },
     "###/SmartDashboard/Scheduler": {
       "Collapsed": "0",
-      "DockId": "0x00000001,0",
-      "Pos": "607,470",
+      "Pos": "490,88",
       "Size": "809,263"
     },
     "###Addressable LEDs": {
@@ -54,7 +61,7 @@
     "###Joysticks": {
       "Collapsed": "0",
       "Pos": "879,979",
-      "Size": "2056,320"
+      "Size": "2056,472"
     },
     "###Keyboard 0 Settings": {
       "Collapsed": "0",
@@ -63,9 +70,8 @@
     },
     "###NetworkTables": {
       "Collapsed": "0",
-      "DockId": "0x00000001,1",
-      "Pos": "607,470",
-      "Size": "809,263"
+      "Pos": "554,334",
+      "Size": "1216,904"
     },
     "###NetworkTables Info": {
       "Collapsed": "0",

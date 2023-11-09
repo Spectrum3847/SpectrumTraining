@@ -120,6 +120,10 @@ public class TrainingCommands {
                 // Have to use PrintCommand and repeatedly becuase it doesn't require the Training
                 // Subystem
                 .ignoringDisable(true)
-                .withName("Training.Parallel Group");
+                .withName("Training.Parallel Group")
+                .finallyDo(
+                        () -> {
+                            RobotTelemetry.print("Finally Do");
+                        });
     }
 }

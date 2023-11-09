@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.auton.Auton;
 import frc.robot.leds.LEDs;
 import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.pilot.Pilot;
@@ -26,6 +27,7 @@ public class Robot extends LoggedRobot {
     public static Swerve swerve;
     public static LEDs leds;
     public static Pilot pilot;
+    public static Auton auton;
 
     /**
      * This method cancels all commands and returns subsystems to their default commands and the
@@ -60,7 +62,7 @@ public class Robot extends LoggedRobot {
 
         /** Intialize Telemetry and Auton */
         telemetry = new RobotTelemetry();
-        // auton = new Auton();
+        auton = new Auton();
         advantageKitInit();
 
         /**

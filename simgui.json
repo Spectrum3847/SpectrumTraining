@@ -75,9 +75,24 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Pose": "Field2d",
+      "/SmartDashboard/Module 0": "Mechanism2d",
+      "/SmartDashboard/Module 1": "Mechanism2d",
+      "/SmartDashboard/Module 2": "Mechanism2d",
+      "/SmartDashboard/Module 3": "Mechanism2d",
       "/SmartDashboard/Scheduler": "Scheduler"
     },
     "windows": {
+      "/Pose": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Module 0": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/Scheduler": {
         "window": {
           "visible": true
@@ -87,6 +102,24 @@
   },
   "NetworkTables": {
     "transitory": {
+      "AdvantageKit": {
+        "RealMetadata": {
+          "open": true
+        },
+        "RealOutputs": {
+          "Odometry": {
+            "open": true
+          },
+          "SwerveStates": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      },
+      "Shuffleboard": {
+        "open": true
+      },
       "SmartDashboard": {
         "open": true
       }

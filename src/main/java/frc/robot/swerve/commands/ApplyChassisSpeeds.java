@@ -24,7 +24,9 @@ public class ApplyChassisSpeeds implements Request {
     }
 
     public static Consumer<ChassisSpeeds> robotRelativeOutput(boolean isOpenLoop) {
-        return (speeds) -> Robot.swerve.setControlMode(new ApplyChassisSpeeds().withIsOpenLoop(isOpenLoop).withSpeeds(speeds));
+        return (speeds) ->
+                Robot.swerve.setControlMode(
+                        new ApplyChassisSpeeds().withIsOpenLoop(isOpenLoop).withSpeeds(speeds));
     }
 
     /** The chassis speeds to apply to the drivetrain. */

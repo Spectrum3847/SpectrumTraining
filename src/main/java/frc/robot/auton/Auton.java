@@ -26,6 +26,12 @@ public class Auton extends SubsystemBase {
         // autonChooser.addOption("Clean3", AutoPaths.CleanSide());
     }
 
+    // Setup the named commands
+    public static void setupNamedCommands() {
+        // Register Named Commands
+        NamedCommands.registerCommand("autoBalance", new AutoBalance());
+    }
+
     // Subsystem Documentation:
     // https://docs.wpilib.org/en/stable/docs/software/commandbased/subsystems.html
     public Auton() {
@@ -36,11 +42,7 @@ public class Auton extends SubsystemBase {
         RobotTelemetry.print("Auton Subsystem Initialized: ");
     }
 
-    public static void setupNamedCommands() {
-        // Register Named Commands
-        NamedCommands.registerCommand("autoBalance", new AutoBalance());
-    }
-
+    //Configures the auto builder to use to run autons
     public static void configureAutoBuilder() {
         // Configure the AutoBuilder last
         AutoBuilder.configureHolonomic(
@@ -50,13 +52,13 @@ public class Auton extends SubsystemBase {
                 // starting pose)
                 Robot.swerve
                         ::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                ApplyChassisSpeeds.robotRelativeOutput(true), // Method that will drive the robot given ROBOT
+                ApplyChassisSpeeds.robotRelativeOutput(
+                        true), // Method that will drive the robot given ROBOT
                 // RELATIVE ChassisSpeeds
                 AutonConfig.AutonPathFollowerConfig,
                 Robot.swerve // Reference to this subsystem to set requirements
                 );
     }
-
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

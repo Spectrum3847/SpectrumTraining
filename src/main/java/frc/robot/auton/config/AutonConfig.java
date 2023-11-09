@@ -5,7 +5,7 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 public class AutonConfig {
-	//TODO: #1 @EDPendleton24: The PID constants have to be different for Translation and Rotation
+    // TODO: #1 @EDPendleton24: The PID constants have to be different for Translation and Rotation
     public static final double kP = 5.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;
@@ -19,8 +19,7 @@ public class AutonConfig {
                     new PIDConstants(kP, kI, kD), // Rotation PID constants
                     maxModuleSpeed, // Max module speed, in m/s
                     driveBaseRadius, // Drive base radius in meters. Distance from robot center to
-                    // furthest
-                    // module.
+                    // furthest module.
                     new ReplanningConfig() // Default path replanning config. See the API for
                     // the options here
                     );

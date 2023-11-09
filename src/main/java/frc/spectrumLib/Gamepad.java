@@ -1,5 +1,6 @@
 package frc.spectrumLib;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -14,7 +15,9 @@ public abstract class Gamepad extends SubsystemBase {
 
     public boolean configured = false;
     private boolean printed = false;
-    public CommandXboxController gamepad;
+    public CommandXboxController controller;
+    private Rotation2d storedLeftStickDirection = new Rotation2d();
+    private Rotation2d storedRightStickDirection = new Rotation2d();
 
     /**
      * Creates a new Gamepad.
@@ -23,7 +26,7 @@ public abstract class Gamepad extends SubsystemBase {
      * @param name The name of the gamepad
      */
     public Gamepad(String name, int port) {
-        gamepad = new CommandXboxController(port);
+        controller = new CommandXboxController(port);
     }
 
     @Override
@@ -35,7 +38,7 @@ public abstract class Gamepad extends SubsystemBase {
     public void configure() {
         // Detect whether the xbox controller has been plugged in after start-up
         if (!configured) {
-            boolean isConnected = gamepad.getHID().isConnected();
+            boolean isConnected = controller.getHID().isConnected();
             if (!isConnected) {
                 if (!printed) {
                     RobotTelemetry.print("##" + getName() + ": GAMEPAD NOT CONNECTED ##");
@@ -66,53 +69,122 @@ public abstract class Gamepad extends SubsystemBase {
         configure();
     }
 
+    public double getTwist() {
+        double right = controller.getRightTriggerAxis();
+        double left = controller.getLeftTriggerAxis();
+        double value = right - left;
+        if (controller.getHID().isConnected()) {
+            return value;
+        }
+        return 0;
+    }
+
+    /* Zero is stick up, 90 is stick to the left*/
+    public Rotation2d getLeftStickDirection() {
+        double x = -1 * controller.getLeftX();
+        double y = -1 * controller.getLeftY();
+        if (x != 0 || y != 0) {
+            Rotation2d angle = new Rotation2d(y, x);
+            storedLeftStickDirection = angle;
+        }
+        return storedLeftStickDirection;
+    }
+
+    public double getLeftStickCardinals() {
+        double stickAngle = getLeftStickDirection().getRadians();
+        if (stickAngle > -Math.PI / 4 && stickAngle <= Math.PI / 4) {
+            return 0;
+        } else if (stickAngle > Math.PI / 4 && stickAngle <= 3 * Math.PI / 4) {
+            return Math.PI / 2;
+        } else if (stickAngle > 3 * Math.PI / 4 || stickAngle <= -3 * Math.PI / 4) {
+            return Math.PI;
+        } else {
+            return -Math.PI / 2;
+        }
+    }
+
+    public double getLeftStickMagnitude() {
+        double x = -1 * controller.getLeftX();
+        double y = -1 * controller.getLeftY();
+        return Math.sqrt(x * x + y * y);
+    }
+
+    public Rotation2d getRightStickDirection() {
+        double x = controller.getRightX();
+        double y = controller.getRightY();
+        if (x != 0 || y != 0) {
+            Rotation2d angle = new Rotation2d(y, x);
+            storedRightStickDirection = angle;
+        }
+        return storedRightStickDirection;
+    }
+
+    public double getRightStickCardinals() {
+        double stickAngle = getRightStickDirection().getRadians();
+        if (stickAngle > -Math.PI / 4 && stickAngle <= Math.PI / 4) {
+            return 0;
+        } else if (stickAngle > Math.PI / 4 && stickAngle <= 3 * Math.PI / 4) {
+            return Math.PI / 2;
+        } else if (stickAngle > 3 * Math.PI / 4 || stickAngle <= -3 * Math.PI / 4) {
+            return Math.PI;
+        } else {
+            return -Math.PI / 2;
+        }
+    }
+
+    public double getRightStickMagnitude() {
+        double x = controller.getRightX();
+        double y = controller.getRightY();
+        return Math.sqrt(x * x + y * y);
+    }
+
     /** Setup modifier bumper and trigger buttons */
     public Trigger noBumpers() {
-        return gamepad.rightBumper().negate().and(gamepad.leftBumper().negate());
+        return controller.rightBumper().negate().and(controller.leftBumper().negate());
     }
 
     public Trigger leftBumperOnly() {
-        return gamepad.leftBumper().and(gamepad.rightBumper().negate());
+        return controller.leftBumper().and(controller.rightBumper().negate());
     }
 
     public Trigger rightBumperOnly() {
-        return gamepad.rightBumper().and(gamepad.leftBumper().negate());
+        return controller.rightBumper().and(controller.leftBumper().negate());
     }
 
     public Trigger bothBumpers() {
-        return gamepad.rightBumper().and(gamepad.leftBumper());
+        return controller.rightBumper().and(controller.leftBumper());
     }
 
     public Trigger noTriggers() {
-        return gamepad.leftTrigger(0).negate().and(gamepad.rightTrigger(0).negate());
+        return controller.leftTrigger(0).negate().and(controller.rightTrigger(0).negate());
     }
 
     public Trigger leftTriggerOnly() {
-        return gamepad.leftTrigger(0).and(gamepad.rightTrigger(0).negate());
+        return controller.leftTrigger(0).and(controller.rightTrigger(0).negate());
     }
 
     public Trigger rightTriggerOnly() {
-        return gamepad.rightTrigger(0).and(gamepad.leftTrigger(0).negate());
+        return controller.rightTrigger(0).and(controller.leftTrigger(0).negate());
     }
 
     public Trigger bothTriggers() {
-        return gamepad.leftTrigger(0).and(gamepad.rightTrigger(0));
+        return controller.leftTrigger(0).and(controller.rightTrigger(0));
     }
 
     public Trigger leftYTrigger(ThresholdType t, double threshold) {
-        return axisTrigger(t, threshold, () -> gamepad.getLeftY());
+        return axisTrigger(t, threshold, () -> controller.getLeftY());
     }
 
     public Trigger leftXTrigger(ThresholdType t, double threshold) {
-        return axisTrigger(t, threshold, () -> gamepad.getLeftX());
+        return axisTrigger(t, threshold, () -> controller.getLeftX());
     }
 
     public Trigger rightYTrigger(ThresholdType t, double threshold) {
-        return axisTrigger(t, threshold, () -> gamepad.getRightY());
+        return axisTrigger(t, threshold, () -> controller.getRightY());
     }
 
     public Trigger rightXTrigger(ThresholdType t, double threshold) {
-        return axisTrigger(t, threshold, () -> gamepad.getRightX());
+        return axisTrigger(t, threshold, () -> controller.getRightX());
     }
 
     private Trigger axisTrigger(ThresholdType t, double threshold, DoubleSupplier v) {
@@ -139,8 +211,8 @@ public abstract class Gamepad extends SubsystemBase {
     }
 
     private void rumble(double leftIntensity, double rightIntensity) {
-        gamepad.getHID().setRumble(RumbleType.kLeftRumble, leftIntensity);
-        gamepad.getHID().setRumble(RumbleType.kRightRumble, rightIntensity);
+        controller.getHID().setRumble(RumbleType.kLeftRumble, leftIntensity);
+        controller.getHID().setRumble(RumbleType.kRightRumble, rightIntensity);
     }
 
     /** Command that can be used to rumble the pilot controller */

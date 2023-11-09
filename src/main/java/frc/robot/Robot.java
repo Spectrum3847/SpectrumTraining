@@ -1,24 +1,33 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.auton.Auton;
 import frc.robot.leds.LEDs;
 import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.swerve.Swerve;
+import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.Training;
 import frc.robot.training.commands.TrainingCommands;
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
     public static RobotConfig config;
     public static RobotTelemetry telemetry;
 
     /** Create a single static instance of all of your subsystems */
     public static Training training;
 
+    public static Swerve swerve;
     public static LEDs leds;
-
     public static Pilot pilot;
+    public static Auton auton;
 
     /**
      * This method cancels all commands and returns subsystems to their default commands and the
@@ -47,18 +56,21 @@ public class Robot extends TimedRobot {
          * Something that don't have an output are alos subsystems.
          */
         training = new Training();
+        swerve = new Swerve();
         pilot = new Pilot();
         leds = new LEDs();
 
         /** Intialize Telemetry and Auton */
         telemetry = new RobotTelemetry();
-        // auton = new Auton();
+        auton = new Auton();
+        advantageKitInit();
 
         /**
          * Set Default Commands this method should exist for each subsystem that has default command
          * these must be done after all the subsystems are intialized
          */
         TrainingCommands.setupDefaultCommand();
+        SwerveCommands.setupDefaultCommand();
         LEDsCommands.setupDefaultCommand();
         PilotCommands.setupDefaultCommand();
 
@@ -87,11 +99,11 @@ public class Robot extends TimedRobot {
 
     /** This method is called once when disabled starts */
     public void disabledInit() {
-        RobotTelemetry.print("### Disabled Init Starting ###");
+        RobotTelemetry.print("### Disabled Init Starting ### ");
 
         resetCommandsAndButtons();
 
-        RobotTelemetry.print("### Disabled Init Complete ###");
+        RobotTelemetry.print("### Disabled Init Complete ### ");
     }
 
     /** This method is called periodically while disabled. */
@@ -99,7 +111,7 @@ public class Robot extends TimedRobot {
 
     /** This method is called once when disabled exits */
     public void disabledExit() {
-        RobotTelemetry.print("### Disabled Exit###");
+        RobotTelemetry.print("### Disabled Exit### ");
     }
 
     /* AUTONOMOUS MODE (AUTO) */
@@ -110,10 +122,10 @@ public class Robot extends TimedRobot {
 
     /** This method is called once when autonomous starts */
     public void autonomousInit() {
-        RobotTelemetry.print("@@@ Auton Init Starting @@@");
+        RobotTelemetry.print("@@@ Auton Init Starting @@@ ");
         resetCommandsAndButtons();
 
-        RobotTelemetry.print("@@@ Auton Init Complete @@@");
+        RobotTelemetry.print("@@@ Auton Init Complete @@@ ");
     }
 
     /** This method is called periodically during autonomous. */
@@ -121,7 +133,7 @@ public class Robot extends TimedRobot {
 
     /** This method is called once when autonomous exits */
     public void autonomousExit() {
-        RobotTelemetry.print("@@@ Auton Exit @@@");
+        RobotTelemetry.print("@@@ Auton Exit @@@ ");
     }
 
     /* TELEOP MODE */
@@ -132,10 +144,10 @@ public class Robot extends TimedRobot {
 
     /** This method is called once when teleop starts */
     public void teleopInit() {
-        RobotTelemetry.print("!!! Teleop Init Starting !!!");
+        RobotTelemetry.print("!!! Teleop Init Starting !!! ");
         resetCommandsAndButtons();
 
-        RobotTelemetry.print("!!! Teleop Init Complete !!!");
+        RobotTelemetry.print("!!! Teleop Init Complete !!! ");
     }
 
     /** This method is called periodically during operator control. */
@@ -143,7 +155,7 @@ public class Robot extends TimedRobot {
 
     /** This method is called once when teleop exits */
     public void teleopExit() {
-        RobotTelemetry.print("!!! Teleop Exit !!!");
+        RobotTelemetry.print("!!! Teleop Exit !!! ");
     }
 
     /* TEST MODE */
@@ -156,10 +168,10 @@ public class Robot extends TimedRobot {
 
     /** This method is called once when test mode starts */
     public void testInit() {
-        RobotTelemetry.print("~~~ Test Init Starting ~~~");
+        RobotTelemetry.print("~~~ Test Init Starting ~~~ ");
         resetCommandsAndButtons();
 
-        RobotTelemetry.print("~~~ Test Init Complete ~~~");
+        RobotTelemetry.print("~~~ Test Init Complete ~~~ ");
     }
 
     /** This method is called periodically during test. */
@@ -167,7 +179,7 @@ public class Robot extends TimedRobot {
 
     /** This method is called once when the robot exits test mode */
     public void testExit() {
-        RobotTelemetry.print("~~~ Test Exit ~~~");
+        RobotTelemetry.print("~~~ Test Exit ~~~ ");
     }
 
     /* SIMULATION MODE */
@@ -178,11 +190,40 @@ public class Robot extends TimedRobot {
 
     /** This method is called once when a simulation starts */
     public void simulationInit() {
-        RobotTelemetry.print("$$$ Simulation Init Starting $$$");
+        RobotTelemetry.print("$$$ Simulation Init Starting $$$ ");
 
-        RobotTelemetry.print("$$$ Simulation Init Complete $$$");
+        RobotTelemetry.print("$$$ Simulation Init Complete $$$ ");
     }
 
     /** This method is called periodically during simulation. */
     public void simulationPeriodic() {}
+
+    /** This method is called once at the end of RobotInit to begin logging */
+    public void advantageKitInit() {
+        // Set up data receivers & replay source
+        switch (Robot.config.getRobotType()) {
+            case SIM:
+                // Running a physics simulator, log to NT
+                Logger.addDataReceiver(new NT4Publisher());
+                break;
+
+            case REPLAY:
+                // Replaying a log, set up replay source
+                setUseTiming(false); // Run as fast as possible
+                String logPath = LogFileUtil.findReplayLog();
+                Logger.setReplaySource(new WPILOGReader(logPath));
+                Logger.addDataReceiver(
+                        new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")));
+                break;
+
+            default:
+                // Running on a real robot, log to a USB stick
+                Logger.addDataReceiver(new WPILOGWriter("/U"));
+                Logger.addDataReceiver(new NT4Publisher());
+                break;
+        }
+
+        // Start AdvantageKit logger
+        Logger.start();
+    }
 }

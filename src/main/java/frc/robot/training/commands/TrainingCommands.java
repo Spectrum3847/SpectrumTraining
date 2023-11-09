@@ -23,6 +23,10 @@ public class TrainingCommands {
                         .withName("Training.default"));
     }
 
+    public static Command fullCommand() {
+        return new FullCommand();
+    }
+
     /** Specific Commands */
     public static Command printOnceCommand() {
         return printOnceCommand("Print Once").withName("Training.Print Once");
@@ -116,6 +120,10 @@ public class TrainingCommands {
                 // Have to use PrintCommand and repeatedly becuase it doesn't require the Training
                 // Subystem
                 .ignoringDisable(true)
-                .withName("Training.Parallel Group");
+                .withName("Training.Parallel Group")
+                .finallyDo(
+                        () -> {
+                            RobotTelemetry.print("Finally Do");
+                        });
     }
 }

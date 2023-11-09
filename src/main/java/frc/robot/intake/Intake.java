@@ -25,5 +25,4 @@ public class Intake extends Mechanism {
     public Command runVelocity(double velocity) {
         return run(() -> setMMVelocity(velocity));
     }
-
 }

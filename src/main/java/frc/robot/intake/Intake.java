@@ -11,9 +11,12 @@ public class Intake extends Mechanism {
         public double ejectSpeed = -1.0;
 
         public IntakeConfig() {
-            super("Intake", 60, "3847", false, false, 40);
+            super("Intake", 60, "3847");
             configPIDGains(0, 0.55, 0, 0.2);
             configFeedForwardGains(0, 0, 0, 0);
+            configClockwise_Positive();
+            configGearRatio(2);
+            configSupplyCurrentLimit(20, true);
         }
     }
 
@@ -22,10 +25,7 @@ public class Intake extends Mechanism {
     public Intake(boolean attached) {
         super(attached);
         if (attached) {
-            motor =
-                    TalonFXFactory.start()
-                            .withMechConfig(config)
-                            .createNew(config.id);
+            motor = TalonFXFactory.createConfigTalon(config.id, config.talonConfig);
         }
     }
 
@@ -33,7 +33,7 @@ public class Intake extends Mechanism {
     public void periodic() {}
 
     public Command runVelocity(double velocity) {
-        return run(() -> setMMVelocity(velocity)).withName("Intake.runVelocity");
+        return run(() -> setMMVelocityFOC(velocity)).withName("Intake.runVelocity");
     }
 
     @Override

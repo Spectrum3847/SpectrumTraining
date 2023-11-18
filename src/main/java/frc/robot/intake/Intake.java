@@ -1,7 +1,6 @@
 package frc.robot.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotTelemetry;
 import frc.spectrumLib.mechanism.Mechanism;
 import frc.spectrumLib.mechanism.TalonFXFactory;
 
@@ -21,7 +20,7 @@ public class Intake extends Mechanism {
     }
 
     public Intake() {
-        super(new IntakeConfig());
+        super();
         motor =
                 TalonFXFactory.start()
                         .withGearRatio(config.gearRatio)
@@ -35,9 +34,13 @@ public class Intake extends Mechanism {
                         .createNew(config.id);
     }
 
-    public void periodic() {
-        RobotTelemetry.print("Intake name: " + config.name);
+    protected Config getConfig() {
+        config = new IntakeConfig();
+        return config;
     }
+
+    @Override
+    public void periodic() {}
 
     public Command runVelocity(double velocity) {
         return run(() -> setMMVelocity(velocity));

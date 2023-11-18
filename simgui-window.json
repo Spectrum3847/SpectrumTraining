@@ -10,8 +10,8 @@
       "style": "0",
       "userScale": "6",
       "width": "1924",
-      "xpos": "386",
-      "ypos": "463"
+      "xpos": "-185",
+      "ypos": "417"
     }
   },
   "Table": {
@@ -51,7 +51,7 @@
     "###Addressable LEDs": {
       "Collapsed": "0",
       "Pos": "1521,48",
-      "Size": "273,78"
+      "Size": "283,744"
     },
     "###FMS": {
       "Collapsed": "0",

@@ -19,9 +19,15 @@ public class Slide extends Mechanism {
     }
 
     public Slide() {
-        super(new SlideConfig());
+        super();
     }
 
+    protected Config getConfig() {
+        config = new SlideConfig();
+        return config;
+    }
+
+    @Override
     public void periodic() {
         RobotTelemetry.print("Slide name: " + config.name);
     }

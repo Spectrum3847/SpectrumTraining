@@ -1,7 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.auton.Auton;
 import frc.robot.intake.Intake;
 import frc.robot.leds.LEDs;
 import frc.robot.leds.commands.LEDsCommands;
@@ -31,7 +30,7 @@ public class Robot extends LoggedRobot {
     public static Slide slide;
     public static LEDs leds;
     public static Pilot pilot;
-    public static Auton auton;
+    // public static Auton auton;
 
     /**
      * This method cancels all commands and returns subsystems to their default commands and the
@@ -68,7 +67,7 @@ public class Robot extends LoggedRobot {
 
         /** Intialize Telemetry and Auton */
         telemetry = new RobotTelemetry();
-        auton = new Auton();
+        // auton = new Auton();
         advantageKitInit();
 
         /**
@@ -98,6 +97,9 @@ public class Robot extends LoggedRobot {
          * block in order for anything in the Command-based framework to work.
          */
         CommandScheduler.getInstance().run();
+
+        System.out.println("Intake name: " + intake.config.name);
+        System.out.println("Slide name: " + slide.config.name);
     }
 
     /* DISABLED MODE */

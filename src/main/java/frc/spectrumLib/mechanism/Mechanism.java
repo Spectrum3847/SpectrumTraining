@@ -7,13 +7,19 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.spectrumLib.util.CanDeviceId;
 
-public abstract class Mechanism implements Subsystem {
-    protected TalonFX motor;
+public abstract class Mechanism implements Subsystem{
+    public TalonFX motor;
     public Config config;
 
-    public Mechanism(Config config) {
-        this.config = config;
+    public Mechanism() {
+        this.config = getConfig();
     }
+
+    protected abstract Config getConfig();
+
+    protected void setConfig(Config config) {
+        this.config = config;
+    };
 
     public void setMMVelocity(double velocity) {
         if (motor != null) {

@@ -7,6 +7,7 @@ import frc.robot.leds.LEDs;
 import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.slide.Slide;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.Training;
@@ -27,6 +28,7 @@ public class Robot extends LoggedRobot {
 
     public static Swerve swerve;
     public static Intake intake;
+    public static Slide slide;
     public static LEDs leds;
     public static Pilot pilot;
     public static Auton auton;
@@ -60,6 +62,7 @@ public class Robot extends LoggedRobot {
         training = new Training();
         swerve = new Swerve();
         intake = new Intake();
+        slide = new Slide();
         pilot = new Pilot();
         leds = new LEDs();
 

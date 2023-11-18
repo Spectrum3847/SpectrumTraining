@@ -154,7 +154,7 @@ public class TalonFXFactory {
         return this;
     }
 
-    public TalonFXFactory withMechConfig(MechConfig config) {
+    public TalonFXFactory withMechConfig(Mechanism.Config config) {
         TalonFXFactory factory = this;
         factory = factory.withGearRatio(config.gearRatio);
         factory = factory.withNeutralBrakeMode(config.neutralBrakeMode);

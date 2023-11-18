@@ -17,9 +17,8 @@ public class DefaultConfig {
     private static final double kWheelRadiusInches = 2;
     private static final double speedAt12VoltsMps = 6; // Units.feetToMeters(16);
     private static final double slipCurrent = 800;
-    private static final SlotGains steerGains = new SlotGains(6.000, 0, 0.05, 0.1224, 0.8);
-    private static final SlotGains driveGains =
-            new SlotGains(0.02 * 12, 0, 0.000002 * 12, 1 / 101.98 * 12, 0.8);
+    private static final SlotGains steerGains = new SlotGains(100, 0, 0.05, 0, 0);
+    private static final SlotGains driveGains = new SlotGains(0.4, 0, 0, 0, 0);
 
     /*Rotation Controller*/
     private static final double kPRotationController = 0.0;

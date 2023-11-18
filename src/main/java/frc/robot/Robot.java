@@ -6,7 +6,7 @@ import frc.robot.intake.IntakeCommands;
 import frc.robot.leds.LEDs;
 import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.pilot.Pilot;
-import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.pilot.PilotCommands;
 import frc.robot.slide.Slide;
 import frc.robot.slide.SlideCommands;
 import frc.robot.swerve.Swerve;

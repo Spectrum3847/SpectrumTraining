@@ -8,6 +8,7 @@ import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.commands.PilotCommands;
 import frc.robot.slide.Slide;
+import frc.robot.slide.SlideCommands;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.Training;
@@ -78,6 +79,7 @@ public class Robot extends LoggedRobot {
         TrainingCommands.setupDefaultCommand();
         SwerveCommands.setupDefaultCommand();
         IntakeCommands.setupDefaultCommand();
+        SlideCommands.setupDefaultCommand();
         LEDsCommands.setupDefaultCommand();
         PilotCommands.setupDefaultCommand();
 

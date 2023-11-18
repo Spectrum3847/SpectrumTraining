@@ -11,7 +11,6 @@ import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.spectrumLib.util.CanDeviceId;
@@ -57,15 +56,13 @@ public abstract class Mechanism implements Subsystem {
         public CanDeviceId id;
         public TalonFXConfiguration talonConfig;
 
-        public MotionMagicVelocityTorqueCurrentFOC mmVelocityFOC = new MotionMagicVelocityTorqueCurrentFOC(0);
+        public MotionMagicVelocityTorqueCurrentFOC mmVelocityFOC =
+                new MotionMagicVelocityTorqueCurrentFOC(0);
         public MotionMagicTorqueCurrentFOC mmPositionFOC = new MotionMagicTorqueCurrentFOC(0);
         public MotionMagicVelocityVoltage mmVelocityVoltage = new MotionMagicVelocityVoltage(0);
         public MotionMagicVoltage mmPositionVoltage = new MotionMagicVoltage(0);
 
-        public Config(
-                String name,
-                int id,
-                String canbus) {
+        public Config(String name, int id, String canbus) {
             this.name = name;
             this.id = new CanDeviceId(id, canbus);
         }
@@ -113,8 +110,10 @@ public abstract class Mechanism implements Subsystem {
 
         // Configure optional motion magic velocity parameters
         public void configMotionMagicVelocity(double acceleration, double feedforward) {
-            mmVelocityFOC = mmVelocityFOC.withAcceleration(acceleration).withFeedForward(feedforward);
-            mmVelocityVoltage = mmVelocityVoltage.withAcceleration(acceleration).withFeedForward(feedforward);
+            mmVelocityFOC =
+                    mmVelocityFOC.withAcceleration(acceleration).withFeedForward(feedforward);
+            mmVelocityVoltage =
+                    mmVelocityVoltage.withAcceleration(acceleration).withFeedForward(feedforward);
         }
 
         // Configure optional motion magic position parameters
@@ -197,19 +196,18 @@ public abstract class Mechanism implements Subsystem {
         }
 
         public void configGravityType(int slot, boolean isArm) {
-            GravityTypeValue gravityType = isArm ? GravityTypeValue.Arm_Cosine : GravityTypeValue.Elevator_Static;
-            if (slot == 0){
+            GravityTypeValue gravityType =
+                    isArm ? GravityTypeValue.Arm_Cosine : GravityTypeValue.Elevator_Static;
+            if (slot == 0) {
                 talonConfig.Slot0.GravityType = gravityType;
-            } else if (slot == 1){
+            } else if (slot == 1) {
                 talonConfig.Slot1.GravityType = gravityType;
-            } else if (slot == 2){
+            } else if (slot == 2) {
                 talonConfig.Slot2.GravityType = gravityType;
             } else {
                 DriverStation.reportWarning("MechConfig: Invalid slot", false);
             }
         }
-
-
 
         // Configure the TalonFXConfiguration feed forward gains
         private void talonConfigFeedForward(int slot, double kV, double kA, double kS, double kG) {

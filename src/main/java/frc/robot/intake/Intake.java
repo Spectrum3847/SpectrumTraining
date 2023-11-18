@@ -14,9 +14,9 @@ public class Intake extends Mechanism {
             super("Intake", 60, "3847");
             configPIDGains(0, 0.55, 0, 0.2);
             configFeedForwardGains(0, 0, 0, 0);
-            configClockwise_Positive();
             configGearRatio(2);
             configSupplyCurrentLimit(20, true);
+            configClockwise_Positive();
         }
     }
 

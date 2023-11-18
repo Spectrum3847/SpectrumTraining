@@ -24,8 +24,7 @@ public class TalonFXFactory {
     private static double NEUTRAL_DEADBAND = 0.04;
     private static double SUPPLY_CURRENT_LIMIT = 40;
 
-    private TalonFXFactory() {
-    }
+    private TalonFXFactory() {}
 
     // create a CANTalon with the default (out of the box) configuration
     public static TalonFX createDefaultTalon(CanDeviceId id) {

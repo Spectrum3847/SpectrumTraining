@@ -8,5 +8,4 @@ public class SlideCommands {
     public static void setupDefaultCommand() {
         slide.setDefaultCommand(slide.runStop().withName("Slide.default"));
     }
-    
 }

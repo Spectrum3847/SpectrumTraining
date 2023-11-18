@@ -31,6 +31,10 @@ public class Slide extends Mechanism {
         return run(() -> setMMPositionFOC(position)).withName("Slide.runPosition");
     }
 
+    public Command runStop() {
+        return run(() -> stop()).withName("Slide.runStop");
+    }
+
     @Override
     protected Config setConfig() {
         config = new SlideConfig();

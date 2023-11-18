@@ -17,8 +17,8 @@ public class Slide extends Mechanism {
         }
     }
 
-    public Slide() {
-        super();
+    public Slide(boolean attached) {
+        super(attached);
     }
 
     protected Config setConfig() {

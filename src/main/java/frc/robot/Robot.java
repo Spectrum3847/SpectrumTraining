@@ -61,8 +61,8 @@ public class Robot extends LoggedRobot {
          */
         training = new Training();
         swerve = new Swerve();
-        intake = new Intake(false);
-        slide = new Slide();
+        intake = new Intake(true);
+        slide = new Slide(true);
         pilot = new Pilot();
         leds = new LEDs();
 

@@ -5,9 +5,7 @@ import frc.spectrumLib.mechanism.Mechanism;
 import frc.spectrumLib.mechanism.TalonFXFactory;
 
 public class Intake extends Mechanism {
-    public IntakeConfig config;
-
-    public static class IntakeConfig extends Config {
+    public class IntakeConfig extends Config {
 
         public double fullSpeed = 1.0;
         public double ejectSpeed = -1.0;
@@ -19,12 +17,10 @@ public class Intake extends Mechanism {
         }
     }
 
-    public Intake() {
-        this(true);
-    }
+    public IntakeConfig config;
 
     public Intake(boolean attached) {
-        super();
+        super(attached);
         if (attached) {
             motor =
                     TalonFXFactory.start()
@@ -40,15 +36,16 @@ public class Intake extends Mechanism {
         }
     }
 
-    protected Config setConfig() {
-        config = new IntakeConfig();
-        return config;
-    }
-
     @Override
     public void periodic() {}
 
     public Command runVelocity(double velocity) {
         return run(() -> setMMVelocity(velocity)).withName("Intake.runVelocity");
+    }
+
+    @Override
+    protected Config setConfig() {
+        config = new IntakeConfig();
+        return config;
     }
 }

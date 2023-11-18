@@ -8,10 +8,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.spectrumLib.util.CanDeviceId;
 
 public abstract class Mechanism extends SubsystemBase {
+    protected boolean attached = false;
     public TalonFX motor;
     public Config config;
 
-    public Mechanism() {
+    public Mechanism(boolean attached) {
+        this.attached = attached;
         this.config = setConfig();
     }
 
@@ -22,14 +24,14 @@ public abstract class Mechanism extends SubsystemBase {
     };
 
     public void setMMVelocity(double velocity) {
-        if (motor != null) {
+        if (attached) {
             MotionMagicVelocityVoltage mm = config.mmVelocity.withVelocity(velocity);
             motor.setControl(mm);
         }
     }
 
     public void setMMPosition(double position) {
-        if (motor != null) {
+        if (attached) {
             MotionMagicVoltage mm = config.mmPosition.withPosition(position);
             motor.setControl(mm);
         }

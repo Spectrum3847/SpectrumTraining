@@ -45,9 +45,9 @@ public class NOTEBLOCK2023 {
 
     // Device Setup
     private static final String kCANbusName = "3847";
-    private static final boolean supportsPro = false;
+    private static final boolean supportsPro = true;
     private static final SwerveModuleSteerFeedbackType steerFeedbackType =
-            SwerveModuleSteerFeedbackType.RemoteCANcoder;
+            SwerveModuleSteerFeedbackType.FusedCANcoder;
 
     // Wheel Positions
     private static final double kFrontLeftXPos = Units.inchesToMeters(wheelBaseInches / 2.0);

@@ -27,7 +27,7 @@ public class PilotCommands {
                         () -> pilot.getDriveLeftPositive(),
                         () -> pilot.getDriveCCWPositive(),
                         () -> pilot.getFieldOriented(), // true is field oriented
-                        () -> true)
+                        () -> false)
                 .withName("Swerve.PilotDrive");
     }
 
@@ -47,7 +47,7 @@ public class PilotCommands {
                         () -> pilot.getDriveFwdPositive(),
                         () -> pilot.getDriveLeftPositive(),
                         () -> pilot.getFieldOriented(), // true is field oriented
-                        () -> true)
+                        () -> false)
                 .withName("Swerve.PilotHeadingLockDrive");
     }
 
@@ -63,7 +63,7 @@ public class PilotCommands {
                         () -> pilot.getDriveLeftPositive(),
                         () -> pilot.getRightStickCardinals(),
                         () -> pilot.getFieldOriented(), // true is field oriented
-                        () -> true)
+                        () -> false)
                 .withName("Swerve.PilotStickSteer");
     }
 

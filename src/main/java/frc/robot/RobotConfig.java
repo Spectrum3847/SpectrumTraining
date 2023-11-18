@@ -12,16 +12,11 @@ public final class RobotConfig {
     public final String XRAY2023MAC = "00:80:2F:22:50:6D";
 
     public final String Canivore = "3847";
-    public final Motors motors = new Motors();
 
     public static final int ledPWMport = 0;
 
-    /** Define the motor IDs in this file */
-    public final class Motors {
-        public static final int intakeMotor = 1;
-    }
-
     private RobotType robotType = null;
+    public boolean intakeAttached = true;
 
     public RobotConfig() {
         if (Robot.isReal()) {
@@ -37,6 +32,8 @@ public final class RobotConfig {
             case SIM:
                 /* Set all the constants specifically for the simulation*/
                 break;
+            case XRAY:
+                intakeAttached = false;
             default:
                 /* Set all the constants specifically for the robot */
                 break;

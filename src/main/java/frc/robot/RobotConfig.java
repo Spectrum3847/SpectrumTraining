@@ -69,7 +69,6 @@ public final class RobotConfig {
         MUSICDISC,
         NOTEBLOCK,
         XRAY,
-        SIM,
-        REPLAY
+        SIM
     }
 }

@@ -45,8 +45,7 @@ public class Swerve implements Subsystem {
             case MUSICDISC:
                 config = MUSICDISC2023.config;
                 break;
-            case SIM: // runs in simulation and replay
-            case REPLAY:
+            case SIM: // runs in simulation
                 OdometryUpdateFrequency = 50;
                 config = NOTEBLOCK2023.config;
                 break;

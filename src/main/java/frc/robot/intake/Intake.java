@@ -20,21 +20,27 @@ public class Intake extends Mechanism {
     }
 
     public Intake() {
-        super();
-        motor =
-                TalonFXFactory.start()
-                        .withGearRatio(config.gearRatio)
-                        .withNeutralBrakeMode(config.neutralBrakeMode)
-                        .withClockwise_Positive()
-                        .withFeedbackPID(
-                                config.slot0.slot,
-                                config.slot0.kP,
-                                config.slot0.kI,
-                                config.slot0.kD)
-                        .createNew(config.id);
+        this(true);
     }
 
-    protected Config getConfig() {
+    public Intake(boolean attached) {
+        super();
+        if (attached) {
+            motor =
+                    TalonFXFactory.start()
+                            .withGearRatio(config.gearRatio)
+                            .withNeutralBrakeMode(config.neutralBrakeMode)
+                            .withClockwise_Positive()
+                            .withFeedbackPID(
+                                    config.slot0.slot,
+                                    config.slot0.kP,
+                                    config.slot0.kI,
+                                    config.slot0.kD)
+                            .createNew(config.id);
+        }
+    }
+
+    protected Config setConfig() {
         config = new IntakeConfig();
         return config;
     }
@@ -43,6 +49,6 @@ public class Intake extends Mechanism {
     public void periodic() {}
 
     public Command runVelocity(double velocity) {
-        return run(() -> setMMVelocity(velocity));
+        return run(() -> setMMVelocity(velocity)).withName("Intake.runVelocity");
     }
 }

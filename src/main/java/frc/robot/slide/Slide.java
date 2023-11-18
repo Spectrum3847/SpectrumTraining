@@ -1,6 +1,5 @@
 package frc.robot.slide;
 
-import frc.robot.RobotTelemetry;
 import frc.spectrumLib.mechanism.Mechanism;
 
 public class Slide extends Mechanism {
@@ -22,13 +21,11 @@ public class Slide extends Mechanism {
         super();
     }
 
-    protected Config getConfig() {
+    protected Config setConfig() {
         config = new SlideConfig();
         return config;
     }
 
     @Override
-    public void periodic() {
-        RobotTelemetry.print("Slide name: " + config.name);
-    }
+    public void periodic() {}
 }

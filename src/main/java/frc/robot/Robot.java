@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.intake.Intake;
+import frc.robot.intake.IntakeCommands;
 import frc.robot.leds.LEDs;
 import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.pilot.Pilot;
@@ -60,7 +61,7 @@ public class Robot extends LoggedRobot {
          */
         training = new Training();
         swerve = new Swerve();
-        intake = new Intake();
+        intake = new Intake(false);
         slide = new Slide();
         pilot = new Pilot();
         leds = new LEDs();
@@ -76,6 +77,7 @@ public class Robot extends LoggedRobot {
          */
         TrainingCommands.setupDefaultCommand();
         SwerveCommands.setupDefaultCommand();
+        IntakeCommands.setupDefaultCommand();
         LEDsCommands.setupDefaultCommand();
         PilotCommands.setupDefaultCommand();
 
@@ -97,9 +99,6 @@ public class Robot extends LoggedRobot {
          * block in order for anything in the Command-based framework to work.
          */
         CommandScheduler.getInstance().run();
-
-        System.out.println("Intake name: " + intake.config.name);
-        System.out.println("Slide name: " + slide.config.name);
     }
 
     /* DISABLED MODE */

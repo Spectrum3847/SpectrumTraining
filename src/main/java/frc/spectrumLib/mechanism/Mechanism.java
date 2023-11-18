@@ -4,18 +4,18 @@ import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.spectrumLib.util.CanDeviceId;
 
-public abstract class Mechanism implements Subsystem{
+public abstract class Mechanism extends SubsystemBase {
     public TalonFX motor;
     public Config config;
 
     public Mechanism() {
-        this.config = getConfig();
+        this.config = setConfig();
     }
 
-    protected abstract Config getConfig();
+    protected abstract Config setConfig();
 
     protected void setConfig(Config config) {
         this.config = config;

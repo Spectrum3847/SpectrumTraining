@@ -1,5 +1,6 @@
 package frc.robot.pilot;
 
+import frc.robot.Robot;
 import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
 import frc.robot.leds.commands.LEDsCommands;
@@ -23,9 +24,16 @@ public class Pilot extends Gamepad {
         // Curve objects that we use to configure the controller axis ojbects
         LeftStickCurve =
                 new ExpCurve(
-                        config.leftStickExp, 0, config.leftStickScalar, config.leftStickDeadzone);
+                        config.leftStickExp,
+                        0,
+                        Robot.swerve.config.maxVelocity,
+                        config.leftStickDeadzone);
         TriggersCurve =
-                new ExpCurve(config.triggersExp, 0, config.triggersScalar, config.triggersDeadzone);
+                new ExpCurve(
+                        config.triggersExp,
+                        0,
+                        Robot.swerve.config.maxAngularVelocity,
+                        config.triggersDeadzone);
 
         RobotTelemetry.print("Pilot Subsystem Initialized: ");
     }
@@ -83,6 +91,14 @@ public class Pilot extends Gamepad {
         // This is just for training, robots may have different buttons during test
         setupTeleopButtons();
     };
+
+    public void setMaxVelocity(double maxVelocity) {
+        LeftStickCurve.setScalar(maxVelocity);
+    }
+
+    public void setMaxRotationalVelocity(double maxRotationalVelocity) {
+        TriggersCurve.setScalar(maxRotationalVelocity);
+    }
 
     public void setSlowMode(boolean isSlowMode) {
         this.isSlowMode = isSlowMode;

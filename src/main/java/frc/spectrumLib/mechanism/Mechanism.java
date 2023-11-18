@@ -65,6 +65,7 @@ public abstract class Mechanism implements Subsystem {
         public Config(String name, int id, String canbus) {
             this.name = name;
             this.id = new CanDeviceId(id, canbus);
+            talonConfig = new TalonFXConfiguration();
         }
 
         public void applyTalonConfig(TalonFX talon) {

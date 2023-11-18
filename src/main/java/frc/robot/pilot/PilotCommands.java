@@ -1,9 +1,8 @@
-package frc.robot.pilot.commands;
+package frc.robot.pilot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Robot;
-import frc.robot.pilot.Pilot;
 import frc.robot.swerve.commands.SwerveCommands;
 
 /** This class should have any command calls that directly call the Pilot */
@@ -27,7 +26,7 @@ public class PilotCommands {
                         () -> pilot.getDriveLeftPositive(),
                         () -> pilot.getDriveCCWPositive(),
                         () -> pilot.getFieldOriented(), // true is field oriented
-                        () -> false)
+                        () -> true)
                 .withName("Swerve.PilotDrive");
     }
 
@@ -47,7 +46,7 @@ public class PilotCommands {
                         () -> pilot.getDriveFwdPositive(),
                         () -> pilot.getDriveLeftPositive(),
                         () -> pilot.getFieldOriented(), // true is field oriented
-                        () -> false)
+                        () -> true)
                 .withName("Swerve.PilotHeadingLockDrive");
     }
 
@@ -63,7 +62,7 @@ public class PilotCommands {
                         () -> pilot.getDriveLeftPositive(),
                         () -> pilot.getRightStickCardinals(),
                         () -> pilot.getFieldOriented(), // true is field oriented
-                        () -> false)
+                        () -> true)
                 .withName("Swerve.PilotStickSteer");
     }
 

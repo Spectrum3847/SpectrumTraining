@@ -23,7 +23,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
-import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 public class Swerve implements Subsystem {
     public final SwerveConfig config;
@@ -60,22 +60,7 @@ public class Swerve implements Subsystem {
     }
 
     @Override
-    public void periodic() {
-        // Log measured states
-        Logger.recordOutput("SwerveStates/Measured", drivetrain.getState().ModuleStates);
-
-        // Log empty setpoint states when disabled
-        if (DriverStation.isDisabled()) {
-            Logger.recordOutput("SwerveStates/Setpoints", new SwerveModuleState[] {});
-        } else {
-            // Log setpoint states
-            Logger.recordOutput("SwerveStates/Setpoints", readSetpoints());
-            ;
-        }
-
-        // Log Odometry Pose
-        Logger.recordOutput("Odometry/Robot", getPose());
-    }
+    public void periodic() {}
 
     @Override
     public void simulationPeriodic() {
@@ -96,6 +81,12 @@ public class Swerve implements Subsystem {
         return drivetrain.getState();
     }
 
+    @AutoLogOutput(key = "SwerveStates/Measured")
+    public SwerveModuleState[] getModuleStates() {
+        return getState().ModuleStates;
+    }
+
+    @AutoLogOutput(key = "Odometry/Robot")
     public Pose2d getPose() {
         return getState().Pose;
     }
@@ -186,6 +177,15 @@ public class Swerve implements Subsystem {
             this.Setpoints = setpoints;
         } finally {
             m_stateLock.writeLock().unlock();
+        }
+    }
+
+    @AutoLogOutput(key = "SwerveStates/Setpoints")
+    public SwerveModuleState[] getLoggedSetpoints() {
+        if (DriverStation.isDisabled()) {
+            return new SwerveModuleState[] {};
+        } else {
+            return readSetpoints();
         }
     }
 

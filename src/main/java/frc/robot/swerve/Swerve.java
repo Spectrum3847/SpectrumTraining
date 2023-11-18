@@ -3,7 +3,9 @@ package frc.robot.swerve;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -196,5 +198,13 @@ public class Swerve implements Subsystem {
         } finally {
             m_stateLock.readLock().unlock();
         }
+    }
+
+    public SwerveDriveKinematics getKinematics() {
+        return drivetrain.getKinematics();
+    }
+
+    public Translation2d[] getModuleLocations() {
+        return drivetrain.getModuleLocations();
     }
 }

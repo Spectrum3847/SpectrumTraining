@@ -20,7 +20,7 @@ public class DefaultConfig {
     private static final SlotGains steerGains = new SlotGains(100, 0, 0.05, 0, 0);
     private static final SlotGains driveGains = new SlotGains(0.4, 0, 0, 0, 0);
 
-    /*Rotation Controller*/
+    /* Rotation Controller */
     private static final double kPRotationController = 0.0;
     private static final double kIRotationController = 0.0;
     private static final double kDRotationController = 0.0;

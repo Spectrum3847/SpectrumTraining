@@ -432,6 +432,14 @@ public class Drivetrain {
         return m_kinematics.toChassisSpeeds(getModuleStates());
     }
 
+    public SwerveDriveKinematics getKinematics() {
+        return m_kinematics;
+    }
+
+    public Translation2d[] getModuleLocations() {
+        return m_moduleLocations;
+    }
+
     /**
      * Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
      * while still accounting for measurement noise.

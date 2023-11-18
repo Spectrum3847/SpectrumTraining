@@ -29,7 +29,8 @@ public class SwerveCommands {
             DoubleSupplier rotationalRate,
             BooleanSupplier isFieldOriented,
             BooleanSupplier isOpenLoop) {
-        return Drive.run(velocityX, velocityY, rotationalRate, isFieldOriented, isOpenLoop)
+        return DriveWithSetPointGenerator.run(
+                        velocityX, velocityY, rotationalRate, isFieldOriented, isOpenLoop)
                 .withName("Swerve.Drive")
                 .ignoringDisable(true);
     }

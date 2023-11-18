@@ -2,6 +2,7 @@ package frc.robot.slide;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.spectrumLib.mechanism.Mechanism;
+import frc.spectrumLib.mechanism.TalonFXFactory;
 
 public class Slide extends Mechanism {
     public class SlideConfig extends Config {
@@ -22,6 +23,9 @@ public class Slide extends Mechanism {
 
     public Slide(boolean attached) {
         super(attached);
+        if (attached) {
+            motor = TalonFXFactory.createConfigTalon(config.id, config.talonConfig);
+        }
     }
 
     @Override

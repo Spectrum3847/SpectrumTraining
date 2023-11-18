@@ -24,14 +24,7 @@ public class Intake extends Mechanism {
         if (attached) {
             motor =
                     TalonFXFactory.start()
-                            .withGearRatio(config.gearRatio)
-                            .withNeutralBrakeMode(config.neutralBrakeMode)
-                            .withClockwise_Positive()
-                            .withFeedbackPID(
-                                    config.slot0.slot,
-                                    config.slot0.kP,
-                                    config.slot0.kI,
-                                    config.slot0.kD)
+                            .withMechConfig(config)
                             .createNew(config.id);
         }
     }

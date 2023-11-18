@@ -171,6 +171,7 @@ public class TalonFXFactory {
                 factory.withFeedForward(
                         2, config.slot2.kV, config.slot2.kA, config.slot2.kS, config.slot2.kG);
 
+        factory = factory.withSupplyCurrentLimit(config.supplyCurrentLimit, true);
         return factory;
     }
 

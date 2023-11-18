@@ -247,9 +247,9 @@ public class Drivetrain {
      * @param modules Constants for each specific module
      */
     public Drivetrain(SwerveConfig swerveConfig, double OdometryUpdateFrequency) {
-        ModuleConfig[] modules = swerveConfig.modules;
+        ModuleConfig[] moduleConfigs = swerveConfig.modules;
         UpdateFrequency = OdometryUpdateFrequency;
-        ModuleCount = modules.length;
+        ModuleCount = moduleConfigs.length;
 
         IsOnCANFD = checkIsOnCanFD(swerveConfig.CANbusName);
 
@@ -262,7 +262,7 @@ public class Drivetrain {
         m_moduleLocations = new Translation2d[ModuleCount];
 
         int iteration = 0;
-        for (ModuleConfig module : modules) {
+        for (ModuleConfig module : moduleConfigs) {
             Modules[iteration] =
                     new Module(module, swerveConfig.CANbusName, swerveConfig.SupportsPro);
             m_moduleLocations[iteration] = new Translation2d(module.LocationX, module.LocationY);
@@ -277,7 +277,7 @@ public class Drivetrain {
 
         m_fieldRelativeOffset = new Rotation2d();
 
-        m_simDrive = new SimDrivetrain(m_moduleLocations, m_pigeon2, swerveConfig, modules);
+        m_simDrive = new SimDrivetrain(m_moduleLocations, m_pigeon2, swerveConfig, moduleConfigs);
 
         m_odometryThread = new OdometryThread();
         RobotTelemetry.print("Starting Odometry Thread: ");

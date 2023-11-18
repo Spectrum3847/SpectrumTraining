@@ -60,19 +60,19 @@ public class SimDrivetrain {
     public SimDrivetrain(
             Translation2d[] wheelLocations,
             Pigeon2 pigeon,
-            SwerveConfig driveConstants,
-            ModuleConfig... moduleConstants) {
+            SwerveConfig swerveConfig,
+            ModuleConfig... moduleConfigs) {
         PigeonSim = pigeon.getSimState();
-        ModuleCount = moduleConstants.length;
+        ModuleCount = moduleConfigs.length;
         m_modules = new SimSwerveModule[ModuleCount];
         m_lastPositions = new SwerveModulePosition[ModuleCount];
         for (int i = 0; i < ModuleCount; ++i) {
             m_modules[i] =
                     new SimSwerveModule(
-                            moduleConstants[i].SteerMotorGearRatio,
-                            moduleConstants[i].SteerInertia,
-                            moduleConstants[i].DriveMotorGearRatio,
-                            moduleConstants[i].DriveInertia);
+                            moduleConfigs[i].SteerMotorGearRatio,
+                            moduleConfigs[i].SteerInertia,
+                            moduleConfigs[i].DriveMotorGearRatio,
+                            moduleConfigs[i].DriveInertia);
             m_lastPositions[i] = new SwerveModulePosition(0, new Rotation2d());
         }
 

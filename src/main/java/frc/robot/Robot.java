@@ -1,11 +1,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.auton.Auton;
+import frc.robot.intake.Intake;
+import frc.robot.intake.IntakeCommands;
 import frc.robot.leds.LEDs;
 import frc.robot.leds.commands.LEDsCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.slide.Slide;
+import frc.robot.slide.SlideCommands;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.Training;
@@ -25,9 +28,11 @@ public class Robot extends LoggedRobot {
     public static Training training;
 
     public static Swerve swerve;
+    public static Intake intake;
+    public static Slide slide;
     public static LEDs leds;
     public static Pilot pilot;
-    public static Auton auton;
+    // public static Auton auton;
 
     /**
      * This method cancels all commands and returns subsystems to their default commands and the
@@ -57,12 +62,14 @@ public class Robot extends LoggedRobot {
          */
         training = new Training();
         swerve = new Swerve();
+        intake = new Intake(true);
+        slide = new Slide(true);
         pilot = new Pilot();
         leds = new LEDs();
 
         /** Intialize Telemetry and Auton */
         telemetry = new RobotTelemetry();
-        auton = new Auton();
+        // auton = new Auton();
         advantageKitInit();
 
         /**
@@ -71,6 +78,8 @@ public class Robot extends LoggedRobot {
          */
         TrainingCommands.setupDefaultCommand();
         SwerveCommands.setupDefaultCommand();
+        IntakeCommands.setupDefaultCommand();
+        SlideCommands.setupDefaultCommand();
         LEDsCommands.setupDefaultCommand();
         PilotCommands.setupDefaultCommand();
 

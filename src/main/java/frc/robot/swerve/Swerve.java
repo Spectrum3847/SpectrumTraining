@@ -32,7 +32,7 @@ public class Swerve implements Subsystem {
     private double OdometryUpdateFrequency = 250;
     private double targetHeading = 0;
     private ReadWriteLock m_stateLock = new ReentrantReadWriteLock();
-    private SwerveModuleState[] Setpoints = new SwerveModuleState[] {};
+    private SwerveModuleState[] setpoints = new SwerveModuleState[] {};
 
     public Swerve() {
         RobotTelemetry.print("Swerve Subsystem Starting: ");
@@ -81,7 +81,7 @@ public class Swerve implements Subsystem {
         return drivetrain.getState();
     }
 
-    @AutoLogOutput(key = "SwerveStates/Measured")
+    @AutoLogOutput(key = "Swerve/SwerveStates/Measured")
     public SwerveModuleState[] getModuleStates() {
         return getState().ModuleStates;
     }
@@ -174,13 +174,13 @@ public class Swerve implements Subsystem {
         try {
             m_stateLock.writeLock().lock();
 
-            this.Setpoints = setpoints;
+            this.setpoints = setpoints;
         } finally {
             m_stateLock.writeLock().unlock();
         }
     }
 
-    @AutoLogOutput(key = "SwerveStates/Setpoints")
+    @AutoLogOutput(key = "Swerve/SwerveStates/Setpoints")
     public SwerveModuleState[] getLoggedSetpoints() {
         if (DriverStation.isDisabled()) {
             return new SwerveModuleState[] {};
@@ -192,7 +192,7 @@ public class Swerve implements Subsystem {
     public SwerveModuleState[] readSetpoints() {
         try {
             m_stateLock.readLock().lock();
-            return Setpoints;
+            return setpoints;
         } finally {
             m_stateLock.readLock().unlock();
         }

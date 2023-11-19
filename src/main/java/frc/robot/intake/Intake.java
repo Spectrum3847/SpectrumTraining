@@ -3,6 +3,7 @@ package frc.robot.intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.spectrumLib.mechanism.Mechanism;
 import frc.spectrumLib.mechanism.TalonFXFactory;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 public class Intake extends Mechanism {
     public class IntakeConfig extends Config {
@@ -40,5 +41,15 @@ public class Intake extends Mechanism {
     protected Config setConfig() {
         config = new IntakeConfig();
         return config;
+    }
+
+    @AutoLogOutput(key = "Intake/Velocity")
+    public double getMotorVelocity() {
+        return motor.getVelocity().getValueAsDouble();
+    }
+
+    @AutoLogOutput(key = "Intake/Temp")
+    public double getMotorTemp() {
+        return motor.getDeviceTemp().getValueAsDouble();
     }
 }

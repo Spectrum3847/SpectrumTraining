@@ -13,6 +13,7 @@ import frc.robot.swerve.Swerve;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.Training;
 import frc.robot.training.commands.TrainingCommands;
+import frc.spectrumLib.util.CrashTracker;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
@@ -48,40 +49,46 @@ public class Robot extends LoggedRobot {
     /* ROBOT INIT (Initialization) */
     /** This method is called once when the robot is first powered on. */
     public void robotInit() {
-        RobotTelemetry.print("--- Robot Init Starting ---");
+        try {
+            RobotTelemetry.print("--- Robot Init Starting ---");
 
-        /** Set up the config */
-        config = new RobotConfig();
+            /** Set up the config */
+            config = new RobotConfig();
 
-        /**
-         * Intialize the Subsystems of the robot. Subsystems are how we divide up the robot code.
-         * Anything with an output that needs to be independently controlled is a subsystem
-         * Something that don't have an output are alos subsystems.
-         */
-        training = new Training();
-        swerve = new Swerve();
-        intake = new Intake(config.intakeAttached);
-        slide = new Slide(true);
-        pilot = new Pilot();
-        leds = new LEDs();
+            /**
+             * Intialize the Subsystems of the robot. Subsystems are how we divide up the robot
+             * code. Anything with an output that needs to be independently controlled is a
+             * subsystem Something that don't have an output are alos subsystems.
+             */
+            training = new Training();
+            swerve = new Swerve();
+            intake = new Intake(config.intakeAttached);
+            slide = new Slide(true);
+            pilot = new Pilot();
+            leds = new LEDs();
 
-        /** Intialize Telemetry and Auton */
-        telemetry = new RobotTelemetry();
-        // auton = new Auton();
-        advantageKitInit();
+            /** Intialize Telemetry and Auton */
+            telemetry = new RobotTelemetry();
+            // auton = new Auton();
+            advantageKitInit();
 
-        /**
-         * Set Default Commands this method should exist for each subsystem that has default command
-         * these must be done after all the subsystems are intialized
-         */
-        TrainingCommands.setupDefaultCommand();
-        SwerveCommands.setupDefaultCommand();
-        IntakeCommands.setupDefaultCommand();
-        SlideCommands.setupDefaultCommand();
-        LEDsCommands.setupDefaultCommand();
-        PilotCommands.setupDefaultCommand();
+            /**
+             * Set Default Commands this method should exist for each subsystem that has default
+             * command these must be done after all the subsystems are intialized
+             */
+            TrainingCommands.setupDefaultCommand();
+            SwerveCommands.setupDefaultCommand();
+            IntakeCommands.setupDefaultCommand();
+            SlideCommands.setupDefaultCommand();
+            LEDsCommands.setupDefaultCommand();
+            PilotCommands.setupDefaultCommand();
 
-        RobotTelemetry.print("--- Robot Init Complete ---");
+            RobotTelemetry.print("--- Robot Init Complete ---");
+        } catch (Throwable t) {
+            // intercept error and log it
+            CrashTracker.logThrowableCrash(t);
+            throw t;
+        }
     }
 
     /* ROBOT PERIODIC  */
@@ -92,6 +99,7 @@ public class Robot extends LoggedRobot {
      * updated from the gamepads and sent to the motors
      */
     public void robotPeriodic() {
+        try {
         /**
          * Runs the Scheduler. This is responsible for polling buttons, adding newly-scheduled
          * commands, running already-scheduled commands, removing finished or interrupted commands,
@@ -99,6 +107,12 @@ public class Robot extends LoggedRobot {
          * block in order for anything in the Command-based framework to work.
          */
         CommandScheduler.getInstance().run();
+        } catch (Throwable t) {
+            // intercept error and log it
+            CrashTracker.logThrowableCrash(t);
+            throw t;
+        }
+
     }
 
     /* DISABLED MODE */
@@ -129,14 +143,21 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when autonomous starts */
     public void autonomousInit() {
-        RobotTelemetry.print("@@@ Auton Init Starting @@@ ");
-        resetCommandsAndButtons();
+        try {
+            RobotTelemetry.print("@@@ Auton Init Starting @@@ ");
+            resetCommandsAndButtons();
 
-        RobotTelemetry.print("@@@ Auton Init Complete @@@ ");
+            RobotTelemetry.print("@@@ Auton Init Complete @@@ ");
+        } catch (Throwable t) {
+            // intercept error and log it
+            CrashTracker.logThrowableCrash(t);
+            throw t;
+        }
     }
 
     /** This method is called periodically during autonomous. */
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+    }
 
     /** This method is called once when autonomous exits */
     public void autonomousExit() {
@@ -151,10 +172,17 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when teleop starts */
     public void teleopInit() {
+        try {
         RobotTelemetry.print("!!! Teleop Init Starting !!! ");
         resetCommandsAndButtons();
 
         RobotTelemetry.print("!!! Teleop Init Complete !!! ");
+        } catch (Throwable t) {
+            // intercept error and log it
+            CrashTracker.logThrowableCrash(t);
+            throw t;
+        }
+
     }
 
     /** This method is called periodically during operator control. */
@@ -175,10 +203,16 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when test mode starts */
     public void testInit() {
+        try {
         RobotTelemetry.print("~~~ Test Init Starting ~~~ ");
         resetCommandsAndButtons();
 
         RobotTelemetry.print("~~~ Test Init Complete ~~~ ");
+        } catch (Throwable t) {
+            // intercept error and log it
+            CrashTracker.logThrowableCrash(t);
+            throw t;
+        }
     }
 
     /** This method is called periodically during test. */

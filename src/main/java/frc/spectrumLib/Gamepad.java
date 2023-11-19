@@ -57,7 +57,7 @@ public abstract class Gamepad extends SubsystemBase {
             }
             configured = true;
 
-            RobotTelemetry.print("##" + getName() + ": gamepad is connected ##");
+            RobotTelemetry.print("## " + getName() + ": gamepad is connected ##");
         }
     }
 

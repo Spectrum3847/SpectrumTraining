@@ -17,7 +17,7 @@ import frc.spectrumLib.util.CanDeviceId;
 
 public abstract class Mechanism implements Subsystem {
     protected boolean attached = false;
-    public TalonFX motor;
+    protected TalonFX motor;
     public Config config;
 
     public Mechanism(boolean attached) {

@@ -16,6 +16,7 @@ public class Slide extends Mechanism {
             configFeedForwardGains(0, 0, 0, 0);
             configReverseSoftLimit(0, true);
             configForwardSoftLimit(top, true);
+            configCounterClockwise_Positive();
         }
     }
 

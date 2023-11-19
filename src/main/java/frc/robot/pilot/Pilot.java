@@ -3,13 +3,27 @@ package frc.robot.pilot;
 import frc.robot.Robot;
 import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
-import frc.robot.leds.commands.LEDsCommands;
-import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.leds.LEDsCommands;
 import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
 import frc.spectrumLib.util.ExpCurve;
 
 public class Pilot extends Gamepad {
+    public class PilotConfig {
+        public static final String name = "Pilot";
+        public static final int port = 0;
+
+        public static final double slowModeScalor = 0.5;
+
+        public final double leftStickDeadzone = 0.1;
+        public final double leftStickExp = 2.0;
+        public final double leftStickScalor = Robot.swerve.config.maxVelocity;
+
+        public final double triggersDeadzone = 0.1;
+        public final double triggersExp = 2.0;
+        public final double triggersScalor = Robot.swerve.config.maxAngularVelocity;
+    }
+
     public PilotConfig config;
     private boolean isSlowMode = false;
     private boolean isFieldOriented = false;
@@ -24,22 +38,11 @@ public class Pilot extends Gamepad {
         // Curve objects that we use to configure the controller axis ojbects
         LeftStickCurve =
                 new ExpCurve(
-                        config.leftStickExp,
-                        0,
-                        Robot.swerve.config.maxVelocity,
-                        config.leftStickDeadzone);
+                        config.leftStickExp, 0, config.leftStickScalor, config.leftStickDeadzone);
         TriggersCurve =
-                new ExpCurve(
-                        config.triggersExp,
-                        0,
-                        Robot.swerve.config.maxAngularVelocity,
-                        config.triggersDeadzone);
+                new ExpCurve(config.triggersExp, 0, config.triggersScalor, config.triggersDeadzone);
 
         RobotTelemetry.print("Pilot Subsystem Initialized: ");
-    }
-
-    public void periodic() {
-        super.periodic();
     }
 
     /** Setup the Buttons for telop mode. */

@@ -4,7 +4,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Robot;
-import frc.robot.pilot.commands.PilotCommands;
+import frc.robot.pilot.PilotCommands;
 import frc.robot.swerve.Swerve;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;

@@ -1,7 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.leds.commands.LEDsCommands;
+import frc.robot.leds.LEDsCommands;
 import frc.robot.training.commands.TrainingCommands;
 
 /**

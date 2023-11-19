@@ -3,7 +3,7 @@ package frc.robot.pilot;
 import frc.robot.Robot;
 import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
-import frc.robot.leds.commands.LEDsCommands;
+import frc.robot.leds.LEDsCommands;
 import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
 import frc.spectrumLib.util.ExpCurve;

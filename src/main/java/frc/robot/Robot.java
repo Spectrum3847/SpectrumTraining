@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.intake.Intake;
 import frc.robot.intake.IntakeCommands;
 import frc.robot.leds.LEDs;
-import frc.robot.leds.commands.LEDsCommands;
+import frc.robot.leds.LEDsCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.PilotCommands;
 import frc.robot.slide.Slide;

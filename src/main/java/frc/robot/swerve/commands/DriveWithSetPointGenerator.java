@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.spectrumLib.swerve.Module;
 import frc.spectrumLib.swerve.Request;
-import frc.spectrumLib.swerve.Setpoint;
 import frc.spectrumLib.swerve.SetpointGenerator;
+import frc.spectrumLib.swerve.SetpointGenerator.SwerveSetpoint;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
@@ -78,18 +78,19 @@ public class DriveWithSetPointGenerator implements Request {
     /** The last applied state in case we don't have anything to drive */
     protected SwerveModuleState[] m_lastAppliedState = null;
 
-    SetpointGenerator generator =
-            new SetpointGenerator(Robot.swerve.getKinematics(), Robot.swerve.getModuleLocations());
+    SetpointGenerator generator = new SetpointGenerator(Robot.swerve.getKinematics());
 
-    protected Setpoint setpoint;
+    protected SwerveSetpoint setpoint;
 
     public DriveWithSetPointGenerator() {
         SwerveModuleState[] states =
                 new SwerveModuleState[Robot.swerve.getModuleLocations().length];
+        double[] accerlerations = new double[states.length];
         for (int i = 0; i < states.length; ++i) {
             states[i] = new SwerveModuleState(0, new Rotation2d());
+            accerlerations[i] = 0;
         }
-        setpoint = new Setpoint(new ChassisSpeeds(0, 0, 0), states);
+        setpoint = new SwerveSetpoint(new ChassisSpeeds(0, 0, 0), states, accerlerations);
     }
 
     @Override
@@ -119,7 +120,7 @@ public class DriveWithSetPointGenerator implements Request {
                         speeds,
                         Robot.swerve.getState().OdometryPeriod);
 
-        SwerveModuleState[] states = setpoint.moduleStates;
+        SwerveModuleState[] states = setpoint.moduleStates();
         // parameters.kinematics.toSwerveModuleStates(speeds, new Translation2d());
 
         Robot.swerve.writeSetpoints(states);

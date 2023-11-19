@@ -1,6 +1,6 @@
 package frc.spectrumLib.swerve.config;
 
-import frc.spectrumLib.swerve.SetpointGenerator.KinematicLimits;
+import frc.spectrumLib.swerve.SetpointGenerator.KinematicLimit;
 
 public class SwerveConfig {
     /** CAN ID of the Pigeon2 on the drivetrain */
@@ -18,7 +18,7 @@ public class SwerveConfig {
     public double kIRotationController = 0.0;
     public double kDRotationController = 0.0;
 
-    public KinematicLimits KINEMATIC_LIMITS = new KinematicLimits().set(5.3, 25, 25);
+    public KinematicLimit KINEMATIC_LIMITS = new KinematicLimit(5.3, 25, 25);
 
     /*Profiling Configs*/
     public double maxVelocity = 0;

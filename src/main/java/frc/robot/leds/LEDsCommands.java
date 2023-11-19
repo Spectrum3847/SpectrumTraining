@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Robot;
-import frc.robot.leds.LEDs;
-import frc.robot.leds.LEDsConfig;
 import frc.robot.leds.LEDsConfig.Section;
 
 public class LEDsCommands {

@@ -12,7 +12,10 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import frc.robot.RobotTelemetry;
 import frc.spectrumLib.util.CanDeviceId;
 
 public abstract class Mechanism implements Subsystem {
@@ -51,6 +54,68 @@ public abstract class Mechanism implements Subsystem {
         }
     }
 
+
+    /**
+     * Checks the motor's current and velocity against target values and prints the results.
+     * 
+     * @param targetCurrent The target current value.
+     * @param targetVelocity The target velocity value.
+     * @param runTime The maximum time for the command to run.
+     * @return The Command object with a timeout.
+     */
+    public Command checkMotor(double targetCurrent, double targetVelocity, double runTime) {
+        return runEnd(() -> setMMVelocityFOC(targetVelocity), () -> {
+            double current = motor.getSupplyCurrent().getValueAsDouble();
+            double velocity = motor.getVelocity().getValueAsDouble();
+            boolean isCurrentInRange = Math.abs(current - targetCurrent) <= targetCurrent;
+            boolean isVelocityInRange = Math.abs(velocity - targetVelocity) <= targetVelocity;
+            
+            RobotTelemetry.print(config.name + " current is in range: " + isCurrentInRange);
+            RobotTelemetry.print(config.name + " velocity is in range: " + isVelocityInRange);
+        }).withTimeout(runTime);
+    }
+
+    /*
+    public Command checkMotor() {
+        return new Command() {
+            double runTime = 1.5; //seconds
+            double targetVelocity = 0.5; //units?
+            double targetCurrent = 5; //random
+            double startTime;
+
+            //constructor
+            {
+                startTime = Timer.getFPGATimestamp();
+
+                setName("Mechanism.checkMotor");
+                addRequirements(Mechanism.this);
+            }
+
+            @Override
+            public void execute() {
+                setMMVelocityFOC(targetVelocity);
+            }
+
+            @Override
+            public void end(boolean interrupted) {
+                double current = motor.getSupplyCurrent().getValueAsDouble();
+                double velocity = motor.getVelocity().getValueAsDouble();
+                boolean isCurrentInRange = Math.abs(current - targetCurrent) <= targetCurrent;
+                boolean isVelocityInRange = Math.abs(velocity - targetVelocity) <= targetVelocity;
+                
+                RobotTelemetry.print(Mechanism.this.config.name + " current is in range: " + isCurrentInRange);
+                RobotTelemetry.print(Mechanism.this.config.name + " velocity is in range: " + isVelocityInRange);
+                stop();
+            }
+
+            @Override
+            public boolean isFinished() {
+                return Timer.getFPGATimestamp() - startTime > runTime;
+            }
+        };
+    }
+    */
+ 
     public static class Config {
         public String name;
         public CanDeviceId id;

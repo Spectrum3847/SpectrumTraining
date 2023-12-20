@@ -14,15 +14,22 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.spectrumLib.util.CanDeviceId;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Mechanism implements Subsystem {
     protected boolean attached = false;
     protected TalonFX motor;
     public Config config;
 
+    // Mechanism instances
+    private static List<Mechanism> instances = new ArrayList<>();
+
     public Mechanism(boolean attached) {
         this.attached = attached;
         this.config = setConfig();
+
+        instances.add(this);
     }
 
     protected abstract Config setConfig();
@@ -49,6 +56,10 @@ public abstract class Mechanism implements Subsystem {
             MotionMagicTorqueCurrentFOC mm = config.mmPositionFOC.withPosition(position);
             motor.setControl(mm);
         }
+    }
+
+    public static List<Mechanism> getInstances() {
+        return instances;
     }
 
     public static class Config {

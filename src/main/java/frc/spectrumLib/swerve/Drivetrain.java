@@ -1,11 +1,11 @@
 package frc.spectrumLib.swerve;
 
 import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.ctre.phoenix6.unmanaged.Unmanaged;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.filter.LinearFilter;
@@ -219,7 +219,7 @@ public class Drivetrain {
     }
 
     protected boolean checkIsOnCanFD(String canbusName) {
-        return Unmanaged.isNetworkFD(canbusName);
+        return CANBus.isNetworkFD(canbusName);
     }
 
     /**
@@ -255,7 +255,7 @@ public class Drivetrain {
 
         m_pigeon2 = new Pigeon2(swerveConfig.Pigeon2Id, swerveConfig.CANbusName);
         m_yawGetter = m_pigeon2.getYaw().clone();
-        m_angularZGetter = m_pigeon2.getAngularVelocityZ().clone();
+        m_angularZGetter = m_pigeon2.getAngularVelocityZWorld().clone();
 
         Modules = new Module[ModuleCount];
         m_modulePositions = new SwerveModulePosition[ModuleCount];

@@ -47,7 +47,8 @@ public class Telemetry extends SubsystemBase {
     /** Print a statment if they are enabled */
     public static void print(String output) {
         if (!disablePrints) {
-            System.out.println("TIME: " + Timer.getFPGATimestamp() + " || " + output);
+            System.out.println(
+                    "TIME: " + String.format("%.3f", Timer.getFPGATimestamp()) + " || " + output);
         }
     }
 }

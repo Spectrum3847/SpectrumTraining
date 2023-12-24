@@ -13,6 +13,7 @@ import frc.robot.swerve.Swerve;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.Training;
 import frc.robot.training.commands.TrainingCommands;
+import frc.spectrumLib.mechanism.MechanismTelemetry;
 import frc.spectrumLib.util.CrashTracker;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -205,6 +206,7 @@ public class Robot extends LoggedRobot {
         try {
             RobotTelemetry.print("~~~ Test Init Starting ~~~ ");
             resetCommandsAndButtons();
+            MechanismTelemetry.testMode();
 
             RobotTelemetry.print("~~~ Test Init Complete ~~~ ");
         } catch (Throwable t) {
@@ -215,10 +217,13 @@ public class Robot extends LoggedRobot {
     }
 
     /** This method is called periodically during test. */
-    public void testPeriodic() {}
+    public void testPeriodic() {
+        MechanismTelemetry.systemChecker();
+    }
 
     /** This method is called once when the robot exits test mode */
     public void testExit() {
+        MechanismTelemetry.close();
         RobotTelemetry.print("~~~ Test Exit ~~~ ");
     }
 

@@ -82,7 +82,7 @@ public abstract class Mechanism implements Subsystem {
     }
 
     /*
-    public Command checkMotor() {
+    public Command checkMechanism() {
         return new Command() {
             double runTime = 1.5; //seconds
             double targetVelocity = 0.5; //units?

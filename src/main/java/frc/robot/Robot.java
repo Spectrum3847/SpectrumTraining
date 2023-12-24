@@ -100,19 +100,18 @@ public class Robot extends LoggedRobot {
      */
     public void robotPeriodic() {
         try {
-        /**
-         * Runs the Scheduler. This is responsible for polling buttons, adding newly-scheduled
-         * commands, running already-scheduled commands, removing finished or interrupted commands,
-         * and running subsystem periodic() methods. This must be called from the robot's periodic
-         * block in order for anything in the Command-based framework to work.
-         */
-        CommandScheduler.getInstance().run();
+            /**
+             * Runs the Scheduler. This is responsible for polling buttons, adding newly-scheduled
+             * commands, running already-scheduled commands, removing finished or interrupted
+             * commands, and running subsystem periodic() methods. This must be called from the
+             * robot's periodic block in order for anything in the Command-based framework to work.
+             */
+            CommandScheduler.getInstance().run();
         } catch (Throwable t) {
             // intercept error and log it
             CrashTracker.logThrowableCrash(t);
             throw t;
         }
-
     }
 
     /* DISABLED MODE */
@@ -156,8 +155,7 @@ public class Robot extends LoggedRobot {
     }
 
     /** This method is called periodically during autonomous. */
-    public void autonomousPeriodic() {
-    }
+    public void autonomousPeriodic() {}
 
     /** This method is called once when autonomous exits */
     public void autonomousExit() {
@@ -173,16 +171,15 @@ public class Robot extends LoggedRobot {
     /** This method is called once when teleop starts */
     public void teleopInit() {
         try {
-        RobotTelemetry.print("!!! Teleop Init Starting !!! ");
-        resetCommandsAndButtons();
+            RobotTelemetry.print("!!! Teleop Init Starting !!! ");
+            resetCommandsAndButtons();
 
-        RobotTelemetry.print("!!! Teleop Init Complete !!! ");
+            RobotTelemetry.print("!!! Teleop Init Complete !!! ");
         } catch (Throwable t) {
             // intercept error and log it
             CrashTracker.logThrowableCrash(t);
             throw t;
         }
-
     }
 
     /** This method is called periodically during operator control. */
@@ -204,10 +201,10 @@ public class Robot extends LoggedRobot {
     /** This method is called once when test mode starts */
     public void testInit() {
         try {
-        RobotTelemetry.print("~~~ Test Init Starting ~~~ ");
-        resetCommandsAndButtons();
+            RobotTelemetry.print("~~~ Test Init Starting ~~~ ");
+            resetCommandsAndButtons();
 
-        RobotTelemetry.print("~~~ Test Init Complete ~~~ ");
+            RobotTelemetry.print("~~~ Test Init Complete ~~~ ");
         } catch (Throwable t) {
             // intercept error and log it
             CrashTracker.logThrowableCrash(t);

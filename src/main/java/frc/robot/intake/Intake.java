@@ -17,6 +17,7 @@ public class Intake extends Mechanism {
             configGearRatio(2);
             configSupplyCurrentLimit(20, true);
             configClockwise_Positive();
+            configSystemCheckValues(1, 5, 0.5); // test values
         }
     }
 

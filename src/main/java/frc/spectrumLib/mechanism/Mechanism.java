@@ -12,7 +12,6 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.RobotTelemetry;
@@ -54,25 +53,32 @@ public abstract class Mechanism implements Subsystem {
         }
     }
 
-
     /**
-     * Checks the motor's current and velocity against target values and prints the results.
-     * 
+     * Default command for checking the motor's current and velocity against target values and prints the results. This
+     * can be overriden in the child class to add additional checks.
+     *
      * @param targetCurrent The target current value.
      * @param targetVelocity The target velocity value.
      * @param runTime The maximum time for the command to run.
      * @return The Command object with a timeout.
      */
-    public Command checkMotor(double targetCurrent, double targetVelocity, double runTime) {
-        return runEnd(() -> setMMVelocityFOC(targetVelocity), () -> {
-            double current = motor.getSupplyCurrent().getValueAsDouble();
-            double velocity = motor.getVelocity().getValueAsDouble();
-            boolean isCurrentInRange = Math.abs(current - targetCurrent) <= targetCurrent;
-            boolean isVelocityInRange = Math.abs(velocity - targetVelocity) <= targetVelocity;
-            
-            RobotTelemetry.print(config.name + " current is in range: " + isCurrentInRange);
-            RobotTelemetry.print(config.name + " velocity is in range: " + isVelocityInRange);
-        }).withTimeout(runTime);
+    public Command checkMechanism() {
+        return runEnd(
+                        () -> setMMVelocityFOC(config.checkValues.targetVelocity),
+                        () -> {
+                            double current = motor.getSupplyCurrent().getValueAsDouble();
+                            double velocity = motor.getVelocity().getValueAsDouble();
+                            boolean isCurrentInRange =
+                                    Math.abs(current - config.checkValues.targetCurrent) <= config.checkValues.targetCurrent;
+                            boolean isVelocityInRange =
+                                    Math.abs(velocity - config.checkValues.targetVelocity) <= config.checkValues.targetVelocity;
+
+                            RobotTelemetry.print(
+                                    config.name + " current is in range: " + isCurrentInRange);
+                            RobotTelemetry.print(
+                                    config.name + " velocity is in range: " + isVelocityInRange);
+                        })
+                .withTimeout(config.checkValues.runTime);
     }
 
     /*
@@ -102,7 +108,7 @@ public abstract class Mechanism implements Subsystem {
                 double velocity = motor.getVelocity().getValueAsDouble();
                 boolean isCurrentInRange = Math.abs(current - targetCurrent) <= targetCurrent;
                 boolean isVelocityInRange = Math.abs(velocity - targetVelocity) <= targetVelocity;
-                
+
                 RobotTelemetry.print(Mechanism.this.config.name + " current is in range: " + isCurrentInRange);
                 RobotTelemetry.print(Mechanism.this.config.name + " velocity is in range: " + isVelocityInRange);
                 stop();
@@ -115,11 +121,13 @@ public abstract class Mechanism implements Subsystem {
         };
     }
     */
- 
+
     public static class Config {
         public String name;
         public CanDeviceId id;
         public TalonFXConfiguration talonConfig;
+        /** Mechanism System Check Values */
+        public CheckValues checkValues;
 
         public MotionMagicVelocityTorqueCurrentFOC mmVelocityFOC =
                 new MotionMagicVelocityTorqueCurrentFOC(0);
@@ -131,6 +139,11 @@ public abstract class Mechanism implements Subsystem {
             this.name = name;
             this.id = new CanDeviceId(id, canbus);
             talonConfig = new TalonFXConfiguration();
+            checkValues = new CheckValues(0, 0, 0);
+        }
+
+        public void configSystemCheckValues(double targetVelocity, double targetCurrent, double runTime) {
+            checkValues = new CheckValues(targetVelocity, targetCurrent, runTime);
         }
 
         public void applyTalonConfig(TalonFX talon) {
@@ -314,5 +327,14 @@ public abstract class Mechanism implements Subsystem {
                 DriverStation.reportWarning("MechConfig: Invalid Feedback slot", false);
             }
         }
+
+        /**
+         * Represents the check values including target velocity, target current, and runtime.
+         *
+         * @param targetVelocity The target velocity in rotations per second.
+         * @param targetCurrent The target current.
+         * @param runTime The duration of the run in seconds.
+         */
+        public record CheckValues(double targetVelocity, double targetCurrent, double runTime) {}
     }
 }

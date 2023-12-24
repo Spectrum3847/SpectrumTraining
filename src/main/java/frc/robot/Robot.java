@@ -62,10 +62,12 @@ public class Robot extends LoggedRobot {
              */
             training = new Training();
             swerve = new Swerve();
-            intake = new Intake(config.intakeAttached);
-            slide = new Slide(true);
             pilot = new Pilot();
             leds = new LEDs();
+
+            /** Initialize Mechanisms */
+            intake = new Intake(config.intakeAttached);
+            slide = new Slide(true);
 
             /** Intialize Telemetry and Auton */
             telemetry = new RobotTelemetry();

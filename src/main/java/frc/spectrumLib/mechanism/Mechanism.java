@@ -61,8 +61,8 @@ public abstract class Mechanism implements Subsystem {
     }
 
     /**
-     * Default command for checking the motor's current and velocity against target values and prints the results. This
-     * can be overriden in the child class to add additional checks.
+     * Default command for checking the motor's current and velocity against target values and
+     * prints the results. This can be overriden in the child class to add additional checks.
      *
      * @param targetCurrent The target current value.
      * @param targetVelocity The target velocity value.
@@ -76,9 +76,11 @@ public abstract class Mechanism implements Subsystem {
                             double current = motor.getSupplyCurrent().getValueAsDouble();
                             double velocity = motor.getVelocity().getValueAsDouble();
                             boolean isCurrentInRange =
-                                    Math.abs(current - config.checkValues.targetCurrent) <= config.checkValues.targetCurrent;
+                                    Math.abs(current - config.checkValues.targetCurrent)
+                                            <= config.checkValues.targetCurrent;
                             boolean isVelocityInRange =
-                                    Math.abs(velocity - config.checkValues.targetVelocity) <= config.checkValues.targetVelocity;
+                                    Math.abs(velocity - config.checkValues.targetVelocity)
+                                            <= config.checkValues.targetVelocity;
 
                             RobotTelemetry.print(
                                     config.name + " current is in range: " + isCurrentInRange);
@@ -153,7 +155,8 @@ public abstract class Mechanism implements Subsystem {
             checkValues = new CheckValues(0, 0, 0);
         }
 
-        public void configSystemCheckValues(double targetVelocity, double targetCurrent, double runTime) {
+        public void configSystemCheckValues(
+                double targetVelocity, double targetCurrent, double runTime) {
             checkValues = new CheckValues(targetVelocity, targetCurrent, runTime);
         }
 

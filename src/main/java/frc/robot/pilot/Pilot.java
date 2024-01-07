@@ -3,6 +3,7 @@ package frc.robot.pilot;
 import frc.robot.Robot;
 import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
+import frc.robot.intake.IntakeCommands;
 import frc.robot.leds.LEDsCommands;
 import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
@@ -49,7 +50,7 @@ public class Pilot extends Gamepad {
     /*  A, B, X, Y, Left Bumper, Right Bumper = Buttons 1 to 6 in simualation */
     public void setupTeleopButtons() {
         // Prints Once
-        controller.a().whileTrue(TrainingCommands.printOnceCommand());
+        controller.a().whileTrue(IntakeCommands.runFull());
         controller.a().whileTrue(LEDsCommands.solidPurpleLED());
 
         // Prints every periodic loop that the button is pressed

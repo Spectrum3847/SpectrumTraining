@@ -11,10 +11,11 @@ public class IntakeCommands {
     }
 
     public static Command runFull() {
-        return intake.runVelocity(intake.config.fullSpeed);
+        return intake.runVelocity(intake.config.maxSpeed);
     }
 
+
     public static Command eject() {
-        return intake.runVelocity(intake.config.ejectSpeed);
+        return intake.runVelocity(intake.config.eject);
     }
 }

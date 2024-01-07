@@ -107,6 +107,9 @@
           "open": true
         },
         "RealOutputs": {
+          "Intake": {
+            "open": true
+          },
           "Odometry": {
             "open": true
           },
@@ -115,6 +118,9 @@
           },
           "open": true
         },
+        "open": true
+      },
+      "Drive": {
         "open": true
       },
       "Shuffleboard": {

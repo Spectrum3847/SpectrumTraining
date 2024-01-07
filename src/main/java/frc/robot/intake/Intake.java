@@ -25,7 +25,7 @@ public class Intake extends Mechanism {
         /* Intake config values */
         public double currentLimit = 12;
         public double threshold = 20; // TODO: how set threshold
-        public double velocityKp = 0.156152; // 0.065 * 2048 * (1/1023) * (1/10) * 12
+        public double velocityKp = 60; // 0.065 * 2048 * (1/1023) * (1/10) * 12
         public double velocityKv = 0.124681; // 0.0519 * 2048 * (1/1023) * (1/10) * 12
         // TODO: feedback sensor? old implementation:
         // motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
@@ -38,6 +38,7 @@ public class Intake extends Mechanism {
             configSupplyCurrentLimit(currentLimit, true);
             configNeutralBrakeMode(true);
             configCounterClockwise_Positive();
+            configMotionMagic(5, 10, 50);
         }
     }
 

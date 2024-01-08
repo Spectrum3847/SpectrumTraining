@@ -32,8 +32,8 @@ public class Intake extends Mechanism {
 
         public IntakeConfig() {
             super("Intake", 52, "3847");
-            configPIDGains(0, velocityKp, 0, 0);
-            configFeedForwardGains(0, velocityKv, 0, 0);
+            configPIDGains(0, velocityKp, 0, 0.1);
+            configFeedForwardGains(0.25, velocityKv, 0, 0);
             configGearRatio(2);
             configSupplyCurrentLimit(currentLimit, true);
             configNeutralBrakeMode(true);

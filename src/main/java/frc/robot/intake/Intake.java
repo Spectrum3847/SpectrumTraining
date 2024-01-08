@@ -10,7 +10,7 @@ public class Intake extends Mechanism {
     public class IntakeConfig extends Config {
 
         /* Intake output in revolutions per min */
-        public double maxSpeed = 6380;
+        public double maxSpeed = 6800;
         public double intake = 6500;
         public double slowIntake = 900;
         public double eject = -3000;
@@ -22,18 +22,21 @@ public class Intake extends Mechanism {
         public double slowIntakePercentage = 0.06;
         public double holdIntakePercentage = 0.1;
 
+        /* Intake positions? */
+        public double customPosition = 500;
+
         /* Intake config values */
         public double currentLimit = 12;
         public double threshold = 20; // TODO: how set threshold
-        public double velocityKp = 60; // 0.065 * 2048 * (1/1023) * (1/10) * 12
-        public double velocityKv = 0.124681; // 0.0519 * 2048 * (1/1023) * (1/10) * 12
+        public double velocityKp = 0.156152; // 0.156152 // 0.065 * 2048 * (1/1023) * (1/10) * 12
+        public double velocityKv = 0.12; // 0.0519 * 2048 * (1/1023) * (1/10) * 12
         // TODO: feedback sensor? old implementation:
         // motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
         public IntakeConfig() {
             super("Intake", 52, "rio");
-            configPIDGains(0, velocityKp, 0, 0.1);
-            configFeedForwardGains(0.25, velocityKv, 0, 0);
+            configPIDGains(0, velocityKp, 0, 0);
+            configFeedForwardGains(0.24, velocityKv, 0, 0);
             configGearRatio(2);
             configSupplyCurrentLimit(currentLimit, true);
             configNeutralBrakeMode(true);
@@ -62,6 +65,10 @@ public class Intake extends Mechanism {
     public Command runVelocity(double velocity) {
         return run(() -> setMMVelocityFOC(Conversions.RPMtoRPS(velocity)))
                 .withName("Intake.runVelocity");
+    }
+
+    public Command runPosition(double position) {
+        return run(() -> setMMPositionFOC(position)).withName("Intake.runPosition");
     }
 
     @Override

@@ -14,6 +14,10 @@ public class IntakeCommands {
         return intake.runVelocity(intake.config.maxSpeed);
     }
 
+    public static Command position() {
+        return intake.runPosition(intake.config.customPosition);
+    }
+
     public static Command eject() {
         return intake.runVelocity(intake.config.eject);
     }

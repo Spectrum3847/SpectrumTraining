@@ -1,13 +1,11 @@
 {
   "Docking": {
-    "Data": [
-      "DockNode  ID=0x00000001 Pos=550,48 Size=818,422 Selected=0xB684EE57"
-    ]
+    "Data": []
   },
   "MainWindow": {
     "GLOBAL": {
       "fps": "120",
-      "height": "1017",
+      "height": "1001",
       "maximized": "1",
       "style": "0",
       "userScale": "2",
@@ -47,24 +45,23 @@
     },
     "###/SmartDashboard/Scheduler": {
       "Collapsed": "0",
-      "DockId": "0x00000001,0",
       "Pos": "550,48",
       "Size": "818,422"
     },
     "###Addressable LEDs": {
       "Collapsed": "0",
       "Pos": "1521,48",
-      "Size": "142,389"
+      "Size": "170,460"
     },
     "###FMS": {
       "Collapsed": "0",
       "Pos": "17,522",
-      "Size": "283,146"
+      "Size": "336,164"
     },
     "###Joysticks": {
       "Collapsed": "0",
       "Pos": "263,312",
-      "Size": "796,189"
+      "Size": "976,219"
     },
     "###Keyboard 0 Settings": {
       "Collapsed": "0",
@@ -94,12 +91,12 @@
     "###System Joysticks": {
       "Collapsed": "0",
       "Pos": "10,522",
-      "Size": "192,218"
+      "Size": "232,254"
     },
     "###Timing": {
       "Collapsed": "0",
       "Pos": "11,252",
-      "Size": "141,150"
+      "Size": "169,168"
     },
     "Debug##Default": {
       "Collapsed": "0",
@@ -109,7 +106,7 @@
     "Robot State": {
       "Collapsed": "0",
       "Pos": "16,46",
-      "Size": "92,99"
+      "Size": "109,114"
     }
   }
 }

@@ -31,7 +31,7 @@ public class Intake extends Mechanism {
         // motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
 
         public IntakeConfig() {
-            super("Intake", 52, "3847");
+            super("Intake", 52, "rio");
             configPIDGains(0, velocityKp, 0, 0.1);
             configFeedForwardGains(0.25, velocityKv, 0, 0);
             configGearRatio(2);

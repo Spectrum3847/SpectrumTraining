@@ -10,7 +10,7 @@ public class Slide extends Mechanism {
         public double top = 10;
 
         public SlideConfig() {
-            super("Slide", 50, "3847");
+            super("Slide", 43, "rio");
             configSupplyCurrentLimit(20, true);
             configPIDGains(0, 0.55, 0, 0.2);
             configFeedForwardGains(0, 0, 0, 0);

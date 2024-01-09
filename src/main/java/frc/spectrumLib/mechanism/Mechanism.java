@@ -1,5 +1,7 @@
 package frc.spectrumLib.mechanism;
 
+import org.littletonrobotics.junction.AutoLogOutput;
+
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC;
@@ -17,10 +19,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.spectrumLib.util.CanDeviceId;
 
-
 /**
- * Control Modes Docs: https://pro.docs.ctr-electronics.com/en/latest/docs/migration/migration-guide/control-requests-guide.html
- * Closed-loop & Motion Magic Docs: https://pro.docs.ctr-electronics.com/en/latest/docs/migration/migration-guide/closed-loop-guide.html
+ * Control Modes Docs:
+ * https://pro.docs.ctr-electronics.com/en/latest/docs/migration/migration-guide/control-requests-guide.html
+ * Closed-loop & Motion Magic Docs:
+ * https://pro.docs.ctr-electronics.com/en/latest/docs/migration/migration-guide/closed-loop-guide.html
  */
 public abstract class Mechanism implements Subsystem {
     protected boolean attached = false;
@@ -40,8 +43,46 @@ public abstract class Mechanism implements Subsystem {
 
     public void stop() {
         if (attached) {
-            motor.setControl(new DutyCycleOut(0));
+            motor.stopMotor(); // TODO: review (changed from): new DutyCycleOut(0)
         }
+    }
+
+    /** Sets the mechanism position of the motor to 0 */
+    public void zeroMotor() {
+        if (attached) {
+            setMotorPosition(0);
+        }
+    }
+
+    /**
+     * Sets the mechanism position of the motor
+     *
+     * @param position rotations
+     */
+    public void setMotorPosition(double position) {
+        if (attached) {
+            motor.setPosition(position);
+        }
+    }
+
+    /** Returns the position of the motor in rotations */
+    @AutoLogOutput(key = "{config.name}/Motor Position (rotations)")
+    public double getMotorPosition() {
+        if (attached) {
+            return motor.getPosition().getValueAsDouble();
+        }
+        return 0;
+    }
+
+    /**
+     * Returns the velocity of the motor in rotations per second
+     */
+    @AutoLogOutput(key = "{config.name}/Motor Velocity (rotations per second)")
+    public double getMotorVelocity() {
+        if (attached) {
+            return motor.getVelocity().getValueAsDouble();
+        }
+        return 0;
     }
 
     /**

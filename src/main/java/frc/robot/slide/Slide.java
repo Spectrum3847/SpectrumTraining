@@ -1,6 +1,5 @@
 package frc.robot.slide;
 
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
@@ -131,7 +130,7 @@ public class Slide extends Mechanism {
         };
     }
 
-    //TODO: review; inline looks really nasty
+    // TODO: review; inline looks really nasty
     public Command zeroSlideRoutine() {
         return new FunctionalCommand(
                         () ->

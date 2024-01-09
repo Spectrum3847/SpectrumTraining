@@ -1,7 +1,5 @@
 package frc.spectrumLib.mechanism;
 
-import org.littletonrobotics.junction.AutoLogOutput;
-
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC;
@@ -18,6 +16,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.spectrumLib.util.CanDeviceId;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 /**
  * Control Modes Docs:
@@ -74,9 +73,7 @@ public abstract class Mechanism implements Subsystem {
         return 0;
     }
 
-    /**
-     * Returns the velocity of the motor in rotations per second
-     */
+    /** Returns the velocity of the motor in rotations per second */
     @AutoLogOutput(key = "{config.name}/Motor Velocity (rotations per second)")
     public double getMotorVelocity() {
         if (attached) {

@@ -51,6 +51,13 @@ public abstract class Mechanism implements Subsystem {
         }
     }
 
+    public void setPercentOutput(double percent) {
+        if (attached) {
+            DutyCycleOut output = config.percentOutput.withOutput(percent);
+            motor.setControl(output);
+        }
+    }
+
     public static class Config {
         public String name;
         public CanDeviceId id;
@@ -61,6 +68,7 @@ public abstract class Mechanism implements Subsystem {
         public MotionMagicTorqueCurrentFOC mmPositionFOC = new MotionMagicTorqueCurrentFOC(0);
         public MotionMagicVelocityVoltage mmVelocityVoltage = new MotionMagicVelocityVoltage(0);
         public MotionMagicVoltage mmPositionVoltage = new MotionMagicVoltage(0);
+        public DutyCycleOut percentOutput = new DutyCycleOut(0);
 
         public Config(String name, int id, String canbus) {
             this.name = name;
@@ -139,8 +147,8 @@ public abstract class Mechanism implements Subsystem {
             return talonConfig.Feedback.SensorToMechanismRatio;
         }
 
-        public void configNeutralBrakeMode(boolean brakeMode) {
-            if (brakeMode) {
+        public void configNeutralBrakeMode(boolean isInBrake) {
+            if (isInBrake) {
                 talonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
             } else {
                 talonConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;

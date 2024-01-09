@@ -6,6 +6,8 @@ import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.MotionMagicVelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.GravityTypeValue;
@@ -15,6 +17,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.spectrumLib.util.CanDeviceId;
 
+
+/**
+ * Control Modes Docs: https://pro.docs.ctr-electronics.com/en/latest/docs/migration/migration-guide/control-requests-guide.html
+ * Closed-loop & Motion Magic Docs: https://pro.docs.ctr-electronics.com/en/latest/docs/migration/migration-guide/closed-loop-guide.html
+ */
 public abstract class Mechanism implements Subsystem {
     protected boolean attached = false;
     protected TalonFX motor;
@@ -37,6 +44,11 @@ public abstract class Mechanism implements Subsystem {
         }
     }
 
+    /**
+     * Closed-loop Velocity Motion Magic with torque control (requires Pro)
+     *
+     * @param velocity rotations per second
+     */
     public void setMMVelocityFOC(double velocity) {
         if (attached) {
             MotionMagicVelocityTorqueCurrentFOC mm = config.mmVelocityFOC.withVelocity(velocity);
@@ -44,6 +56,23 @@ public abstract class Mechanism implements Subsystem {
         }
     }
 
+    /**
+     * Closed-loop velocity control with voltage compensation
+     *
+     * @param velocity rotations per second
+     */
+    public void setVelocity(double velocity) {
+        if (attached) {
+            VelocityVoltage output = config.velocityControl.withVelocity(velocity);
+            motor.setControl(output);
+        }
+    }
+
+    /**
+     * Closed-loop Position Motion Magic with torque control (requires Pro)
+     *
+     * @param position rotations
+     */
     public void setMMPositionFOC(double position) {
         if (attached) {
             MotionMagicTorqueCurrentFOC mm = config.mmPositionFOC.withPosition(position);
@@ -51,9 +80,15 @@ public abstract class Mechanism implements Subsystem {
         }
     }
 
+    /**
+     * Open-loop Percent output control with voltage compensation
+     *
+     * @param percent fractional units between -1 and +1
+     */
     public void setPercentOutput(double percent) {
         if (attached) {
-            DutyCycleOut output = config.percentOutput.withOutput(percent);
+            VoltageOut output =
+                    config.voltageControl.withOutput(config.voltageCompSaturation * percent);
             motor.setControl(output);
         }
     }
@@ -62,22 +97,33 @@ public abstract class Mechanism implements Subsystem {
         public String name;
         public CanDeviceId id;
         public TalonFXConfiguration talonConfig;
+        public double voltageCompSaturation; // 12V by default
 
         public MotionMagicVelocityTorqueCurrentFOC mmVelocityFOC =
                 new MotionMagicVelocityTorqueCurrentFOC(0);
         public MotionMagicTorqueCurrentFOC mmPositionFOC = new MotionMagicTorqueCurrentFOC(0);
         public MotionMagicVelocityVoltage mmVelocityVoltage = new MotionMagicVelocityVoltage(0);
         public MotionMagicVoltage mmPositionVoltage = new MotionMagicVoltage(0);
-        public DutyCycleOut percentOutput = new DutyCycleOut(0);
+        public VoltageOut voltageControl = new VoltageOut(0);
+        public VelocityVoltage velocityControl = new VelocityVoltage(0);
+        public DutyCycleOut percentOutput =
+                new DutyCycleOut(
+                        0); // Percent Output control using percentage of supply voltage //Should
+        // normally use VoltageOut
 
         public Config(String name, int id, String canbus) {
             this.name = name;
+            this.voltageCompSaturation = 12.0;
             this.id = new CanDeviceId(id, canbus);
             talonConfig = new TalonFXConfiguration();
         }
 
         public void applyTalonConfig(TalonFX talon) {
             talon.getConfigurator().apply(talonConfig);
+        }
+
+        public void configVoltageCompensation(double voltageCompSaturation) {
+            this.voltageCompSaturation = voltageCompSaturation;
         }
 
         public void configCounterClockwise_Positive() {

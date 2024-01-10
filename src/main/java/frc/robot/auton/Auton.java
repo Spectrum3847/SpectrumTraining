@@ -1,6 +1,5 @@
 package frc.robot.auton;
 
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -12,8 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 import frc.robot.auton.commands.AutoBalance;
-import frc.robot.auton.config.AutonConfig;
-import frc.robot.swerve.commands.ApplyChassisSpeeds;
 
 public class Auton extends SubsystemBase {
     public static final SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -35,13 +32,17 @@ public class Auton extends SubsystemBase {
     // Subsystem Documentation:
     // https://docs.wpilib.org/en/stable/docs/software/commandbased/subsystems.html
     public Auton() {
+        /*
         configureAutoBuilder(); // configures the auto builder
+          */
+
         setupNamedCommands(); // registers named commands
         setupSelectors(); // runs the command to start the chooser for auto on shuffleboard
 
         RobotTelemetry.print("Auton Subsystem Initialized: ");
     }
 
+    /*
     // Configures the auto builder to use to run autons
     public static void configureAutoBuilder() {
         // Configure the AutoBuilder last
@@ -59,6 +60,7 @@ public class Auton extends SubsystemBase {
                 Robot.swerve // Reference to this subsystem to set requirements
                 );
     }
+     */
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

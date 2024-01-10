@@ -5,97 +5,49 @@
   "MainWindow": {
     "GLOBAL": {
       "fps": "120",
-      "height": "897",
+      "height": "720",
       "maximized": "0",
       "style": "0",
       "userScale": "2",
-      "width": "2903",
-      "xpos": "382",
-      "ypos": "54"
-    }
-  },
-  "Table": {
-    "0x965B9C9E,2": {
-      "Column 0  Width": "160",
-      "Column 1  Weight": "1.0000",
-      "RefScale": "16"
-    },
-    "0xE56EC1C2,4": {
-      "Column 0  Weight": "1.0000",
-      "Column 1  Weight": "1.0000",
-      "Column 2  Weight": "1.0000",
-      "Column 3  Weight": "1.0000"
+      "width": "1280",
+      "xpos": "484",
+      "ypos": "129"
     }
   },
   "Window": {
-    "###/FMSInfo": {
-      "Collapsed": "0",
-      "Pos": "521,184",
-      "Size": "202,194"
-    },
-    "###/Pose": {
-      "Collapsed": "0",
-      "Pos": "785,288",
-      "Size": "1159,703"
-    },
-    "###/SmartDashboard/Module 0": {
-      "Collapsed": "0",
-      "Pos": "1577,480",
-      "Size": "900,685"
-    },
-    "###/SmartDashboard/Scheduler": {
-      "Collapsed": "0",
-      "Pos": "550,48",
-      "Size": "818,422"
-    },
-    "###Addressable LEDs": {
-      "Collapsed": "0",
-      "Pos": "1521,48",
-      "Size": "142,389"
-    },
     "###FMS": {
       "Collapsed": "0",
-      "Pos": "17,522",
+      "Pos": "5,540",
       "Size": "283,146"
     },
     "###Joysticks": {
       "Collapsed": "0",
-      "Pos": "263,312",
-      "Size": "796,189"
-    },
-    "###Keyboard 0 Settings": {
-      "Collapsed": "0",
-      "Pos": "10,50",
-      "Size": "773,1059"
+      "Pos": "250,465",
+      "Size": "796,73"
     },
     "###NetworkTables": {
       "Collapsed": "0",
-      "Pos": "554,334",
-      "Size": "1216,904"
+      "Pos": "250,277",
+      "Size": "750,185"
     },
     "###NetworkTables Info": {
       "Collapsed": "0",
-      "Pos": "248,137",
-      "Size": "750,527"
+      "Pos": "250,130",
+      "Size": "750,145"
     },
     "###Other Devices": {
       "Collapsed": "0",
-      "Pos": "1901,28",
-      "Size": "691,868"
-    },
-    "###RoboRIO": {
-      "Collapsed": "0",
-      "Pos": "793,122",
-      "Size": "233,320"
+      "Pos": "1025,20",
+      "Size": "250,695"
     },
     "###System Joysticks": {
       "Collapsed": "0",
-      "Pos": "10,522",
+      "Pos": "5,350",
       "Size": "192,218"
     },
     "###Timing": {
       "Collapsed": "0",
-      "Pos": "11,252",
+      "Pos": "5,150",
       "Size": "141,150"
     },
     "Debug##Default": {
@@ -105,7 +57,7 @@
     },
     "Robot State": {
       "Collapsed": "0",
-      "Pos": "16,46",
+      "Pos": "5,20",
       "Size": "92,99"
     }
   }

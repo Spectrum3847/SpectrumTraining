@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.elbow.Elbow;
 import frc.robot.intake.Intake;
 import frc.robot.intake.IntakeCommands;
 import frc.robot.leds.LEDs;
@@ -29,6 +30,7 @@ public class Robot extends LoggedRobot {
     public static Swerve swerve;
     public static Intake intake;
     public static Slide slide;
+    public static Elbow elbow;
     public static LEDs leds;
     public static Pilot pilot;
     // public static Auton auton;

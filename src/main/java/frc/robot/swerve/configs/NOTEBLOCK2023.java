@@ -99,7 +99,7 @@ public class NOTEBLOCK2023 {
                     .withFeedbackSource(steerFeedbackType);
 
     public static final ModuleConfig BackRight =
-            DefaultConfig.BackRight.withCANcoderOffset(kBackRightCANcoderOffset)
+            DefaultConfig.BackRight.withCANcoderOffset(160)
                     .withLocationX(kBackRightXPos)
                     .withLocationY(kBackRightYPos)
                     .withSlipCurrent(slipCurrent)

@@ -13,7 +13,7 @@ public class NOTEBLOCK2023 {
     private static final double kFrontLeftCANcoderOffset = -0.407958984375;
     private static final double kFrontRightCANncoderOffset = -0.181396484375;
     private static final double kBackLeftCANcoderOffset = -0.8779296875;
-    private static final double kBackRightCANcoderOffset = -0.84130859375;
+    private static final double kBackRightCANcoderOffset = -0.019287;
 
     // Physical Config
     private static final double wheelBaseInches = 21.5;
@@ -99,7 +99,7 @@ public class NOTEBLOCK2023 {
                     .withFeedbackSource(steerFeedbackType);
 
     public static final ModuleConfig BackRight =
-            DefaultConfig.BackRight.withCANcoderOffset(160)
+            DefaultConfig.BackRight.withCANcoderOffset(kBackRightCANcoderOffset)
                     .withLocationX(kBackRightXPos)
                     .withLocationY(kBackRightYPos)
                     .withSlipCurrent(slipCurrent)

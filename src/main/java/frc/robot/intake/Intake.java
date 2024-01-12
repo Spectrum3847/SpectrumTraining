@@ -36,6 +36,11 @@ public class Intake extends Mechanism {
     }
 
     public IntakeConfig config;
+    
+    protected Config setConfig() {
+        config = new IntakeConfig();
+        return config;
+    }
 
     public Intake(boolean attached) {
         super(attached);
@@ -51,7 +56,7 @@ public class Intake extends Mechanism {
         return run(() -> setPercentOutput(percent)).withName("Intake.runPercent");
     }
 
-    
-
-
+    public Command runVelocity(double velocity) {
+        return run(() -> setVelocity(velocity)).withName("Intake.runVelocity");
+    }
 }

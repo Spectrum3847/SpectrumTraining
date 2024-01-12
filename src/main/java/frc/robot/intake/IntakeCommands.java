@@ -10,11 +10,15 @@ public class IntakeCommands {
         intake.setDefaultCommand(intake.runVelocity(0).withName("Intake.default"));
     }
 
-    public static Command runFull() {
-        return intake.runVelocity(intake.config.fullSpeed);
+    public static Command intake() {
+        return intake.runVelocity(intake.config.intake).withName("Intake.intake");
+    }
+
+    public static Command slowIntake() {
+        return intake.runVelocity(intake.config.slowIntake).withName("Intake.slowIntake");
     }
 
     public static Command eject() {
-        return intake.runVelocity(intake.config.ejectSpeed);
+        return intake.runVelocity(intake.config.eject).withName("Intake.eject");
     }
 }

@@ -102,6 +102,9 @@ public class SwerveCommands {
                 .withName("SetTargetHeading");
     }
 
+    public static Command reorient(double angle) {
+        return swerve.runOnce(() -> swerve.reorient(angle)).withName("Swerve.reorient");
+    }
     // Swerve Command Options
     // - Drive needs to work with slow mode (this might be done in PilotCommands)
 }

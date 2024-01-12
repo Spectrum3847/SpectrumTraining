@@ -104,6 +104,10 @@ public class Swerve implements Subsystem {
         drivetrain.seedFieldRelative(pose);
     }
 
+    public void reorient(double angle) {
+        drivetrain.seedFieldRelative(angle);
+    }
+
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return drivetrain.getChassisSpeeds();
     }

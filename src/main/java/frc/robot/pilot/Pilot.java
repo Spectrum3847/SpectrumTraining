@@ -4,6 +4,7 @@ import frc.robot.Robot;
 import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
 import frc.robot.leds.LEDsCommands;
+import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
 import frc.spectrumLib.util.ExpCurve;
@@ -26,7 +27,7 @@ public class Pilot extends Gamepad {
 
     public PilotConfig config;
     private boolean isSlowMode = false;
-    private boolean isFieldOriented = false;
+    private boolean isFieldOriented = true;
     private ExpCurve LeftStickCurve;
     private ExpCurve TriggersCurve;
 
@@ -70,6 +71,14 @@ public class Pilot extends Gamepad {
         controller.y().and(rightBumperOnly()).whileTrue(TrainingCommands.parellelGroupCommand());
 
         leftXTrigger(ThresholdType.GREATER_THAN, 0).whileTrue(RobotCommands.PrintAndBreathLED());
+
+        controller
+                .povUp()
+                .and(leftBumperOnly())
+                .whileTrue(SwerveCommands.reorient(0).alongWith(PilotCommands.rumble(1, 0.5)));
+        controller.povLeft().and(leftBumperOnly()).whileTrue(SwerveCommands.reorient(90));
+        controller.povDown().and(leftBumperOnly()).whileTrue(SwerveCommands.reorient(180));
+        controller.povRight().and(leftBumperOnly()).whileTrue(SwerveCommands.reorient(270));
 
         // Use the pilot drive if we are manually steering the robot
         controller

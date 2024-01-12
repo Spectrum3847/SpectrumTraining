@@ -24,7 +24,7 @@ public class PilotCommands {
         return SwerveCommands.Drive(
                         () -> pilot.getDriveFwdPositive(),
                         () -> pilot.getDriveLeftPositive(),
-                        () -> pilot.getDriveCCWPositive(),
+                        () -> -pilot.getDriveCCWPositive(),
                         () -> pilot.getFieldOriented(), // true is field oriented
                         () -> true)
                 .withName("Swerve.PilotDrive");

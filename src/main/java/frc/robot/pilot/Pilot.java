@@ -27,7 +27,7 @@ public class Pilot extends Gamepad {
 
     public PilotConfig config;
     private boolean isSlowMode = false;
-    private boolean isFieldOriented = false;
+    private boolean isFieldOriented = true;
     private ExpCurve LeftStickCurve;
     private ExpCurve TriggersCurve;
 

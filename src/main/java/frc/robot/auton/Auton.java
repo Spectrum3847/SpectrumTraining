@@ -48,10 +48,12 @@
 //         AutoBuilder.configureHolonomic(
 //                 Robot.swerve::getPose, // Robot pose supplier
 //                 Robot.swerve
-//                         ::resetPose, // Method to reset odometry (will be called if your auto has a
+//                         ::resetPose, // Method to reset odometry (will be called if your auto has
+// a
 //                 // starting pose)
 //                 Robot.swerve
-//                         ::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+//                         ::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT
+// RELATIVE
 //                 ApplyChassisSpeeds.robotRelativeOutput(
 //                         true), // Method that will drive the robot given ROBOT
 //                 // RELATIVE ChassisSpeeds
@@ -85,7 +87,8 @@
 //         autoMessagePrinted = false;
 //     }
 
-//     /** Called in RobotPeriodic and displays the duration of the auton command Based on 6328 code */
+//     /** Called in RobotPeriodic and displays the duration of the auton command Based on 6328 code
+// */
 //     public static void printAutoDuration() {
 //         Command autoCommand = Auton.getAutonomousCommand();
 //         if (autoCommand != null) {

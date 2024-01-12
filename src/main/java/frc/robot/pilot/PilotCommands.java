@@ -22,9 +22,9 @@ public class PilotCommands {
     /** Full control of the swerve by the Pilot command */
     public static Command pilotDrive() {
         return SwerveCommands.Drive(
-                        () -> pilot.getDriveFwdPositive(),
-                        () -> pilot.getDriveLeftPositive(),
-                        () -> -pilot.getDriveCCWPositive(),
+                        () -> 0,
+                        () -> 0,
+                        () -> 0,
                         () -> pilot.getFieldOriented(), // true is field oriented
                         () -> true)
                 .withName("Swerve.PilotDrive");

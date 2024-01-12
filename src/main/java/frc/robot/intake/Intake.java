@@ -1,8 +1,6 @@
 package frc.robot.intake;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import frc.spectrumLib.mechanism.Mechanism;
 import frc.spectrumLib.mechanism.TalonFXFactory;
 
@@ -30,13 +28,13 @@ public class Intake extends Mechanism {
             configFeedForwardGains(0, velocityKv, 0, 0);
             configMotionMagic(120, 195, 50); // TODO: configure jerk
             configSupplyCurrentLimit(currentLimit, true);
-            configClockwise_Positive();
+            configCounterClockwise_Positive();
             // TODO: config nominal output?
         }
     }
 
     public IntakeConfig config;
-    
+
     protected Config setConfig() {
         config = new IntakeConfig();
         return config;
@@ -47,7 +45,7 @@ public class Intake extends Mechanism {
         if (attached) {
             motor = TalonFXFactory.createConfigTalon(config.id, config.talonConfig);
         }
-    }    
+    }
 
     @Override
     public void periodic() {}

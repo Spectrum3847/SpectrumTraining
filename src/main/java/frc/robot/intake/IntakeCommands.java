@@ -7,7 +7,7 @@ public class IntakeCommands {
     private static Intake intake = Robot.intake;
 
     public static void setupDefaultCommand() {
-        intake.setDefaultCommand(intake.runVelocity(0).withName("Intake.default"));
+        intake.setDefaultCommand(intake.run(() -> intake.stop()).withName("Intake.default"));
     }
 
     public static Command intake() {

@@ -3,7 +3,7 @@ package frc.robot.pilot;
 import frc.robot.Robot;
 import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
-import frc.robot.leds.LEDsCommands;
+import frc.robot.intake.IntakeCommands;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
@@ -50,16 +50,19 @@ public class Pilot extends Gamepad {
     /*  A, B, X, Y, Left Bumper, Right Bumper = Buttons 1 to 6 in simualation */
     public void setupTeleopButtons() {
         // Prints Once
-        controller.a().whileTrue(TrainingCommands.printOnceCommand());
-        controller.a().whileTrue(LEDsCommands.solidPurpleLED());
+        // controller.a().whileTrue(TrainingCommands.printOnceCommand());
+        // controller.a().whileTrue(LEDsCommands.solidPurpleLED());
+        controller.a().whileTrue(IntakeCommands.intake());
 
         // Prints every periodic loop that the button is pressed
         // Change this to .onTrue() to continue printing even when the button is released
-        controller.b().whileTrue(TrainingCommands.periodicCommand());
-        controller.b().whileTrue(LEDsCommands.strobeOrangeLED());
+        // controller.b().whileTrue(TrainingCommands.periodicCommand());
+        // controller.b().whileTrue(LEDsCommands.strobeOrangeLED());
+        controller.b().whileTrue(IntakeCommands.eject());
 
-        // Runs the FullComman Training Command, doesn't run while disabled
-        controller.x().whileTrue(TrainingCommands.fullCommand());
+        // Runs the FullCommand Training Command, doesn't run while disabled
+        // controller.x().whileTrue(TrainingCommands.fullCommand());
+        controller.x().whileTrue(IntakeCommands.slowIntake());
 
         // Prints every periodic loop for 1 second
         controller.y().and(noBumpers()).whileTrue(TrainingCommands.periodicTimeoutCommand());

@@ -11,26 +11,24 @@ public class Elbow extends Mechanism{
 
     public class ElbowConfig extends Config {
 
-        public int elbowMaxFalcon = 63256; // 63256
-
-        /* Slide constants in rotations */
-        public double maxHeight = 38.6; // absolute max: 39.1
+        /* Elbow constants in rotations */
+        public double maxHeight = 30.88671875; // idk
         public double minHeight = 0.29;
 
-        /* Slide positions in rotations */
+        /* Elbow positions in rotations */
         public double fullExtend = maxHeight;
         public double startingMotorPos = -0.15;
 
-        /* Slide config settings */
-        public double positionKp = 0.86;
-        public double positionKv = 0.012813; // TODO: this value could be 0
-        public double currentLimit = 20;
+        //Elbow positions
+        public double positionKp = 0.080078;
+        public double positionKv = 0.012812;
+        public double currentLimit = 5.0;
 
         // Positions set as percentage of
         // 0 is vertical
         public int initializedPosition = 90;
 
-        public int intake = -96;
+        public int intake = -96;                         
         public int airIntake = -43;
         public int shelfIntake = -95;
 
@@ -55,10 +53,10 @@ public class Elbow extends Mechanism{
         // Physical Constants
         public double gearRatio = 1; // TODO: change; not actually used though
         public ElbowConfig() {
-            super("Elbow", 42, "rio");
+            super("Elbow", 41, "rio");
             configPIDGains(0, positionKp, 0, 0);
             configFeedForwardGains(0, positionKv, 0, 0);
-            configMotionMagic(120, 195, 50); // TODO: configure jerk
+            configMotionMagic(51.26953125, 205.078125, 50); // TODO: configure jerk
             configSupplyCurrentLimit(currentLimit, true);
             configForwardSoftLimit(maxHeight, true);
             configReverseSoftLimit(minHeight, true);
@@ -78,7 +76,7 @@ public class Elbow extends Mechanism{
 
     @Override
     public void periodic() {}
-
+    
     public Command runPercentage(double percent) {
         return run(() -> setPercentOutput(percent)).withName("Elbow.runPercentage");
     }
@@ -89,6 +87,10 @@ public class Elbow extends Mechanism{
 
     public Command runStop() {
         return run(() -> stop()).withName("Elbow.runStop");
+    }
+
+    public double percentToRot(double percent) {
+        return percent/100 * 30.88671875;
     }
 
     public Command coastMode() {
@@ -120,7 +122,7 @@ public class Elbow extends Mechanism{
                     setMMPositionFOC(holdPosition);
                 } else {
                     DriverStation.reportError(
-                            "SlideHoldPosition tried to go too far away from current position. Current Position: "
+                            "ElbowHoldPosition tried to go tebloo far away from current position. Current Position: "
                                     + currentPosition
                                     + " || Hold Position: "
                                     + holdPosition,
@@ -154,7 +156,7 @@ public class Elbow extends Mechanism{
                         },
                         () -> false,
                         this)
-                .withName("Slide.zeroSlideRoutine");
+                .withName("Elbow.zeroElbowRoutine");
     }
 
     @Override

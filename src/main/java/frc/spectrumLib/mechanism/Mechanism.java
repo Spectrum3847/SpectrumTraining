@@ -64,23 +64,6 @@ public abstract class Mechanism implements Subsystem {
         }
     }
 
-    /** Returns the position of the motor in rotations */
-    @AutoLogOutput(key = "{config.name}/Motor Position (rotations)")
-    public double getMotorPosition() {
-        if (attached) {
-            return motor.getPosition().getValueAsDouble();
-        }
-        return 0;
-    }
-
-    /** Returns the velocity of the motor in rotations per second */
-    @AutoLogOutput(key = "{config.name}/Motor Velocity (rotations per second)")
-    public double getMotorVelocity() {
-        if (attached) {
-            return motor.getVelocity().getValueAsDouble();
-        }
-        return 0;
-    }
 
     /**
      * Closed-loop Velocity Motion Magic with torque control (requires Pro)

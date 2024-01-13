@@ -10,10 +10,16 @@ import frc.spectrumLib.swerve.config.SwerveConfig;
 public class NOTEBLOCK2023 {
 
     // Angle Offsets
-    private static final double kFrontLeftCANcoderOffset = -0.407958984375;
-    private static final double kFrontRightCANncoderOffset = -0.181396484375;
-    private static final double kBackLeftCANcoderOffset = -0.8779296875;
-    private static final double kBackRightCANcoderOffset = -0.019287;
+    private static final double kFrontLeftCANcoderOffset = -0.399658;
+    private static final double kFrontRightCANncoderOffset = -0.186279;
+    private static final double kBackLeftCANcoderOffset = 0.118896;
+    private static final double kBackRightCANcoderOffset = -0.021240;
+
+    // GOOD OFFSETS
+    //         private static final double kFrontLeftCANcoderOffset = -0.407958984375;
+    //     private static final double kFrontRightCANncoderOffset = -0.181396484375;
+    //     private static final double kBackLeftCANcoderOffset = -0.8779296875;
+    //     private static final double kBackRightCANcoderOffset = -0.019287;
 
     // Physical Config
     private static final double wheelBaseInches = 21.5;

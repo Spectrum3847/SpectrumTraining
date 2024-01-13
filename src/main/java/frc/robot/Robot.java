@@ -5,6 +5,8 @@ import frc.robot.intake.Intake;
 import frc.robot.intake.IntakeCommands;
 import frc.robot.leds.LEDs;
 import frc.robot.leds.LEDsCommands;
+import frc.robot.operator.Operator;
+import frc.robot.operator.OperatorCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.PilotCommands;
 import frc.robot.slide.Slide;
@@ -31,6 +33,7 @@ public class Robot extends LoggedRobot {
     public static Slide slide;
     public static LEDs leds;
     public static Pilot pilot;
+    public static Operator operator;
     // public static Auton auton;
 
     /**
@@ -44,6 +47,7 @@ public class Robot extends LoggedRobot {
 
         // Reset Config for all gamepads and other button bindings
         pilot.resetConfig();
+        operator.resetConfig();
     }
 
     /* ROBOT INIT (Initialization) */
@@ -65,6 +69,7 @@ public class Robot extends LoggedRobot {
             intake = new Intake(config.intakeAttached);
             slide = new Slide(true);
             pilot = new Pilot();
+            operator = new Operator();
             leds = new LEDs();
 
             /** Intialize Telemetry and Auton */
@@ -82,6 +87,7 @@ public class Robot extends LoggedRobot {
             SlideCommands.setupDefaultCommand();
             LEDsCommands.setupDefaultCommand();
             PilotCommands.setupDefaultCommand();
+            OperatorCommands.setupDefaultCommand();
 
             RobotTelemetry.print("--- Robot Init Complete ---");
         } catch (Throwable t) {

@@ -16,7 +16,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.spectrumLib.util.CanDeviceId;
-import org.littletonrobotics.junction.AutoLogOutput;
 
 /**
  * Control Modes Docs:
@@ -63,7 +62,6 @@ public abstract class Mechanism implements Subsystem {
             motor.setPosition(position);
         }
     }
-
 
     /**
      * Closed-loop Velocity Motion Magic with torque control (requires Pro)

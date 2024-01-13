@@ -23,6 +23,7 @@ public class Pilot extends Gamepad {
         public final double triggersDeadzone = 0.1;
         public final double triggersExp = 2.0;
         public final double triggersScalor = Robot.swerve.config.maxAngularVelocity;
+        public final double rotationScalor = 0.8;
     }
 
     public PilotConfig config;
@@ -150,6 +151,8 @@ public class Pilot extends Gamepad {
         double ccwPositive = TriggersCurve.calculate(getTwist());
         if (isSlowMode) {
             ccwPositive *= Math.abs(PilotConfig.slowModeScalor);
+        } else {
+            ccwPositive *= config.rotationScalor;
         }
         return ccwPositive;
     }

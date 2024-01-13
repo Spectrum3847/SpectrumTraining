@@ -228,6 +228,18 @@ public abstract class Gamepad extends SubsystemBase {
         return rumbleCommand(intensity, intensity, durationSeconds);
     }
 
+    /**
+     * Returns a new Command object that combines the given command with a rumble command. The
+     * rumble command has a rumble strength of 1 and a duration of 0.5 seconds. The name of the
+     * returned command is set to the name of the given command.
+     *
+     * @param command the command to be combined with the rumble command
+     * @return a new Command object with rumble command
+     */
+    public Command rumbleCommand(Command command) {
+        return command.alongWith(rumbleCommand(1, 0.5)).withName(command.getName());
+    }
+
     public abstract void setupTeleopButtons();
 
     public abstract void setupDisabledButtons();

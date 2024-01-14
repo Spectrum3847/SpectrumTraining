@@ -11,7 +11,7 @@ public class Slide extends Mechanism {
 
         public SlideConfig() {
             super("Slide", 50, "3847");
-            configSupplyCurrentLimit(20, true);
+            configSupplyCurrentLimit(20, 20, true);
             configPIDGains(0, 0.55, 0, 0.2);
             configFeedForwardGains(0, 0, 0, 0);
             configReverseSoftLimit(0, true);

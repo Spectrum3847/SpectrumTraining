@@ -15,7 +15,7 @@ public class Intake extends Mechanism {
             configPIDGains(0, 0.55, 0, 0.2);
             configFeedForwardGains(0, 0, 0, 0);
             configGearRatio(2);
-            configSupplyCurrentLimit(20, true);
+            configSupplyCurrentLimit(20, 20, true);
             configClockwise_Positive();
         }
     }

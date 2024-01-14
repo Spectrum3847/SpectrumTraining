@@ -153,8 +153,9 @@ public abstract class Mechanism implements Subsystem {
             talonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         }
 
-        public void configSupplyCurrentLimit(double supplyLimit, boolean enabled) {
+        public void configSupplyCurrentLimit(double supplyLimit, double supplyThreshold, boolean enabled) {
             talonConfig.CurrentLimits.SupplyCurrentLimit = supplyLimit;
+            talonConfig.CurrentLimits.SupplyCurrentThreshold = supplyThreshold;
             talonConfig.CurrentLimits.SupplyCurrentLimitEnable = enabled;
         }
 

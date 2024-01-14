@@ -1,5 +1,6 @@
 package frc.spectrumLib.mechanism;
 
+import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC;
@@ -99,6 +100,13 @@ public abstract class Mechanism implements Subsystem {
         }
     }
 
+    public void setMMPosition(double position) {
+        if (attached) {
+            MotionMagicVoltage mm = config.mmPositionVoltage.withPosition(position);
+            motor.setControl(mm);
+        }
+    }
+
     /**
      * Open-loop Percent output control with voltage compensation
      *
@@ -110,6 +118,11 @@ public abstract class Mechanism implements Subsystem {
                     config.voltageControl.withOutput(config.voltageCompSaturation * percent);
             motor.setControl(output);
         }
+    }
+
+    public void setBrakeMode(boolean isInBrake) {
+        config.configNeutralBrakeMode(isInBrake);
+        config.applyTalonConfig(motor);
     }
 
     public static class Config {
@@ -138,7 +151,11 @@ public abstract class Mechanism implements Subsystem {
         }
 
         public void applyTalonConfig(TalonFX talon) {
-            talon.getConfigurator().apply(talonConfig);
+            StatusCode result = talon.getConfigurator().apply(talonConfig);
+            if (!result.isOK()) {
+                DriverStation.reportWarning(
+                        "Could not apply config changes to " + name + "\'s motor ", false);
+            }
         }
 
         public void configVoltageCompensation(double voltageCompSaturation) {
@@ -153,7 +170,8 @@ public abstract class Mechanism implements Subsystem {
             talonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         }
 
-        public void configSupplyCurrentLimit(double supplyLimit, double supplyThreshold, boolean enabled) {
+        public void configSupplyCurrentLimit(
+                double supplyLimit, double supplyThreshold, boolean enabled) {
             talonConfig.CurrentLimits.SupplyCurrentLimit = supplyLimit;
             talonConfig.CurrentLimits.SupplyCurrentThreshold = supplyThreshold;
             talonConfig.CurrentLimits.SupplyCurrentLimitEnable = enabled;

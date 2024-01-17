@@ -1,12 +1,7 @@
 package frc.robot.auton;
 
-import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -16,8 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 import frc.robot.auton.commands.AutoBalance;
+import frc.robot.auton.commands.FollowSinglePath;
 import frc.robot.auton.config.AutonConfig;
-import frc.robot.swerve.commands.ApplyChassisSpeeds;
 
 public class Auton extends SubsystemBase {
     public static final SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -27,7 +22,11 @@ public class Auton extends SubsystemBase {
     // A chooser for autonomous commands
     public static void setupSelectors() {
         autonChooser.setDefaultOption("Clean Side 3", new PathPlannerAuto("Clean Side 3"));
-        // autonChooser.addOption("Clean3", AutoPaths.CleanSide());
+
+        autonChooser.addOption(
+                "Clean3", FollowSinglePath.getSinglePath("test")); // Runs single Path
+        autonChooser.addOption(
+                "Clean Side 3", new PathPlannerAuto("Clean Side 3")); // Runs full Auto
     }
 
     // Setup the named commands
@@ -39,46 +38,12 @@ public class Auton extends SubsystemBase {
     // Subsystem Documentation:
     // https://docs.wpilib.org/en/stable/docs/software/commandbased/subsystems.html
     public Auton() {
-        /*
-        configureAutoBuilder(); // configures the auto builder
-          */
-
+        AutonConfig.ConfigureAutoBuilder(); // configures the auto builder
         setupNamedCommands(); // registers named commands
         setupSelectors(); // runs the command to start the chooser for auto on shuffleboard
 
         RobotTelemetry.print("Auton Subsystem Initialized: ");
     }
-
-    public class DriveSubsystem extends SubsystemBase {
-    public DriveSubsystem() {
-        // All other subsystem initialization
-        // ...
-
-        // Configure AutoBuilder last
-        AutoBuilder.configureHolonomic(
-                Robot.swerve::getPose, // Robot pose supplier
-                Robot.swerve
-                        ::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-                Robot.swerve
-                        ::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                ApplyChassisSpeeds.robotRelativeOutput(
-                        true), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-                AutonConfig.AutonPathFollowerConfig,
-                () -> {
-                    // Boolean supplier that controls when the path will be mirrored for the red alliance
-                    // This will flip the path being followed to the red side of the field.
-                    // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-                    var alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
-                },
-                this // Reference to this subsystem to set requirements
-        );
-    }
-}
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -6,6 +6,8 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 public class AutonConfig {
     // TODO: #1 @EDPendleton24: The PID constants have to be different for Translation and Rotation
+    
+    
     public static final double kP = 5.0;
     public static final double kI = 0.0;
     public static final double kD = 0.0;

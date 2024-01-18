@@ -1,6 +1,8 @@
 package frc.robot.swerve.commands;
 
 import com.ctre.phoenix6.StatusCode;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -97,6 +99,18 @@ public class Drive implements Request {
 
         SwerveModuleState[] states =
                 parameters.kinematics.toSwerveModuleStates(speeds, new Translation2d());
+
+        /* Prevent rotating module if speed is less then 1% */
+        for(SwerveModuleState desiredState : states) {
+            Rotation2d angle = desiredState.angle;
+            if((Math.abs(desiredState.speedMetersPerSecond) < (Robot.swerve.config.maxVelocity * 0.01))) {
+                angle = lastAngle; //TODO: create
+
+            }
+            
+            lastAngle = angle;
+        }
+
 
         Robot.swerve.writeSetpoints(states);
         for (int i = 0; i < modulesToApply.length; ++i) {

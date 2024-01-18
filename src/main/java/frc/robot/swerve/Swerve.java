@@ -106,6 +106,11 @@ public class Swerve implements Subsystem {
 
     public void reorient(double angle) {
         drivetrain.seedFieldRelative(angle);
+
+        //TODO: add last angle impl
+        for(frc.spectrumLib.swerve.Module module : drivetrain.getModules()) {
+            module.lastAngle = Rotation2d.fromDegrees(angle);
+        } 
     }
 
     public ChassisSpeeds getRobotRelativeSpeeds() {

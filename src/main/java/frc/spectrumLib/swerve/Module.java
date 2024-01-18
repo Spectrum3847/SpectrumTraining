@@ -21,6 +21,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import frc.robot.Robot;
 import frc.spectrumLib.swerve.config.ModuleConfig;
 
 /**
@@ -54,6 +55,9 @@ public class Module {
     private double m_speedAt12VoltsMps = 0;
     private boolean m_supportsPro = false;
 
+    public Rotation2d lastAngle;
+    private double rotationMotorGearRatio;
+
     /**
      * Construct a SwerveModule with the specified constants.
      *
@@ -67,6 +71,7 @@ public class Module {
         m_cancoder = new CANcoder(config.AngleEncoderId, canbusName);
 
         TalonFXConfiguration talonConfigs = new TalonFXConfiguration();
+        rotationMotorGearRatio = config.SteerMotorGearRatio;
 
         talonConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
@@ -170,6 +175,8 @@ public class Module {
 
         /* If this supports pro, save it */
         m_supportsPro = supportsPro;
+
+        lastAngle = checkMotorAngle();
     }
 
     /**
@@ -329,6 +336,15 @@ public class Module {
      */
     public CANcoder getCANcoder() {
         return m_cancoder;
+    }
+
+    public Rotation2d checkMotorAngle() {
+        return Rotation2d.fromDegrees((360 * m_steerMotor.getPosition().getValueAsDouble()) / rotationMotorGearRatio);
+
+    }
+
+    public void setLastAngleToCurrentAngle() {
+        lastAngle = checkMotorAngle();
     }
 
     // NEEDS TO BE TESTED

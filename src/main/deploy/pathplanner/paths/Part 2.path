@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.29,
+        "y": 7.44
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.401723393491082,
+        "y": 7.018030177861009
+      },
+      "isLocked": false,
+      "linkedName": "GP1"
+    },
+    {
+      "anchor": {
+        "x": 5.932589708502171,
+        "y": 6.362659522586414
+      },
+      "prevControl": {
+        "x": 6.798864131364447,
+        "y": 6.744200248094914
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "GP1 Score"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "4 Piece Middle",
+  "previewStartingState": {
+    "rotation": 180.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

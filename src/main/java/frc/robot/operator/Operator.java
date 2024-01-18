@@ -12,7 +12,6 @@ public class Operator extends Gamepad {
         public static final String name = "Operator";
         public static final int port = 1;
 
-        // slideModifer, shoulderModifier, elbowModifier,
         public static final double slideModifier = 1.0;
         public static final double shoulderModifier = 0.3;
         public static final double elbowModifier = 0.3;

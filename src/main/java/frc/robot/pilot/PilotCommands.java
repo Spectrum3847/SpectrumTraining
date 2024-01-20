@@ -82,4 +82,9 @@ public class PilotCommands {
         return Commands.startEnd(
                 () -> pilot.setFieldOriented(false), () -> pilot.setFieldOriented(true));
     }
+
+    // TODO: calling command from slide class instead of SlideCommands
+    // public static Command manualSlide() {
+    //     return Robot.slide.runPercentage(() -> Robot.operator.manualSlide());
+    // }
 }

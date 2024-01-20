@@ -100,6 +100,11 @@ public abstract class Mechanism implements Subsystem {
         }
     }
 
+    /**
+     * Closed-loop Position Motion Magic
+     *
+     * @param position rotations
+     */
     public void setMMPosition(double position) {
         if (attached) {
             MotionMagicVoltage mm = config.mmPositionVoltage.withPosition(position);

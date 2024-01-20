@@ -11,11 +11,14 @@ import frc.robot.operator.Operator;
 import frc.robot.operator.OperatorCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.PilotCommands;
+import frc.robot.pose.Pose;
 import frc.robot.slide.Slide;
 import frc.robot.slide.SlideCommands;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.Training;
+import frc.robot.trajectories.Trajectories;
+import frc.robot.vision.Vision;
 import frc.spectrumLib.util.CrashTracker;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -27,8 +30,6 @@ public class Robot extends LoggedRobot {
     public static RobotTelemetry telemetry;
 
     /** Create a single static instance of all of your subsystems */
-    public static Training training;
-
     public static Swerve swerve;
     public static Intake intake;
     public static Slide slide;
@@ -36,6 +37,10 @@ public class Robot extends LoggedRobot {
     public static Pilot pilot;
     public static Operator operator;
     public static Auton auton;
+    public static Pose pose;
+    public static Vision vision;
+    public static Trajectories trajectories;
+    public static Training training;
 
     /**
      * This method cancels all commands and returns subsystems to their default commands and the
@@ -65,17 +70,36 @@ public class Robot extends LoggedRobot {
              * code. Anything with an output that needs to be independently controlled is a
              * subsystem Something that don't have an output are alos subsystems.
              */
-            training = new Training();
+            //Intializes position based subsystems
+            vision = new Vision();
+            System.out.println("Started Vision");
             swerve = new Swerve();
+            System.out.println("Started Swerve");
+            pose = new Pose();
+            System.out.println("Started Pose");
+            trajectories = new Trajectories();
+            System.out.println("Started Trajectories");
+
+            //Starts subsystems
             intake = new Intake(config.intakeAttached);
+            System.out.println("Started Intake");
             slide = new Slide(true);
+            System.out.println("Started Slide");
+
+            //Starts gamepads and LEDs
             pilot = new Pilot();
             operator = new Operator();
+            System.out.println("Started Gamepads");
             leds = new LEDs();
+            System.out.println("Started LEDs");
 
             /** Intialize Telemetry and Auton */
-            // telemetry = new RobotTelemetry();
             auton = new Auton();
+            System.out.println("Started Auton");
+            telemetry = new RobotTelemetry();
+            System.out.println("Started Telemetry");
+            training = new Training();
+            System.out.println("Started Training");
             advantageKitInit();
 
             /**

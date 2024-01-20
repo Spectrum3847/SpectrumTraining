@@ -389,6 +389,10 @@ public class Drivetrain {
         }
     }
 
+    public void resetHeading(Rotation2d heading){
+        m_kinematics.resetHeadings(heading);
+    }
+
     /**
      * Check if the odometry is currently valid
      *
@@ -402,6 +406,10 @@ public class Drivetrain {
         } finally {
             m_stateLock.readLock().unlock();
         }
+    }
+
+    public SwerveDriveKinematics getSwerveDriveKinematics(){
+        return m_kinematics;
     }
 
     /**
@@ -447,6 +455,14 @@ public class Drivetrain {
      */
     public ChassisSpeeds getChassisSpeeds() {
         return m_kinematics.toChassisSpeeds(getModuleStates());
+    }
+
+    public Pose2d getPoseMeters() {
+        return m_odometry.getEstimatedPosition();
+    }
+
+    public SwerveModulePosition[] getSwerveModulePositions(){
+        return m_modulePositions;
     }
 
     /**

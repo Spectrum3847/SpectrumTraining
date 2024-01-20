@@ -4,6 +4,8 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -100,8 +102,20 @@ public class Swerve implements Subsystem {
         return getState().Pose;
     }
 
+    public SwerveModulePosition[] getSwerveModulePositions() {
+        return drivetrain.getSwerveModulePositions();
+    }
+
+    public Pose2d getPoseMeters() {
+        return drivetrain.getPoseMeters();
+    }
+
     public void resetPose(Pose2d pose) {
         drivetrain.seedFieldRelative(pose);
+    }
+
+    public SwerveDriveKinematics getSwerveDriveKinematics(){
+        return drivetrain.getSwerveDriveKinematics();
     }
 
     public void driveFieldRelativeAuto(ChassisSpeeds fieldRelativeSpeeds) {
@@ -118,6 +132,10 @@ public class Swerve implements Subsystem {
 
     public Rotation2d getRotation() {
         return getPose().getRotation();
+    }
+
+    public void resetHeading(Rotation2d heading){
+        drivetrain.resetHeading(heading);
     }
 
     public void resetRotationController() {

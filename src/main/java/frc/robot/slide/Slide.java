@@ -148,7 +148,7 @@ public class Slide extends Mechanism {
 
     // TODO: inline vs custom command
     public Command zeroSlideRoutine() {
-        return new FunctionalCommand( //TODO: refresh config in order to modify soft limits
+        return new FunctionalCommand( // TODO: refresh config in order to modify soft limits
                         () ->
                                 config.configReverseSoftLimit(
                                         config.talonConfig

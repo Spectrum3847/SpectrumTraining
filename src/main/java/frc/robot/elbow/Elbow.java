@@ -75,7 +75,8 @@ public class Elbow extends Mechanism {
     }
 
     /**
-     * Sets the intake motor to a specified position using FOC control. Will require different PID and Motion Magic gains
+     * Sets the intake motor to a specified position using FOC control. Will require different PID
+     * and Motion Magic gains
      *
      * @param percent percentage of max rotation (0 is vertical). Note that the percentage is not
      *     [-1,1] but rather [-100,100]

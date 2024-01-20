@@ -25,7 +25,7 @@ public class Intake extends Mechanism {
         public double currentLimit = 12;
         public double threshold = 20;
         public double velocityKp = 0.156152;
-        public double velocityKv = 0.12; 
+        public double velocityKv = 0.12;
         public double velocityKs = 0.24;
 
         public IntakeConfig() {

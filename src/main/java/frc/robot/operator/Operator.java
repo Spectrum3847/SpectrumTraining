@@ -1,7 +1,9 @@
 package frc.robot.operator;
 
+import frc.robot.Robot;
 import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
+import frc.robot.elbow.ElbowCommands;
 import frc.robot.leds.LEDsCommands;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.commands.TrainingCommands;
@@ -36,6 +38,7 @@ public class Operator extends Gamepad {
 
         // Prints every periodic loop that the button is pressed
         // Change this to .onTrue() to continue printing even when the button is released
+
         controller.b().whileTrue(TrainingCommands.periodicCommand());
         controller.b().whileTrue(LEDsCommands.strobeOrangeLED());
 
@@ -82,4 +85,8 @@ public class Operator extends Gamepad {
         // This is just for training, robots may have different buttons during test
         setupTeleopButtons();
     };
+
+    public double getElbowManual() {
+        return controller.getLeftY() * config.elbowModifier;
+    }
 }

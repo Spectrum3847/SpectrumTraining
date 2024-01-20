@@ -20,7 +20,10 @@ public class OperatorCommands {
         return operator.rumbleCommand(intensity, durationSeconds);
     }
 
-    // TODO: add manual slide, shoulder, elbow
+    // TODO: add manual slide, shoulder, elbow //TODO: review
+    public static Command manualElbow() {
+        return Robot.elbow.run(() -> Robot.elbow.setPercentOutput(operator.getElbowManual()));
+    }
 
     public static Command cancelCommands() {
         return new InstantCommand(() -> CommandScheduler.getInstance().cancelAll())

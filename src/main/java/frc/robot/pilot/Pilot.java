@@ -5,6 +5,7 @@ import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
 import frc.robot.leds.LEDsCommands;
 import frc.robot.swerve.commands.SwerveCommands;
+import frc.robot.training.Training;
 import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
 import frc.spectrumLib.util.ExpCurve;

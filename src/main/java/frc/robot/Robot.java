@@ -1,6 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.elbow.Elbow;
+import frc.robot.elbow.ElbowCommands;
 import frc.robot.intake.Intake;
 import frc.robot.intake.IntakeCommands;
 import frc.robot.leds.LEDs;
@@ -31,6 +33,7 @@ public class Robot extends LoggedRobot {
     public static Swerve swerve;
     public static Intake intake;
     public static Slide slide;
+    public static Elbow elbow;
     public static LEDs leds;
     public static Pilot pilot;
     public static Operator operator;
@@ -68,6 +71,7 @@ public class Robot extends LoggedRobot {
             swerve = new Swerve();
             intake = new Intake(config.intakeAttached);
             slide = new Slide(true);
+            elbow = new Elbow(true);
             pilot = new Pilot();
             operator = new Operator();
             leds = new LEDs();
@@ -85,6 +89,7 @@ public class Robot extends LoggedRobot {
             SwerveCommands.setupDefaultCommand();
             IntakeCommands.setupDefaultCommand();
             SlideCommands.setupDefaultCommand();
+            ElbowCommands.setupDefaultCommand();
             LEDsCommands.setupDefaultCommand();
             PilotCommands.setupDefaultCommand();
             OperatorCommands.setupDefaultCommand();

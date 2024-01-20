@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutonLogger {
-    //TODO: Get Logging working on AdvantageScope
-    
+    // TODO: Get Logging working on AdvantageScope
+
     public class RobotContainer {
         private final Field2d field;
 

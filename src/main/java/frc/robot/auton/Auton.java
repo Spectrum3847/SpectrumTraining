@@ -1,17 +1,15 @@
 package frc.robot.auton;
 
-import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
-import frc.robot.auton.commands.AutoBalance;
-import frc.robot.auton.commands.FollowSinglePath;
 import frc.robot.auton.config.AutonConfig;
 
 public class Auton extends SubsystemBase {
@@ -21,18 +19,22 @@ public class Auton extends SubsystemBase {
 
     // A chooser for autonomous commands
     public static void setupSelectors() {
-        autonChooser.setDefaultOption("Clean Side 3", new PathPlannerAuto("Clean Side 3"));
+        autonChooser.setDefaultOption("4 Piece Middle", new PathPlannerAuto("4 Piece Middle"));
 
-        autonChooser.addOption(
-                "Clean3", FollowSinglePath.getSinglePath("test")); // Runs single Path
-        autonChooser.addOption(
-                "Clean Side 3", new PathPlannerAuto("Clean Side 3")); // Runs full Auto
+        // autonChooser.addOption(
+        //         "Example Path", FollowSinglePath.getSinglePath("Example Path")); // Runs single
+        // Path
+        // autonChooser.addOption(
+        //         "4 Piece Middle", new PathPlannerAuto("4 Piece Middle")); // Runs full Auto
+
+        SmartDashboard.putData("Auto Chooser", autonChooser);
     }
 
     // Setup the named commands
     public static void setupNamedCommands() {
         // Register Named Commands
-        NamedCommands.registerCommand("autoBalance", new AutoBalance());
+        // NamedCommands.registerCommand("autoBalance", new AutoBalance());
+        // NamedCommands.registerCommand("alignToSpeaker", new AutoBalance());
     }
 
     // Subsystem Documentation:

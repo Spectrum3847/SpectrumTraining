@@ -11,6 +11,8 @@ import frc.robot.operator.Operator;
 import frc.robot.operator.OperatorCommands;
 import frc.robot.pilot.Pilot;
 import frc.robot.pilot.PilotCommands;
+import frc.robot.shoulder.Shoulder;
+import frc.robot.shoulder.ShoulderCommands;
 import frc.robot.slide.Slide;
 import frc.robot.slide.SlideCommands;
 import frc.robot.swerve.Swerve;
@@ -34,6 +36,7 @@ public class Robot extends LoggedRobot {
     public static Intake intake;
     public static Slide slide;
     public static Elbow elbow;
+    public static Shoulder shoulder;
     public static LEDs leds;
     public static Pilot pilot;
     public static Operator operator;
@@ -72,6 +75,7 @@ public class Robot extends LoggedRobot {
             intake = new Intake(config.intakeAttached);
             slide = new Slide(true);
             elbow = new Elbow(true);
+            shoulder = new Shoulder(true);
             pilot = new Pilot();
             operator = new Operator();
             leds = new LEDs();
@@ -90,6 +94,7 @@ public class Robot extends LoggedRobot {
             IntakeCommands.setupDefaultCommand();
             SlideCommands.setupDefaultCommand();
             ElbowCommands.setupDefaultCommand();
+            ShoulderCommands.setupDefaultCommand();
             LEDsCommands.setupDefaultCommand();
             PilotCommands.setupDefaultCommand();
             OperatorCommands.setupDefaultCommand();

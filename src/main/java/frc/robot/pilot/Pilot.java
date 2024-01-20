@@ -52,7 +52,7 @@ public class Pilot extends Gamepad {
     /*  A, B, X, Y, Left Bumper, Right Bumper = Buttons 1 to 6 in simualation */
     public void setupTeleopButtons() {
         // Prints Once
-        controller.a().whileTrue(TrainingCommands.printOnceCommand());
+        controller.a().whileTrue(Robot.elbow.runManualOutput(0.1));
         controller.a().whileTrue(LEDsCommands.solidPurpleLED());
 
         // Prints every periodic loop that the button is pressed

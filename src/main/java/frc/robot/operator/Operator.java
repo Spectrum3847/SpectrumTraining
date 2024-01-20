@@ -5,6 +5,7 @@ import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
 import frc.robot.elbow.ElbowCommands;
 import frc.robot.leds.LEDsCommands;
+import frc.robot.shoulder.ShoulderCommands;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
@@ -33,7 +34,7 @@ public class Operator extends Gamepad {
     /*  A, B, X, Y, Left Bumper, Right Bumper = Buttons 1 to 6 in simualation */
     public void setupTeleopButtons() {
         // Prints Once
-        controller.a().whileTrue(TrainingCommands.printOnceCommand());
+        controller.a().whileTrue(ShoulderCommands.stow());
         controller.a().whileTrue(LEDsCommands.solidPurpleLED());
 
         // Prints every periodic loop that the button is pressed
@@ -43,10 +44,10 @@ public class Operator extends Gamepad {
         controller.b().whileTrue(LEDsCommands.strobeOrangeLED());
 
         // Runs the FullComman Training Command, doesn't run while disabled
-        controller.x().whileTrue(TrainingCommands.fullCommand());
+        controller.x().toggleOnTrue(Robot.elbow.brakeMode());
 
         // Prints every periodic loop for 1 second
-        controller.y().and(noBumpers()).whileTrue(TrainingCommands.periodicTimeoutCommand());
+        // controller.y().and(noBumpers()).toggleOnTrue();
 
         // Prints one line once and then prints one line every periodic loop
         controller.y().and(leftBumperOnly()).whileTrue(TrainingCommands.sequentialGroupCommand());

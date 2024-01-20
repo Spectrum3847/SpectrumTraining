@@ -373,15 +373,15 @@ public class Drivetrain {
         }
     }
 
-    public void driveFieldRelative(ChassisSpeeds fieldRelativeSpeeds) {
+    public void driveFieldRelativeAuto(ChassisSpeeds fieldRelativeSpeeds) {
         ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(fieldRelativeSpeeds, 0.02);
 
         SwerveModuleState[] targetStates = m_kinematics.toSwerveModuleStates(targetSpeeds);
 
-        setStates(targetStates);
+        setStatesAuto(targetStates);
     }
 
-    public void setStates(SwerveModuleState[] targetStates) {
+    public void setStatesAuto(SwerveModuleState[] targetStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(targetStates, AutonConfig.maxModuleSpeed);
 
         for (int i = 0; i < Modules.length; i++) {

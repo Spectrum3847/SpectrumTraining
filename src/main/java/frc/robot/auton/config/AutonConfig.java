@@ -47,7 +47,7 @@ public class AutonConfig {
                 // has a starting pose)
                 Robot.swerve::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT
                 // RELATIVE
-                Robot.swerve::driveFieldRelative, // Method that will drive the robot given ROBOT
+                Robot.swerve::driveFieldRelativeAuto, // Method that will drive the robot given ROBOT
                 // RELATIVE
                 // ChassisSpeeds
                 AutonConfig.AutonPathFollowerConfig,

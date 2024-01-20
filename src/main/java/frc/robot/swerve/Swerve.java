@@ -104,8 +104,8 @@ public class Swerve implements Subsystem {
         drivetrain.seedFieldRelative(pose);
     }
 
-    public void driveFieldRelative(ChassisSpeeds fieldRelativeSpeeds) {
-        drivetrain.driveFieldRelative(fieldRelativeSpeeds);
+    public void driveFieldRelativeAuto(ChassisSpeeds fieldRelativeSpeeds) {
+        drivetrain.driveFieldRelativeAuto(fieldRelativeSpeeds);
     }
 
     public void reorient(double angle) {

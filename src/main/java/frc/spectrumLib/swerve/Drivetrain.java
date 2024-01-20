@@ -21,6 +21,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Threads;
 import frc.robot.RobotTelemetry;
+import frc.robot.auton.config.AutonConfig;
 import frc.spectrumLib.swerve.Request.ControlRequestParameters;
 import frc.spectrumLib.swerve.config.ModuleConfig;
 import frc.spectrumLib.swerve.config.SwerveConfig;
@@ -369,6 +370,22 @@ public class Drivetrain {
                     Rotation2d.fromDegrees(m_yawGetter.getValue()), m_modulePositions, location);
         } finally {
             m_stateLock.writeLock().unlock();
+        }
+    }
+
+    public void driveFieldRelative(ChassisSpeeds fieldRelativeSpeeds) {
+        ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(fieldRelativeSpeeds, 0.02);
+
+        SwerveModuleState[] targetStates = m_kinematics.toSwerveModuleStates(targetSpeeds);
+
+        setStates(targetStates);
+    }
+
+    public void setStates(SwerveModuleState[] targetStates) {
+        SwerveDriveKinematics.desaturateWheelSpeeds(targetStates, AutonConfig.maxModuleSpeed);
+
+        for (int i = 0; i < Modules.length; i++) {
+            Modules[i].apply(targetStates[i], true);
         }
     }
 

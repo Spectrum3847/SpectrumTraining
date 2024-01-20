@@ -12,6 +12,7 @@ import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 import frc.robot.auton.commands.FollowSinglePath;
 import frc.robot.auton.config.AutonConfig;
+import frc.robot.swerve.commands.SwerveCommands;
 
 public class Auton extends SubsystemBase {
     public static final SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -27,6 +28,17 @@ public class Auton extends SubsystemBase {
         // Path
         autonChooser.addOption(
                 "Example Path", FollowSinglePath.getSinglePath("Example Path")); // Runs full Auto
+
+        autonChooser.addOption(
+                "Slow Path", FollowSinglePath.getSinglePath("Slow Path")); // Runs full Auto
+        autonChooser.addOption(
+                "Test Swerve",
+                SwerveCommands.Drive(
+                        () -> 0.1,
+                        () -> 0,
+                        () -> 1,
+                        () -> true, // true is field oriented
+                        () -> true)); // Runs full Auto
 
         SmartDashboard.putData("Auto Chooser", autonChooser);
     }

@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
-import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.swerve.configs.MUSICDISC2023;
 import frc.robot.swerve.configs.NOTEBLOCK2023;
 import frc.spectrumLib.swerve.Drivetrain;
@@ -106,12 +105,7 @@ public class Swerve implements Subsystem {
     }
 
     public void driveFieldRelative(ChassisSpeeds fieldRelativeSpeeds) {
-        SwerveCommands.Drive(
-                () -> fieldRelativeSpeeds.vxMetersPerSecond,
-                () -> fieldRelativeSpeeds.vyMetersPerSecond,
-                () -> fieldRelativeSpeeds.omegaRadiansPerSecond,
-                () -> true,
-                () -> true);
+        drivetrain.driveFieldRelative(fieldRelativeSpeeds);
     }
 
     public void reorient(double angle) {

@@ -1,7 +1,6 @@
 package frc.robot.swerve.commands;
 
 import com.ctre.phoenix6.StatusCode;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -50,6 +49,8 @@ public class Drive implements Request {
                                         .isOpenLoop(isOpenLoop.getAsBoolean()))
                 .withName("Drive");
     }
+
+    public static Rotation2d lastAngle = new Rotation2d();
 
     /**
      * The velocity in the X direction. X is defined as forward according to WPILib convention, so
@@ -101,16 +102,15 @@ public class Drive implements Request {
                 parameters.kinematics.toSwerveModuleStates(speeds, new Translation2d());
 
         /* Prevent rotating module if speed is less then 1% */
-        for(SwerveModuleState desiredState : states) {
-            Rotation2d angle = desiredState.angle;
-            if((Math.abs(desiredState.speedMetersPerSecond) < (Robot.swerve.config.maxVelocity * 0.01))) {
-                angle = lastAngle; //TODO: create
+        // for (SwerveModuleState desiredState : states) {
+        //     Rotation2d angle = desiredState.angle;
+        //     if ((Math.abs(desiredState.speedMetersPerSecond)
+        //             < (Robot.swerve.config.maxVelocity * 0.01))) {
+        //         angle = lastAngle; // TODO: create
+        //     }
 
-            }
-            
-            lastAngle = angle;
-        }
-
+        //     lastAngle = angle;
+        // }
 
         Robot.swerve.writeSetpoints(states);
         for (int i = 0; i < modulesToApply.length; ++i) {

@@ -10,10 +10,16 @@ public class LEDsCommands {
     private static LEDs leds = Robot.leds;
 
     public static void setupDefaultCommand() {
-        leds.setDefaultCommand(defaultCommand());
+        leds.setDefaultCommand(stop());
     }
 
     /** Specific Commands */
+    public static Command stop() {
+        return leds.run(() -> solid(0, Color.kAliceBlue, 0))
+                .ignoringDisable(true)
+                .withName("LEDS.stop");
+    }
+
     public static Command defaultCommand() {
         return leds.run(
                         () -> {

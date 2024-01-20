@@ -21,7 +21,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
-import frc.robot.Robot;
 import frc.spectrumLib.swerve.config.ModuleConfig;
 
 /**
@@ -251,6 +250,7 @@ public class Module {
             /* But we do care about the backout due to coupling, so we keep it in */
             velocityToSet /= m_driveRotationsPerMeter;
             /* Open loop always uses voltage setter */
+
             m_driveMotor.setControl(
                     m_voltageOpenLoopSetter.withOutput(velocityToSet / m_speedAt12VoltsMps * 12.0));
         } else {
@@ -339,12 +339,8 @@ public class Module {
     }
 
     public Rotation2d checkMotorAngle() {
-        return Rotation2d.fromDegrees((360 * m_steerMotor.getPosition().getValueAsDouble()) / rotationMotorGearRatio);
-
-    }
-
-    public void setLastAngleToCurrentAngle() {
-        lastAngle = checkMotorAngle();
+        return Rotation2d.fromDegrees(
+                (360 * m_steerMotor.getPosition().getValueAsDouble()) / rotationMotorGearRatio);
     }
 
     // NEEDS TO BE TESTED

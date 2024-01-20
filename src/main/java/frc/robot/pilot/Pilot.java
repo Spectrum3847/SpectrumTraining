@@ -8,6 +8,7 @@ import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
 import frc.spectrumLib.util.ExpCurve;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 public class Pilot extends Gamepad {
     public class PilotConfig {
@@ -136,6 +137,7 @@ public class Pilot extends Gamepad {
 
     // Positive is forward, up on the left stick is positive
     // Applies Expontial Curve, Deadzone, and Slow Mode toggle
+    @AutoLogOutput(key = "Pilot/FWDPos")
     public double getDriveFwdPositive() {
         double fwdPositive = LeftStickCurve.calculate(-1 * controller.getLeftY());
         if (isSlowMode) {

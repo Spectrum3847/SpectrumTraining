@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
+import frc.robot.swerve.commands.Drive;
 import frc.robot.swerve.configs.MUSICDISC2023;
 import frc.robot.swerve.configs.NOTEBLOCK2023;
 import frc.spectrumLib.swerve.Drivetrain;
@@ -23,6 +24,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
+import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 public class Swerve implements Subsystem {
@@ -33,6 +35,8 @@ public class Swerve implements Subsystem {
     private double targetHeading = 0;
     private ReadWriteLock m_stateLock = new ReentrantReadWriteLock();
     private SwerveModuleState[] Setpoints = new SwerveModuleState[] {};
+
+    public Rotation2d lastAngle = new Rotation2d();
 
     public Swerve() {
         RobotTelemetry.print("Swerve Subsystem Starting: ");
@@ -56,6 +60,7 @@ public class Swerve implements Subsystem {
         drivetrain = new Drivetrain(config, OdometryUpdateFrequency);
 
         rotationController = new RotationController(this);
+        lastAngle = drivetrain.getModule(0).checkMotorAngle();
         RobotTelemetry.print("Swerve Subsystem Initialized: ");
     }
 
@@ -107,10 +112,11 @@ public class Swerve implements Subsystem {
     public void reorient(double angle) {
         drivetrain.seedFieldRelative(angle);
 
-        //TODO: add last angle impl
-        for(frc.spectrumLib.swerve.Module module : drivetrain.getModules()) {
-            module.lastAngle = Rotation2d.fromDegrees(angle);
-        } 
+        Drive.lastAngle = Rotation2d.fromDegrees(angle);
+    }
+
+    public void setLastAngleToCurrentAngle() {
+        Drive.lastAngle = drivetrain.getModule(0).checkMotorAngle();
     }
 
     public ChassisSpeeds getRobotRelativeSpeeds() {
@@ -205,5 +211,25 @@ public class Swerve implements Subsystem {
         } finally {
             m_stateLock.readLock().unlock();
         }
+    }
+
+    @AutoLogOutput(key = "Pilot/FLdutyCycle")
+    public double getFLDutyCycle() {
+        return drivetrain.getModule(0).getDriveMotor().getDutyCycle().getValueAsDouble();
+    }
+
+    @AutoLogOutput(key = "Pilot/FRdutyCycle")
+    public double getFRDutyCycle() {
+        return drivetrain.getModule(1).getDriveMotor().getDutyCycle().getValueAsDouble();
+    }
+
+    @AutoLogOutput(key = "Pilot/BLdutyCycle")
+    public double getBLDutyCycle() {
+        return drivetrain.getModule(2).getDriveMotor().getDutyCycle().getValueAsDouble();
+    }
+
+    @AutoLogOutput(key = "Pilot/BRdutyCycle")
+    public double getBRDutyCycle() {
+        return drivetrain.getModule(3).getDriveMotor().getDutyCycle().getValueAsDouble();
     }
 }

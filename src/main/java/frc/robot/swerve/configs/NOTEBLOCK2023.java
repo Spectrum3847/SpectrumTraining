@@ -11,9 +11,9 @@ public class NOTEBLOCK2023 {
 
     // Angle Offsets
     private static final double kFrontLeftCANcoderOffset = -0.399658;
-    private static final double kFrontRightCANncoderOffset = -0.186279;
-    private static final double kBackLeftCANcoderOffset = 0.118896;
-    private static final double kBackRightCANcoderOffset = -0.021240;
+    private static final double kFrontRightCANncoderOffset = -0.186035;
+    private static final double kBackLeftCANcoderOffset = 0.121582;
+    private static final double kBackRightCANcoderOffset = -0.020508;
 
     // GOOD OFFSETS
     //         private static final double kFrontLeftCANcoderOffset = -0.407958984375;

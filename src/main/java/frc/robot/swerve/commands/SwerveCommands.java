@@ -14,7 +14,7 @@ public class SwerveCommands {
     private static Swerve swerve = Robot.swerve;
 
     public static void setupDefaultCommand() {
-        swerve.setDefaultCommand(PilotCommands.pilotDrive());
+        swerve.setDefaultCommand(PilotCommands.headingLockDrive());
     }
 
     /** Turn the swerve wheels to an X to prevent the robot from moving */
@@ -72,8 +72,8 @@ public class SwerveCommands {
                                 velocityX,
                                 velocityY,
                                 () -> {
-                                    if (velocityX.getAsDouble() == 0
-                                            && velocityY.getAsDouble() == 0) {
+                                    if (velocityX.getAsDouble() <= 0.1
+                                            && velocityY.getAsDouble() <= 0.1) {
                                         return 0.0;
                                     } else {
                                         return swerve.calculateRotationController(

@@ -152,6 +152,8 @@ public class Robot extends LoggedRobot {
             RobotTelemetry.print("@@@ Auton Init Starting @@@ ");
             resetCommandsAndButtons();
 
+            swerve.setLastAngleToCurrentAngle();
+
             RobotTelemetry.print("@@@ Auton Init Complete @@@ ");
         } catch (Throwable t) {
             // intercept error and log it
@@ -179,6 +181,8 @@ public class Robot extends LoggedRobot {
         try {
             RobotTelemetry.print("!!! Teleop Init Starting !!! ");
             resetCommandsAndButtons();
+
+            swerve.setLastAngleToCurrentAngle();
 
             RobotTelemetry.print("!!! Teleop Init Complete !!! ");
         } catch (Throwable t) {

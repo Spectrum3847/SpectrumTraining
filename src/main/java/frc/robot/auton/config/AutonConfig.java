@@ -6,24 +6,29 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Robot;
-import frc.robot.swerve.commands.ApplyChassisSpeeds;
 
 public class AutonConfig {
     // TODO: #1 @EDPendleton24: The PID constants have to be different for Translation and Rotation
     // TODO: Check if required commands work
     // TODO: Check if PID and other constants are correct
 
-    public static final double kP = 5.0;
-    public static final double kI = 0.0;
-    public static final double kD = 0.0;
+    public static final double kTranslationP = 5.4;
+    public static final double kTranslationI = 0.0;
+    public static final double kTranslationD = 0.0;
+    public static final double kRotationP = 2;
+    public static final double kRotationI = 0.0;
+    public static final double kRotationD = 0.01;
     public static final double maxModuleSpeed = 4.5;
     public static final double driveBaseRadius = 0.4;
 
     public static HolonomicPathFollowerConfig AutonPathFollowerConfig =
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely
                     // live in your Constants class
-                    new PIDConstants(kP, kI, kD), // Translation PID constants
-                    new PIDConstants(kP, kI, kD), // Rotation PID constants
+                    new PIDConstants(
+                            kTranslationP,
+                            kTranslationI,
+                            kTranslationD), // Translation PID constants
+                    new PIDConstants(kRotationP, kRotationI, kRotationD), // Rotation PID constants
                     maxModuleSpeed, // Max module speed, in m/s
                     driveBaseRadius, // Drive base radius in meters. Distance from robot center to
                     // furthest module.
@@ -42,8 +47,8 @@ public class AutonConfig {
                 // has a starting pose)
                 Robot.swerve::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT
                 // RELATIVE
-                ApplyChassisSpeeds.robotRelativeOutput(
-                        true), // Method that will drive the robot given ROBOT RELATIVE
+                Robot.swerve::driveFieldRelative, // Method that will drive the robot given ROBOT
+                // RELATIVE
                 // ChassisSpeeds
                 AutonConfig.AutonPathFollowerConfig,
                 () -> {

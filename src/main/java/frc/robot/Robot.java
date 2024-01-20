@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.auton.Auton;
 import frc.robot.intake.Intake;
@@ -15,7 +16,6 @@ import frc.robot.slide.SlideCommands;
 import frc.robot.swerve.Swerve;
 import frc.robot.swerve.commands.SwerveCommands;
 import frc.robot.training.Training;
-import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.util.CrashTracker;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -82,7 +82,7 @@ public class Robot extends LoggedRobot {
              * Set Default Commands this method should exist for each subsystem that has default
              * command these must be done after all the subsystems are intialized
              */
-            TrainingCommands.setupDefaultCommand();
+            // TrainingCommands.setupDefaultCommand();
             SwerveCommands.setupDefaultCommand();
             IntakeCommands.setupDefaultCommand();
             SlideCommands.setupDefaultCommand();
@@ -149,10 +149,12 @@ public class Robot extends LoggedRobot {
 
     /** This method is called once when autonomous starts */
     public void autonomousInit() {
+        resetCommandsAndButtons();
+        Command autonCommand = Auton.getAutonomousCommand();
         try {
             RobotTelemetry.print("@@@ Auton Init Starting @@@ ");
-            resetCommandsAndButtons();
-
+            autonCommand.schedule();
+            Auton.startAutonTimer();
             RobotTelemetry.print("@@@ Auton Init Complete @@@ ");
         } catch (Throwable t) {
             // intercept error and log it

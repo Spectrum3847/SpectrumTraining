@@ -14,7 +14,6 @@ import java.util.function.Supplier;
 
 /** Accepts a generic ChassisSpeeds to apply to the drivetrain. */
 public class ApplyChassisSpeeds implements Request {
-
     public static Command run(Supplier<ChassisSpeeds> speeds, BooleanSupplier isOpenLoop) {
         return Robot.swerve.applyRequest(
                 () ->

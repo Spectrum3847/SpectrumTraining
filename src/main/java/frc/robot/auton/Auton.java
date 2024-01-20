@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
+import frc.robot.auton.commands.FollowSinglePath;
 import frc.robot.auton.config.AutonConfig;
 
 public class Auton extends SubsystemBase {
@@ -24,8 +25,8 @@ public class Auton extends SubsystemBase {
         // autonChooser.addOption(
         //         "Example Path", FollowSinglePath.getSinglePath("Example Path")); // Runs single
         // Path
-        // autonChooser.addOption(
-        //         "4 Piece Middle", new PathPlannerAuto("4 Piece Middle")); // Runs full Auto
+        autonChooser.addOption(
+                "Example Path", FollowSinglePath.getSinglePath("Example Path")); // Runs full Auto
 
         SmartDashboard.putData("Auto Chooser", autonChooser);
     }

@@ -71,8 +71,7 @@ public class Trajectories extends SubsystemBase {
 
     public DoubleSupplier calculateYSupplier(DoubleSupplier goalY) {
         return () ->
-                yController.calculate(
-                        Robot.swerve.getPoseMeters().getY(), goalY.getAsDouble());
+                yController.calculate(Robot.swerve.getPoseMeters().getY(), goalY.getAsDouble());
     }
 
     public DoubleSupplier calculateYSupplier(double goalY) {

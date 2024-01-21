@@ -12,7 +12,7 @@ public class AutonConfig {
     // TODO: Check if required commands work
     // TODO: Check if PID and other constants are correct
 
-    public static final double kTranslationP = 5.4;
+    public static final double kTranslationP = 0.4;
     public static final double kTranslationI = 0.0;
     public static final double kTranslationD = 0.0;
     public static final double kRotationP = 2;
@@ -47,7 +47,8 @@ public class AutonConfig {
                 // has a starting pose)
                 Robot.swerve::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT
                 // RELATIVE
-                Robot.swerve::driveFieldRelativeAuto, // Method that will drive the robot given ROBOT
+                Robot.swerve
+                        ::driveFieldRelativeAuto, // Method that will drive the robot given ROBOT
                 // RELATIVE
                 // ChassisSpeeds
                 AutonConfig.AutonPathFollowerConfig,

@@ -31,6 +31,7 @@ public class Robot extends LoggedRobot {
 
     /** Create a single static instance of all of your subsystems */
     public static Swerve swerve;
+
     public static Intake intake;
     public static Slide slide;
     public static LEDs leds;
@@ -70,7 +71,7 @@ public class Robot extends LoggedRobot {
              * code. Anything with an output that needs to be independently controlled is a
              * subsystem Something that don't have an output are alos subsystems.
              */
-            //Intializes position based subsystems
+            // Intializes position based subsystems
             vision = new Vision();
             System.out.println("Started Vision");
             swerve = new Swerve();
@@ -80,13 +81,13 @@ public class Robot extends LoggedRobot {
             trajectories = new Trajectories();
             System.out.println("Started Trajectories");
 
-            //Starts subsystems
+            // Starts subsystems
             intake = new Intake(config.intakeAttached);
             System.out.println("Started Intake");
             slide = new Slide(true);
             System.out.println("Started Slide");
 
-            //Starts gamepads and LEDs
+            // Starts gamepads and LEDs
             pilot = new Pilot();
             operator = new Operator();
             System.out.println("Started Gamepads");

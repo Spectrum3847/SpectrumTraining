@@ -114,7 +114,7 @@ public class Swerve implements Subsystem {
         drivetrain.seedFieldRelative(pose);
     }
 
-    public SwerveDriveKinematics getSwerveDriveKinematics(){
+    public SwerveDriveKinematics getSwerveDriveKinematics() {
         return drivetrain.getSwerveDriveKinematics();
     }
 
@@ -134,7 +134,7 @@ public class Swerve implements Subsystem {
         return getPose().getRotation();
     }
 
-    public void resetHeading(Rotation2d heading){
+    public void resetHeading(Rotation2d heading) {
         drivetrain.resetHeading(heading);
     }
 

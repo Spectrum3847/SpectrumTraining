@@ -90,7 +90,7 @@ public class Vision extends SubsystemBase {
             aimHorizontalOffset = LimelightHelpers.getTX(VisionConfig.DEFAULT_LL);
             aimVerticalOffset = LimelightHelpers.getTY(VisionConfig.DEFAULT_LL);
             aimTarget = LimelightHelpers.getTV(VisionConfig.DEFAULT_LL);
-            //Robot.log.logger.recordOutput("aimLL-VertOffset", aimVerticalOffset);
+            // Robot.log.logger.recordOutput("aimLL-VertOffset", aimVerticalOffset);
             // RobotTelemetry.print("aimLL-VertOffset: " + aimVerticalOffset);
         }
 
@@ -125,12 +125,9 @@ public class Vision extends SubsystemBase {
      * <p>Limelight pose logic:
      *
      * <p>Sets odometry pose to be vision estimate at the start of {@link Robot#teleopInit} and
-     * {@link Robot#disabledInit} so odometry has correct starting pose. Will not override
-odometry
-     * with vision if limelight does not see targets. Adds vision estimate to pose estimator
-using
-     * standard deviation values if 1) odometry has been overridden by vision at least once and
-2)
+     * {@link Robot#disabledInit} so odometry has correct starting pose. Will not override odometry
+     * with vision if limelight does not see targets. Adds vision estimate to pose estimator using
+     * standard deviation values if 1) odometry has been overridden by vision at least once and 2)
      * vision estimate is within 1 meter of odometry
      */
     public void update() {
@@ -187,8 +184,7 @@ using
      * between the robot heading and the angle required to face the hybrid spot. Will return 0 if
      * the robot cannot see an apriltag.
      *
-     * @param hybridSpot 0-8 representing the 9 different hybrid spots for launching cubes to
-hybrid
+     * @param hybridSpot 0-8 representing the 9 different hybrid spots for launching cubes to hybrid
      *     nodes
      * @return angle between robot heading and hybrid spot in degrees
      */
@@ -235,8 +231,7 @@ hybrid
     /**
      * Helper function for {@link Vision#getThetaToHybrid}
      *
-     * @param hybridSpot 0-8 representing the 9 different hybrid spots for launching cubes to
-hybrid
+     * @param hybridSpot 0-8 representing the 9 different hybrid spots for launching cubes to hybrid
      *     nodes
      * @return Transform2d representing the x and y distance components between the robot and the
      *     hybrid spot
@@ -261,8 +256,7 @@ hybrid
     public double getDistanceToTarget() {
         double angleToGoal =
                 Units.degreesToRadians(VisionConfig.limelightAngle + aimVerticalOffset);
-        return (VisionConfig.tagHeight - VisionConfig.limelightLensHeight) /
-Math.tan(angleToGoal);
+        return (VisionConfig.tagHeight - VisionConfig.limelightLensHeight) / Math.tan(angleToGoal);
     }
 
     /**
@@ -318,8 +312,7 @@ Math.tan(angleToGoal);
     }
 
     /**
-     * Converts a vision pose3d object to a pose2d object Also replaces the rotational component
-to
+     * Converts a vision pose3d object to a pose2d object Also replaces the rotational component to
      * be the gyro rotation as this stays consistent throughout the match and does not need to be
      * overriden by vision
      *
@@ -357,8 +350,7 @@ to
     }
 
     /**
-     * Gets if limelight has seen a target at least once. Attempts to disregard erroneous targets
-by
+     * Gets if limelight has seen a target at least once. Attempts to disregard erroneous targets by
      * checking how many loops the target has been seen in
      *
      * @return true if limelight has seen a valid target at least once
@@ -435,10 +427,8 @@ by
                     "LimelightYaw",
                     df.format(Units.radiansToDegrees(botPose3d.getRotation().getZ())));
         }
-        SmartDashboard.putString("EstimatedPoseX",
-df.format(Robot.pose.getEstimatedPose().getX()));
-        SmartDashboard.putString("EstimatedPoseY",
-df.format(Robot.pose.getEstimatedPose().getY()));
+        SmartDashboard.putString("EstimatedPoseX", df.format(Robot.pose.getEstimatedPose().getX()));
+        SmartDashboard.putString("EstimatedPoseY", df.format(Robot.pose.getEstimatedPose().getY()));
         SmartDashboard.putString(
                 "EstimatedPoseTheta", df.format(Robot.pose.getHeading().getDegrees()));
     }

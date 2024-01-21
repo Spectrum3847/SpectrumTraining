@@ -389,7 +389,7 @@ public class Drivetrain {
         }
     }
 
-    public void resetHeading(Rotation2d heading){
+    public void resetHeading(Rotation2d heading) {
         m_kinematics.resetHeadings(heading);
     }
 
@@ -408,7 +408,7 @@ public class Drivetrain {
         }
     }
 
-    public SwerveDriveKinematics getSwerveDriveKinematics(){
+    public SwerveDriveKinematics getSwerveDriveKinematics() {
         return m_kinematics;
     }
 
@@ -461,7 +461,7 @@ public class Drivetrain {
         return m_odometry.getEstimatedPosition();
     }
 
-    public SwerveModulePosition[] getSwerveModulePositions(){
+    public SwerveModulePosition[] getSwerveModulePositions() {
         return m_modulePositions;
     }
 

@@ -8,13 +8,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
 import frc.robot.auton.commands.FollowSinglePath;
 import frc.robot.auton.config.AutonConfig;
 import frc.robot.swerve.commands.SwerveCommands;
-import frc.robot.swerve.commands.SysIdCommands;
 
 public class Auton extends SubsystemBase {
     public static final SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -32,13 +30,7 @@ public class Auton extends SubsystemBase {
                 "Example Path", FollowSinglePath.getSinglePath("Example Path")); // Runs full Auto
 
         autonChooser.addOption("1 Meter", new PathPlannerAuto("1 Meter")); // Runs full Auto
-        
-        //SysId Configuration Autos
-        autonChooser.addOption("SysIdQuasistaticForward", SysIdCommands.sysIdQuasistaticForward());
-        autonChooser.addOption("SysIdQuasistaticBackward", SysIdCommands.sysIdQuasistaticBackward());
-        autonChooser.addOption("SysIdDynamicForward", SysIdCommands.sysIdDynamicForward());
-        autonChooser.addOption("SysIdDynamicBackward", SysIdCommands.sysIdDynamicBackward());
-        
+
         autonChooser.addOption(
                 "Test Swerve",
                 SwerveCommands.Drive(

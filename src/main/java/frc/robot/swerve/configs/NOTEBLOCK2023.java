@@ -32,8 +32,8 @@ public class NOTEBLOCK2023 {
     private static final double kWheelRadiusInches = 2;
     private static final double speedAt12VoltsMps = 6;
     private static final double slipCurrent = 800;
-    private static final SlotGains steerGains = new SlotGains(100, 0, 0.05, 0, 0);
-    private static final SlotGains driveGains = new SlotGains(0.4, 0, 0, 0, 0);
+    private static final SlotGains steerGains = new SlotGains(0.1694, 0, 0, 0.11519, 0.16232);
+    private static final SlotGains driveGains = new SlotGains(0.1694, 0, 0, 0.11519, 0.16232);
 
     /*Rotation Controller*/
     private static final double kPRotationController = 0.0;

@@ -385,7 +385,7 @@ public class Drivetrain {
         SwerveDriveKinematics.desaturateWheelSpeeds(targetStates, AutonConfig.maxModuleSpeed);
 
         for (int i = 0; i < Modules.length; i++) {
-            Modules[i].apply(targetStates[i], true);
+            Modules[i].apply(targetStates[i], false);
         }
     }
 

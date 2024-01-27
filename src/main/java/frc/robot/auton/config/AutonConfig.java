@@ -6,6 +6,7 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Robot;
+import frc.robot.swerve.commands.ApplyChassisSpeeds;
 
 public class AutonConfig {
     // TODO: #1 @EDPendleton24: The PID constants have to be different for Translation and Rotation
@@ -47,8 +48,8 @@ public class AutonConfig {
                 // has a starting pose)
                 Robot.swerve::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT
                 // RELATIVE
-                Robot.swerve
-                        ::driveFieldRelativeAuto, // Method that will drive the robot given ROBOT
+                ApplyChassisSpeeds.robotRelativeOutput(
+                        true), // Method that will drive the robot given ROBOT
                 // RELATIVE
                 // ChassisSpeeds
                 AutonConfig.AutonPathFollowerConfig,

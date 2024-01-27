@@ -1,0 +1,49 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.42,
+      "y": 4.1
+    },
+    "rotation": 180.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Front Part 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Front Part 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Front Part 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Front Part 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Front Part 5"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

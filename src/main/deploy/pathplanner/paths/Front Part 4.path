@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.62,
+        "y": 5.55
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.2745139596920914,
+        "y": 6.178014675954516
+      },
+      "isLocked": false,
+      "linkedName": "GP 3 Shoot"
+    },
+    {
+      "anchor": {
+        "x": 1.75,
+        "y": 7.0
+      },
+      "prevControl": {
+        "x": 2.1816766552148636,
+        "y": 6.30953419063059
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "GP 4 Front Shoot"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 0.5,
+    "maxAcceleration": 0.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "4 Piece Front",
+  "previewStartingState": {
+    "rotation": 180.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

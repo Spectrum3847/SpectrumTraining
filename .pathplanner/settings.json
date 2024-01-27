@@ -3,9 +3,12 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "4 Piece Middle"
+    "4 Piece Middle",
+    "4 Piece Front"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "PID Config Autos"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

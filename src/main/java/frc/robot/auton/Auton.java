@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
-import frc.robot.auton.commands.FollowSinglePath;
 import frc.robot.auton.config.AutonConfig;
 import frc.robot.swerve.commands.SwerveCommands;
 
@@ -22,14 +21,14 @@ public class Auton extends SubsystemBase {
     // A chooser for autonomous commands
     public static void setupSelectors() {
         autonChooser.setDefaultOption("4 Piece Middle", new PathPlannerAuto("4 Piece Middle"));
+        autonChooser.setDefaultOption("4 Piece Front", new PathPlannerAuto("4 Piece Front"));
 
         // autonChooser.addOption(
         //         "Example Path", FollowSinglePath.getSinglePath("Example Path")); // Runs single
         // Path
-        autonChooser.addOption(
-                "Example Path", FollowSinglePath.getSinglePath("Example Path")); // Runs full Auto
-
         autonChooser.addOption("1 Meter", new PathPlannerAuto("1 Meter")); // Runs full Auto
+        autonChooser.addOption("3 Meter", new PathPlannerAuto("3 Meter")); // Runs full Auto
+        autonChooser.addOption("5 Meter", new PathPlannerAuto("5 Meter")); // Runs full Auto
 
         autonChooser.addOption(
                 "Test Swerve",

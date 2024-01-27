@@ -9,6 +9,7 @@ import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TorqueCurrentConfigs;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -45,7 +46,7 @@ public class Module {
     private double m_couplingRatioDriveRotorToCANcoder;
 
     private MotionMagicVoltage m_angleSetter = new MotionMagicVoltage(0);
-    private VelocityVoltage m_velocityVoltageSetterFOC = new VelocityVoltage(0);
+    private VelocityTorqueCurrentFOC m_velocityTorqueSetter = new VelocityTorqueCurrentFOC(0);
     private VelocityVoltage m_velocityVoltageSetter = new VelocityVoltage(0);
     private VoltageOut m_voltageOpenLoopSetter = new VoltageOut(0);
 
@@ -159,7 +160,7 @@ public class Module {
         m_couplingRatioDriveRotorToCANcoder = config.CouplingGearRatio;
 
         /* Make control requests synchronous */
-        m_velocityVoltageSetterFOC.UpdateFreqHz = 0;
+        m_velocityTorqueSetter.UpdateFreqHz = 0;
         m_velocityVoltageSetter.UpdateFreqHz = 0;
         m_voltageOpenLoopSetter.UpdateFreqHz = 0;
         m_angleSetter.UpdateFreqHz = 0;
@@ -251,7 +252,7 @@ public class Module {
             /* If we support pro, use the torque request */
             if (m_supportsPro) {
                 m_driveMotor.setControl(
-                        m_velocityVoltageSetterFOC.withVelocity(velocityToSet).withEnableFOC(true));
+                        m_velocityTorqueSetter.withVelocity(velocityToSet));
             } else {
                 m_driveMotor.setControl(m_velocityVoltageSetter.withVelocity(velocityToSet));
             }

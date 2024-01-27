@@ -251,8 +251,7 @@ public class Module {
         } else {
             /* If we support pro, use the torque request */
             if (m_supportsPro) {
-                m_driveMotor.setControl(
-                        m_velocityTorqueSetter.withVelocity(velocityToSet));
+                m_driveMotor.setControl(m_velocityTorqueSetter.withVelocity(velocityToSet));
             } else {
                 m_driveMotor.setControl(m_velocityVoltageSetter.withVelocity(velocityToSet));
             }

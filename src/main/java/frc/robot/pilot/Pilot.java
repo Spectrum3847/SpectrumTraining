@@ -3,9 +3,9 @@ package frc.robot.pilot;
 import frc.robot.Robot;
 import frc.robot.RobotCommands;
 import frc.robot.RobotTelemetry;
-import frc.robot.leds.LEDsCommands;
+import frc.robot.swerve.commands.AlignToNote;
+import frc.robot.swerve.commands.DriveToNote;
 import frc.robot.swerve.commands.SwerveCommands;
-import frc.robot.training.commands.TrainingCommands;
 import frc.spectrumLib.Gamepad;
 import frc.spectrumLib.util.ExpCurve;
 
@@ -51,25 +51,26 @@ public class Pilot extends Gamepad {
     /*  A, B, X, Y, Left Bumper, Right Bumper = Buttons 1 to 6 in simualation */
     public void setupTeleopButtons() {
         // Prints Once
-        controller.a().whileTrue(TrainingCommands.printOnceCommand());
-        controller.a().whileTrue(LEDsCommands.solidPurpleLED());
+        controller.a().whileTrue(new AlignToNote(() -> 0, 0));
+        controller.b().whileTrue(new DriveToNote(0));
+        // controller.a().whileTrue(LEDsCommands.solidPurpleLED());
 
         // Prints every periodic loop that the button is pressed
         // Change this to .onTrue() to continue printing even when the button is released
-        controller.b().whileTrue(TrainingCommands.periodicCommand());
-        controller.b().whileTrue(LEDsCommands.strobeOrangeLED());
+        // controller.b().whileTrue(TrainingCommands.periodicCommand());
+        // controller.b().whileTrue(LEDsCommands.strobeOrangeLED());
 
-        // Runs the FullComman Training Command, doesn't run while disabled
-        controller.x().whileTrue(TrainingCommands.fullCommand());
+        // // Runs the FullComman Training Command, doesn't run while disabled
+        // controller.x().whileTrue(TrainingCommands.fullCommand());
 
-        // Prints every periodic loop for 1 second
-        controller.y().and(noBumpers()).whileTrue(TrainingCommands.periodicTimeoutCommand());
+        // // Prints every periodic loop for 1 second
+        // controller.y().and(noBumpers()).whileTrue(TrainingCommands.periodicTimeoutCommand());
 
-        // Prints one line once and then prints one line every periodic loop
-        controller.y().and(leftBumperOnly()).whileTrue(TrainingCommands.sequentialGroupCommand());
+        // // Prints one line once and then prints one line every periodic loop
+        // controller.y().and(leftBumperOnly()).whileTrue(TrainingCommands.sequentialGroupCommand());
 
-        // Prints two lines every periodic loop
-        controller.y().and(rightBumperOnly()).whileTrue(TrainingCommands.parellelGroupCommand());
+        // // Prints two lines every periodic loop
+        // controller.y().and(rightBumperOnly()).whileTrue(TrainingCommands.parellelGroupCommand());
 
         leftXTrigger(ThresholdType.GREATER_THAN, 0).whileTrue(RobotCommands.PrintAndBreathLED());
 

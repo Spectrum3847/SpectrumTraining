@@ -56,8 +56,8 @@ public class Vision extends SubsystemBase {
 
         // configure both limelights
         LimelightHelpers.setLEDMode_ForceOff(VisionConfig.DETECT_LL);
-        setLimelightPipeline(VisionConfig.DETECT_LL, VisionConfig.coneDetectorPipeline);
-        setLimelightPipeline(VisionConfig.DEFAULT_LL, VisionConfig.reflectivePipeline);
+        setLimelightPipeline(VisionConfig.DETECT_LL, VisionConfig.noteDetectorPipeline);
+        setLimelightPipeline(VisionConfig.DEFAULT_LL, VisionConfig.noteDetectorPipeline);
 
         /* PhotonVision Setup -- uncomment if running PhotonVision*/
         // photonVision = new PhotonVision();
@@ -398,13 +398,13 @@ public class Vision extends SubsystemBase {
      */
     public boolean isDetectorPipeline(String limelight) {
         double currentPipeline = LimelightHelpers.getCurrentPipelineIndex(limelight);
-        return currentPipeline == VisionConfig.coneDetectorPipeline
-                || currentPipeline == VisionConfig.cubeDetectorPipeline;
+        return currentPipeline == VisionConfig.noteDetectorPipeline
+                || currentPipeline == VisionConfig.noteDetectorPipeline;
     }
 
     public boolean isReflectivePipeline(String limelight) {
         double currentPipeline = LimelightHelpers.getCurrentPipelineIndex(limelight);
-        return currentPipeline == VisionConfig.reflectivePipeline;
+        return currentPipeline == VisionConfig.noteDetectorPipeline;
     }
 
     /**

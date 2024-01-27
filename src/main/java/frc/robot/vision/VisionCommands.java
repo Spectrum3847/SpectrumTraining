@@ -65,18 +65,18 @@ public class VisionCommands {
     }
 
     public static Command setCubeNodePipeline() {
-        return setLimelightPipeline("", VisionConfig.aprilTagPipeline);
+        return setLimelightPipeline("", VisionConfig.noteDetectorPipeline);
     }
 
     public static Command setConeNodePipeline() {
-        return setLimelightPipeline("", VisionConfig.reflectivePipeline);
+        return setLimelightPipeline("", VisionConfig.noteDetectorPipeline);
     }
 
     public static Command setConeDetectPipeline() {
-        return setLimelightPipeline("", VisionConfig.coneDetectorPipeline);
+        return setLimelightPipeline("", VisionConfig.noteDetectorPipeline);
     }
 
     public static Command setCubeDetectPipeline() {
-        return setLimelightPipeline("", VisionConfig.cubeDetectorPipeline);
+        return setLimelightPipeline("", VisionConfig.noteDetectorPipeline);
     }
 }

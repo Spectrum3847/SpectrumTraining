@@ -57,7 +57,7 @@ public class Vision extends SubsystemBase {
         // configure both limelights
         LimelightHelpers.setLEDMode_ForceOff(VisionConfig.DETECT_LL);
         setLimelightPipeline(VisionConfig.DETECT_LL, VisionConfig.noteDetectorPipeline);
-        setLimelightPipeline(VisionConfig.DEFAULT_LL, VisionConfig.noteDetectorPipeline);
+        setLimelightPipeline(VisionConfig.DEFAULT_LL, VisionConfig.speakerDetectorPipeline);
 
         /* PhotonVision Setup -- uncomment if running PhotonVision*/
         // photonVision = new PhotonVision();

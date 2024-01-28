@@ -6,6 +6,8 @@ import frc.robot.RobotTelemetry;
 import frc.robot.swerve.commands.AlignToNote;
 import frc.robot.swerve.commands.DriveToNote;
 import frc.robot.swerve.commands.SwerveCommands;
+import frc.robot.swerve.commands.TurnToNote;
+import frc.robot.swerve.commands.TurnToSpeaker;
 import frc.spectrumLib.Gamepad;
 import frc.spectrumLib.util.ExpCurve;
 
@@ -53,6 +55,8 @@ public class Pilot extends Gamepad {
         // Prints Once
         controller.a().whileTrue(new AlignToNote(() -> 0, 0));
         controller.b().whileTrue(new DriveToNote(0));
+        controller.x().whileTrue(new TurnToNote());
+        controller.y().whileTrue(new TurnToSpeaker());
         // controller.a().whileTrue(LEDsCommands.solidPurpleLED());
 
         // Prints every periodic loop that the button is pressed

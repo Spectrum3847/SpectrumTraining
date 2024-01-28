@@ -18,6 +18,7 @@ public final class VisionConfig {
 
     /* Pipeline config */
     public static final int noteDetectorPipeline = 1;
+    public static final int speakerDetectorPipeline = 1;
 
     /* How many degrees back is limelight rotated from perfectly vertical */
     public static final double limelightAngle = -22.5;

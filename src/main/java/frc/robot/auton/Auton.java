@@ -1,5 +1,6 @@
 package frc.robot.auton;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
@@ -10,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.RobotTelemetry;
+import frc.robot.auton.commands.TargetOverride;
 import frc.robot.auton.config.AutonConfig;
 import frc.robot.swerve.commands.SwerveCommands;
 
@@ -45,8 +47,9 @@ public class Auton extends SubsystemBase {
     // Setup the named commands
     public static void setupNamedCommands() {
         // Register Named Commands
-        // NamedCommands.registerCommand("autoBalance", new AutoBalance());
-        // NamedCommands.registerCommand("alignToSpeaker", new AutoBalance());
+        NamedCommands.registerCommand("alignToSpeaker", TargetOverride.trackSpeaker());
+        NamedCommands.registerCommand("alignToGamePiece", TargetOverride.trackNote());
+        NamedCommands.registerCommand("stopTracking", TargetOverride.stopTracking());
     }
 
     // Subsystem Documentation:

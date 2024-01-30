@@ -55,8 +55,8 @@ public class Auton extends SubsystemBase {
     // Subsystem Documentation:
     // https://docs.wpilib.org/en/stable/docs/software/commandbased/subsystems.html
     public Auton() {
-        AutonConfig.ConfigureAutoBuilder(); // configures the auto builder
         setupNamedCommands(); // registers named commands
+        AutonConfig.ConfigureAutoBuilder(); // configures the auto builder
         setupSelectors(); // runs the command to start the chooser for auto on shuffleboard
 
         RobotTelemetry.print("Auton Subsystem Initialized: ");

@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.auton.Auton;
+import frc.robot.auton.commands.TargetOverride;
 import frc.robot.intake.Intake;
 import frc.robot.intake.IntakeCommands;
 import frc.robot.leds.LEDs;
@@ -178,6 +179,7 @@ public class Robot extends LoggedRobot {
         Command autonCommand = Auton.getAutonomousCommand();
         try {
             RobotTelemetry.print("@@@ Auton Init Starting @@@ ");
+            TargetOverride.stopTracking();
             autonCommand.schedule();
             Auton.startAutonTimer();
             RobotTelemetry.print("@@@ Auton Init Complete @@@ ");

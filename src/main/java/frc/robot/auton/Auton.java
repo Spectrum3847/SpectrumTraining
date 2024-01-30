@@ -48,7 +48,7 @@ public class Auton extends SubsystemBase {
     public static void setupNamedCommands() {
         // Register Named Commands
         NamedCommands.registerCommand("alignToSpeaker", TargetOverride.trackSpeaker());
-        NamedCommands.registerCommand("alignToGamePiece", TargetOverride.trackNote());
+        NamedCommands.registerCommand("alignToNote", TargetOverride.trackNote());
         NamedCommands.registerCommand("stopTracking", TargetOverride.stopTracking());
     }
 

@@ -21,7 +21,7 @@ public class Auton extends SubsystemBase {
     // A chooser for autonomous commands
     public static void setupSelectors() {
         autonChooser.setDefaultOption("4 Piece Middle", new PathPlannerAuto("4 Piece Middle"));
-        autonChooser.setDefaultOption("4 Piece Front", new PathPlannerAuto("4 Piece Front"));
+        autonChooser.addOption("4 Piece Front", new PathPlannerAuto("4 Piece Front"));
 
         // autonChooser.addOption(
         //         "Example Path", FollowSinglePath.getSinglePath("Example Path")); // Runs single

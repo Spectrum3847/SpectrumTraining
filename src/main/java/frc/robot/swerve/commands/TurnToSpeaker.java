@@ -10,8 +10,8 @@ import java.util.function.DoubleSupplier;
 
 public class TurnToSpeaker extends PIDCommand {
 
-    private static final double kp = 0.04;
-    private static final double tolerance = 0.005;
+    private static final double kp = 0.06;
+    private static final double tolerance = 0.001;
     private static final double maxOutput = Robot.swerve.config.maxVelocity * 0.5;
     private static final double error = 0.3;
     Command driveCommand;
@@ -19,7 +19,7 @@ public class TurnToSpeaker extends PIDCommand {
     private static double out = 0;
     private int pipelineIndex = VisionConfig.speakerDetectorPipeline;
     private double heading = Integer.MIN_VALUE;
-    private static final String m_limelight = VisionConfig.DEFAULT_LL;
+    private static final String m_limelight = VisionConfig.DETECT_LL;
 
     /**
      * Creates a new AlignToVisionTarget command that aligns to a vision target (apriltag,

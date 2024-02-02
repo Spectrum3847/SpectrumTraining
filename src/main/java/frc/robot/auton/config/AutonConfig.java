@@ -55,7 +55,7 @@ public class AutonConfig {
                 Robot.swerve::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT
                 // RELATIVE
                 ApplyChassisSpeeds.robotRelativeOutput(
-                        true), // Method that will drive the robot given ROBOT
+                        false), // Method that will drive the robot given ROBOT
                 // RELATIVE
                 // ChassisSpeeds
                 AutonConfig.AutonPathFollowerConfig,
